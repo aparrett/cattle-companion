@@ -1,0 +1,19 @@
+{
+  "name": "cattle-companion",
+  "version": "0.0.1",
+  "description": "A web application for managing cattle.",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest --watchAll --verbose"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aparrett/cattle-companion.git"
+  },
+  "author": "Anthony Parrett",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/aparrett/cattle-companion/issues"
+  },
+  "homepage": "https://github.com/aparrett/cattle-companion#readme"
+}
