@@ -5,7 +5,10 @@
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
-    "test": "jest --watchAll --verbose"
+    "test": "jest --watchAll --verbose",
+    "client": "npm run start --prefix client",
+    "dev": "concurrently \"npm run start\" \"npm run client\"",
+    "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "engines": {
     "node": "8.11.3",
@@ -22,9 +25,11 @@
   },
   "homepage": "https://github.com/aparrett/cattle-companion#readme",
   "dependencies": {
+    "concurrently": "^3.6.1",
     "express": "^4.16.3",
     "jest": "^23.5.0",
     "joi": "^13.6.0",
-    "mongoose": "^5.2.9"
+    "mongoose": "^5.2.9",
+    "redux-promise": "^0.6.0"
   }
 }
