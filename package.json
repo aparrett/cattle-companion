@@ -4,7 +4,12 @@
   "description": "A web application for managing cattle.",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "jest --watchAll --verbose"
+  },
+  "engines": {
+    "node": "8.11.3",
+    "npm": "5.6.0"
   },
   "repository": {
     "type": "git",
@@ -15,5 +20,11 @@
   "bugs": {
     "url": "https://github.com/aparrett/cattle-companion/issues"
   },
-  "homepage": "https://github.com/aparrett/cattle-companion#readme"
+  "homepage": "https://github.com/aparrett/cattle-companion#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "jest": "^23.5.0",
+    "joi": "^13.6.0",
+    "mongoose": "^5.2.9"
+  }
 }
