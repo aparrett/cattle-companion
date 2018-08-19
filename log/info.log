@@ -1,2 +1,8 @@
 {"level":"info","message":"Listening on port 5000...","timestamp":"2018-08-19T23:39:53.155Z"}
 {"level":"info","message":"Connected to mongodb://admin:s4LAhbjAd@ds125862.mlab.com:25862/cattle-companion-dev...","timestamp":"2018-08-19T23:39:53.495Z"}
+{"level":"info","message":"Listening on port 5000...","timestamp":"2018-08-19T23:46:52.875Z"}
+{"level":"info","message":"Connected to mongodb://admin:s4LAhbjAd@ds125862.mlab.com:25862/cattle-companion-dev...","timestamp":"2018-08-19T23:46:53.423Z"}
+{"level":"info","message":"Listening on port 5000...","timestamp":"2018-08-19T23:48:03.604Z"}
+{"level":"info","message":"Connected to mongodb://admin:s4LAhbjAd@ds125862.mlab.com:25862/cattle-companion-dev...","timestamp":"2018-08-19T23:48:03.888Z"}
+{"level":"info","message":"Listening on port 5000...","timestamp":"2018-08-19T23:48:52.935Z"}
+{"level":"info","message":"Connected to mongodb://admin:s4LAhbjAd@ds125862.mlab.com:25862/cattle-companion-dev...","timestamp":"2018-08-19T23:48:53.322Z"}
