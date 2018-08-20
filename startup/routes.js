@@ -1,12 +1,11 @@
 const express = require('express');
 const error = require('../middleware/error');
+const users = require('../routes/users');
 
 module.exports = function(app) {
   app.use(express.json());
 
-  app.get('/', (req, res) => {
-    res.send({ hello: 'world' });
-  });
+  app.use('/api/users', users);
 
   if (process.env.NODE_ENV === 'production') {
     // Use express to serve up production assets like main.js and main.css.
@@ -18,6 +17,6 @@ module.exports = function(app) {
       res.sendFile(path.resolve(__dirname, 'client', 'build', 'index.html'));
     });
   }
-  
+
   app.use(error);
 }

@@ -26,13 +26,17 @@
   },
   "homepage": "https://github.com/aparrett/cattle-companion#readme",
   "dependencies": {
+    "bcrypt": "^3.0.0",
     "concurrently": "^3.6.1",
     "express": "^4.16.3",
     "express-async-errors": "^3.0.0",
     "jest": "^23.5.0",
     "joi": "^13.6.0",
+    "jsonwebtoken": "^8.3.0",
+    "lodash": "^4.17.10",
     "mongoose": "^5.2.9",
     "redux-promise": "^0.6.0",
+    "supertest": "^3.1.0",
     "winston": "^2.4.0"
   }
 }
