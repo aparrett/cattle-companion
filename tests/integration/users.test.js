@@ -150,8 +150,8 @@ describe('/api/users', () => {
       const res = await doRequest();
 
       expect(res.body).toHaveProperty('_id');
-      expect(res.body).toHaveProperty('name');
-      expect(res.body).toHaveProperty('email');
+      expect(res.body.name).toBe(name);
+      expect(res.body.email).toBe(email);
     });
 
     it('should set header x-auth-token to jwt if user is valid', async () => {
