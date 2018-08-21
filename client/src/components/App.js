@@ -1,11 +1,13 @@
+import 'bootstrap/dist/css/bootstrap.min.css';
 import React, { Component } from 'react';
 import { BrowserRouter, Route } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 
 import Header from './Header';
+import Login from './auth/Login';
+import Register from './auth/Register';
 
 const Home = () => <div>Hello World</div>;
-const Login = () => <div>Login</div>;
 
 class App extends Component {
   render() {
@@ -13,8 +15,11 @@ class App extends Component {
       <BrowserRouter>
         <div>
           <Header />
-          <Route exact path="/login" component={Login} />
-          <PrivateRoute exact path="/" component={Home} />
+          <div className="container body-content">
+            <Route exact path="/login" component={Login} />
+            <Route exact path="/register" component={Register} />
+            <PrivateRoute exact path="/" component={Home} />
+          </div>
         </div>
       </BrowserRouter>
     );

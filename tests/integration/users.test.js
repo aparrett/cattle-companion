@@ -149,15 +149,15 @@ describe('/api/users', () => {
     it('should send user in response if user is valid', async () => {
       const res = await doRequest();
 
-      expect(res.body).toHaveProperty('_id');
-      expect(res.body.name).toBe(name);
-      expect(res.body.email).toBe(email);
+      expect(res.body.user).toHaveProperty('_id');
+      expect(res.body.user.name).toBe(name);
+      expect(res.body.user.email).toBe(email);
     });
 
     it('should set header x-auth-token to jwt if user is valid', async () => {
       const res = await doRequest();
       
-      expect(res.header).toHaveProperty('x-auth-token');
+      expect(res.body).toHaveProperty('token');
     });
   });
 });
