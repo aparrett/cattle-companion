@@ -7,28 +7,32 @@ import { AUTH_USER,
 const cookie = new Cookies();
 
 export function registerUser({ email, name, password }, callback) {  
-  return function(dispatch) {
+  return dispatch => {
     axios.post('/api/users', { email, name, password })
     .then(response => {
       cookie.set('token', response.data.token, { path: '/' });
       dispatch({ type: AUTH_USER, payload: response.data.user });
       callback();
     })
-    .catch((error) => {
-      errorHandler(dispatch, error.response, AUTH_ERROR)
+    .catch(({response}) => {
+      if (response.status === 400) {
+        errorHandler(dispatch, response, AUTH_ERROR);
+      } else {
+        errorHandler(dispatch, 'Unable to register at this time.', AUTH_ERROR);
+      }
     });
   }
 }
 
 export function logoutUser() {  
-  return function (dispatch) {
+  return dispatch => {
     dispatch({ type: UNAUTH_USER });
     cookie.remove('token', { path: '/' });
   }
 }
 
 export function fetchUser(callback) {
-  return function(dispatch) {
+  return dispatch => {
     axios.get('/api/users/me', {
       headers: { 'x-auth-token': cookie.get('token') }
     })
@@ -38,7 +42,7 @@ export function fetchUser(callback) {
         payload: response.data.user,
       });
     })
-    .catch((error) => {
+    .catch(error => {
       errorHandler(dispatch, error.response, AUTH_ERROR);
       if (callback) {
         callback();

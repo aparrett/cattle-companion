@@ -3,11 +3,6 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { registerUser } from '../../actions/auth';
 
-const form = reduxForm({  
-  form: 'register',
-  validate
-});
-
 class Register extends Component {
   renderField(field) {
     return (
@@ -23,10 +18,11 @@ class Register extends Component {
   }
 
   render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit, error } = this.props;
 
     return (
       <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+        {error && <div className="error">{error}</div>}
         <div className="row">
           <div className="col-md-12">
             <label>Name</label>
@@ -93,4 +89,13 @@ function validate(values) {
   return errors;
 }
 
-export default connect(null, { registerUser })(form(Register));  
+function mapStateToProps({ auth }) {
+  return { error: auth.error };
+}
+
+Register = connect(mapStateToProps, { registerUser })(Register);  
+
+export default reduxForm({
+  form: 'register',
+  validate
+})(Register);
