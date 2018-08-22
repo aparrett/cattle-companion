@@ -11,8 +11,9 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
         if (rest.auth){
           return <Component {...props} />;
         } else {
+          // If error in fetchUser, user will be redirected to login page.
           rest.fetchUser(() => window.location.href = '/login');
-          return <div />;
+          return <Component {...props} />;
         }
       }
     }

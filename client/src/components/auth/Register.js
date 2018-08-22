@@ -19,7 +19,7 @@ class Register extends Component {
   }
 
   handleFormSubmit(formProps) {
-    this.props.registerUser(formProps, () => this.props.history.push('/'));
+    this.props.registerUser(formProps, () => window.location.href = '/');
   }
 
   render() {
