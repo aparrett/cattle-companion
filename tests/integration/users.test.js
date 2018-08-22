@@ -36,16 +36,16 @@ describe('/api/users', () => {
     });
 
     describe('Validate Name', () => {
-      it('should return 400 if name is less than 5 characters', async () => {
-        name = 'abca';
+      it('should return 400 if name is less than 3 characters', async () => {
+        name = 'ab';
 
         const res = await doRequest();
 
         expect(res.status).toBe(400);
       });
 
-      it('should return 400 if name is greater than 50 characters', async () => {
-        name = new Array(52).join('a');
+      it('should return 400 if name is greater than 100 characters', async () => {
+        name = new Array(102).join('a');
 
         const res = await doRequest();
         
@@ -54,14 +54,6 @@ describe('/api/users', () => {
 
       it('should return 400 if name is not given', async () => {
         name = null;
-
-        const res = await doRequest();
-        
-        expect(res.status).toBe(400);
-      });
-
-      it('should return 400 if name is a number', async () => {
-        name = 1;
 
         const res = await doRequest();
         
@@ -88,14 +80,6 @@ describe('/api/users', () => {
 
       it('should return 400 if email is not given', async () => {
         email = null;
-
-        const res = await doRequest();
-        
-        expect(res.status).toBe(400);
-      });
-
-      it('should return 400 if email is a number', async () => {
-        email = 1;
 
         const res = await doRequest();
         
