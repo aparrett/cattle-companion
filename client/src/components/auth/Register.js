@@ -19,17 +19,7 @@ class Register extends Component {
   }
 
   handleFormSubmit(formProps) {
-    this.props.registerUser(formProps);
-  }
-
-  renderError() {
-    if(this.props.errorMessage) {
-      return (
-        <div>
-          <span><strong>Error!</strong> {this.props.errorMessage}</span>
-        </div>
-      );
-    }
+    this.props.registerUser(formProps, () => this.props.history.push('/'));
   }
 
   render() {
@@ -37,7 +27,6 @@ class Register extends Component {
 
     return (
       <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-        {this.renderError()}
         <div className="row">
           <div className="col-md-12">
             <label>Name</label>
@@ -80,11 +69,4 @@ function validate(values) {
   return errors;
 }
 
-function mapStateToProps(state) {  
-  return {
-    errorMessage: state.auth.error,
-    message: state.auth.message
-  };
-}
-
-export default connect(mapStateToProps, { registerUser })(form(Register));  
+export default connect(null, { registerUser })(form(Register));  

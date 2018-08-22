@@ -6,13 +6,14 @@ import { AUTH_USER,
 
 const cookie = new Cookies();
 
-export function registerUser({ email, name, password }) {  
+export function registerUser({ email, name, password }, callback) {  
+  console.log('reg user')
   return function(dispatch) {
     axios.post('/api/users', { email, name, password })
     .then(response => {
       cookie.set('token', response.data.token, { path: '/' });
-      dispatch({ type: AUTH_USER });
-      window.location.href = '/';
+      dispatch({ type: AUTH_USER, payload: response.data.user });
+      callback();
     })
     .catch((error) => {
       errorHandler(dispatch, error.response, AUTH_ERROR)
@@ -21,25 +22,45 @@ export function registerUser({ email, name, password }) {
 }
 
 export function logoutUser() {  
+  console.log('log out user')
   return function (dispatch) {
     dispatch({ type: UNAUTH_USER });
     cookie.remove('token', { path: '/' });
-    window.location.href = '/login';
+  }
+}
+
+export function fetchUser(callback) {
+  return function(dispatch) {
+    axios.get('/api/users/me', {
+      headers: { 'x-auth-token': cookie.get('token') }
+    })
+    .then(response => {
+      dispatch({
+        type: AUTH_USER, 
+        payload: response.data.user,
+      });
+    })
+    .catch((error) => {
+      errorHandler(dispatch, error.response, AUTH_ERROR);
+      if (callback) {
+        callback();
+      }
+    });
   }
 }
 
 export function errorHandler(dispatch, error, type) {  
   let errorMessage = '';
 
-  if (error.data.error) {
+  if (error && error.data && error.data.error) {
     errorMessage = error.data.error;
-  } else if (error.data) {
+  } else if (error && error.data) {
     errorMessage = error.data;
   } else {
     errorMessage = error;
   }
 
-  if (error.status === 401) {
+  if (error && error.status === 401) {
     dispatch({
       type: type,
       payload: 'You are not authorized to do this. Please login and try again.'
