@@ -1,9 +1,6 @@
 const request = require('supertest');
 const { User } = require('../../../models/User');
-const { UserFarm } = require('../../../models/UserFarm');
 const { Farm } = require('../../../models/Farm');
-const config = require('../../../config');
-const jwt = require('jsonwebtoken');
 
 let server;
 
@@ -31,9 +28,8 @@ describe('/api/farms', () => {
     });
 
     afterEach(async () => {
-      await User.deleteMany({});
       await Farm.deleteMany({});
-      await UserFarm.deleteMany({});
+      await User.deleteMany({});
     });
 
     it('should return 401 if client is not logged in', async () => {
@@ -60,7 +56,7 @@ describe('/api/farms', () => {
       expect(res.status).toBe(400);
     });
 
-    it('should save farm if it is valid', async () => {
+    it('should save the farm', async () => {
       const res = await doRequest();
 
       const farm = await Farm.find({ _id: res.body._id });
@@ -68,16 +64,24 @@ describe('/api/farms', () => {
       expect(farm).not.toBeNull();
     });
 
-    it('should save farm and user farm if it is valid', async () => {
-      const res = await doRequest();
+    it('should save the user on the farm', async () => {
+      let user = new User({ name: 'test', email: 'test1@test.com', password: 'password' });
+      user = await user.save();
+      token = user.generateAuthToken();
 
-      const user = jwt.verify(token, config.jwtPrivateKey);
-      const userFarm = await UserFarm.find({ farm: res.body._id, user: user._id });
+      const res = await request(server)
+          .post('/api/farms')
+          .set('x-auth-token', token)
+          .send({ name });
 
-      expect(userFarm).not.toBeNull();
+      const farm = await Farm
+        .findOne({ _id: res.body._id })
+        .populate('User');
+        
+      expect(farm.users.length).toBe(1);
     });
 
-    it('should return the farm if it is valid', async () => {
+    it('should return the farm', async () => {
       const res = await doRequest();
 
       expect(res.body.name).toBe(name);

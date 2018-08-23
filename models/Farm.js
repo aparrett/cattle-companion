@@ -6,7 +6,8 @@ const farmSchema = new mongoose.Schema({
     type: String,
     required: true,
     maxlength: 100
-  }
+  },
+  users: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }]
 });
 
 const Farm = mongoose.model('Farm', farmSchema);

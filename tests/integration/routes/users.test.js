@@ -144,4 +144,18 @@ describe('/api/users', () => {
       expect(res.body).toHaveProperty('token');
     });
   });
+
+  // describe('GET /:id/farms', () => {
+  //   it('should return 404 if given id is not valid', () => {
+  //     const res = await request(server).get('/api/1/farms');
+
+  //     expect(res.status).toBe(404);
+  //   });
+    
+  //   // it should return 404 if user not found with given id
+
+  //   // it should return 401 if user not authorized
+
+  //   // it should return farms for user if user is valid
+  // });
 });
