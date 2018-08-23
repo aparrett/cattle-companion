@@ -3,6 +3,7 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const { Farm, validate } = require('../models/Farm');
 const { UserFarm } = require('../models/UserFarm');
+const _ = require('lodash');
 
 router.post('/', auth, async (req, res) => {
   const { error } = validate(req.body);
@@ -14,7 +15,7 @@ router.post('/', auth, async (req, res) => {
   let userFarm = new UserFarm({ user: req.user._id, farm: farm._id });
   userFarm = await userFarm.save();
 
-  res.send(farm);
+  res.send(_.pick(farm, ['_id', 'name']));
 });
 
 module.exports = router;

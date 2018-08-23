@@ -13,8 +13,12 @@ export function saveFarm({ name }) {
     .then(res => {
       dispatch({ type: SAVE_FARM, payload: res.data });
     })
-    .catch(() => {
-      dispatch({ type: ERROR, payload: 'Could not perform action at this time. Please try again later.' });
+    .catch(({ response }) => {
+      if (response.status === 400) {
+        dispatch({ type: ERROR, payload: response.data });
+      } else {
+        dispatch({ type: ERROR, payload: 'Could not perform action at this time. Please try again later.' });
+      }
     });
   }
 }
