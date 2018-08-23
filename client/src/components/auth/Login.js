@@ -1,28 +1,85 @@
-import React from 'react';
-import { Link, Redirect } from 'react-router-dom';
+import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
-import { fetchUser } from '../../actions/auth';
+import { Field, reduxForm } from 'redux-form';
+import { loginUser } from '../../actions/auth';
 
-const Login = (props) => {
-  if (props.auth) {
-    return <Redirect to="/" />;
-  } else {
-    props.fetchUser();
+class Login extends Component {
+  renderField(field) {
+    return (
+      <div>
+        <input className="form-control" {...field.input} type={field.type} />
+        {field.meta.touched && field.meta.error && <div className="error">{field.meta.error}</div>}
+      </div>
+    );
   }
-  
-  return (
-    <div>
-      <p>Login Dummy Text</p>
-      <Link to={'/register'}>
-        Register
-      </Link>
-    </div>
-  );
-};
 
-function mapStateToProps(state) {
-  console.log('state', state);
-  return { auth: state.auth.authenticated };
+  handleFormSubmit(formProps) {
+    this.props.loginUser(formProps, () => window.location.href = '/');
+  }
+
+  render() {
+    const { handleSubmit, error } = this.props;
+
+    return (
+      <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+        {error && <div className="error">{error}</div>}
+        <div className="row">
+          <div className="col-md-12">
+            <label>Email</label>
+            <Field name="email" className="form-control" component={this.renderField} type="email" />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
+            <label>Password</label>
+            <Field name="password" className="form-control" component={this.renderField} type="password" />
+          </div>
+        </div>
+        <button type="submit" className="btn btn-primary">Login</button>
+        <div>Not signed up? <Link to="/register">Register</Link></div>
+      </form>
+    );
+  }
 }
 
-export default connect(mapStateToProps, { fetchUser })(Login);
+function validate(values) {  
+  const errors = {};
+
+  if (!values.email) {
+    errors.email = 'Please enter an email.';
+  }
+
+  if (values.email && values.email.length < 5) {
+    errors.email = 'Email must be longer than 4 characters.';
+  }
+
+  if (values.email && values.email.length > 255) {
+    errors.email = 'Email cannot be longer than 255 characters.';
+  }
+
+  if (!values.password) {
+    errors.password = 'Please enter a password.';
+  }
+
+  if (values.password && values.password.length < 5) {
+    errors.password = 'Password must be longer than 4 characters.';
+  }
+
+  if (values.password && values.password.length > 255) {
+    errors.password = 'Password cannot be longer than 255 characters.';
+  }
+
+  return errors;
+}
+
+function mapStateToProps({ auth }) {
+  return { error: auth.error };
+}
+
+Login = connect(mapStateToProps, { loginUser })(Login);  
+
+export default reduxForm({
+  form: 'login',
+  validate
+})(Login);

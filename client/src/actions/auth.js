@@ -9,9 +9,9 @@ const cookie = new Cookies();
 export function registerUser({ email, name, password }, callback) {  
   return dispatch => {
     axios.post('/api/users', { email, name, password })
-    .then(response => {
-      cookie.set('token', response.data.token, { path: '/' });
-      dispatch({ type: AUTH_USER, payload: response.data.user });
+    .then(res => {
+      cookie.set('token', res.data.token, { path: '/' });
+      dispatch({ type: AUTH_USER, payload: res.data.user });
       callback();
     })
     .catch(({response}) => {
@@ -19,6 +19,24 @@ export function registerUser({ email, name, password }, callback) {
         errorHandler(dispatch, response, AUTH_ERROR);
       } else {
         errorHandler(dispatch, 'Unable to register at this time.', AUTH_ERROR);
+      }
+    });
+  }
+}
+
+export function loginUser({ email, password }, callback) {
+  return dispatch => {
+    axios.post('/api/auth', { email, password })
+    .then(res => {
+      cookie.set('token', res.data.token, { path: '/' });
+      dispatch({ type: AUTH_USER, payload: res.data.user });
+      callback();
+    })
+    .catch(({response}) => {
+      if (response.status === 400) {
+        errorHandler(dispatch, response, AUTH_ERROR);
+      } else {
+        errorHandler(dispatch, 'Unable to login at this time.', AUTH_ERROR);
       }
     });
   }
