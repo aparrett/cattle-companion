@@ -2,9 +2,15 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { loginUser } from '../../actions/auth';
+import { loginUser, logoutUser } from '../../actions/auth';
 
 class Login extends Component {
+  componentDidMount() {
+    if (this.props.authenticated) { 
+      this.props.logoutUser();
+    }
+  }
+
   renderField(field) {
     return (
       <div>
@@ -74,10 +80,10 @@ function validate(values) {
 }
 
 function mapStateToProps({ auth }) {
-  return { error: auth.error };
+  return { error: auth.error, authenticated: auth.authenticated };
 }
 
-Login = connect(mapStateToProps, { loginUser })(Login);  
+Login = connect(mapStateToProps, { loginUser, logoutUser })(Login);  
 
 export default reduxForm({
   form: 'login',
