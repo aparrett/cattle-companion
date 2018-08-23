@@ -5,9 +5,9 @@ import Cookies from 'universal-cookie';
 
 const cookie = new Cookies();
 
-export function saveFarm() {
+export function saveFarm({ name }) {
   return dispatch => {
-    axios.post('/api/farms', {
+    axios.post('/api/farms', { name }, {
       headers: { 'x-auth-token': cookie.get('token') }
     })
     .then(res => {

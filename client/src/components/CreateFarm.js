@@ -7,6 +7,7 @@ import InputField from './fields/InputField';
 class CreateFarm extends Component {
   handleFormSubmit(formProps) {
     this.props.saveFarm(formProps);
+    this.props.reset();
   }
 
   render() {
@@ -16,8 +17,7 @@ class CreateFarm extends Component {
       <div>
         <h5>Create a New Farm</h5>
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-          <label>Name</label>
-          <Field name="name" className="form-control" component={InputField} type="text" />
+          <Field name="name" className="form-control" component={InputField} placeholder="Name" type="text" />
           <button type="submit" className="btn btn-primary">Create</button>
         </form>
       </div>
@@ -33,7 +33,7 @@ function validate(values) {
   }
 
   if (values.name && values.name.length < 1) {
-    errors.name = 'Name cannot be longer than 100 characters.';
+    errors.name = 'Name cannot be empty.';
   }
 
   if (values.name && values.name.length > 100) {
