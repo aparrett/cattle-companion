@@ -6,8 +6,7 @@ import PrivateRoute from './PrivateRoute';
 import Header from './Header';
 import Login from './auth/Login';
 import Register from './auth/Register';
-
-const Home = () => <div>Hello World</div>;
+import Home from './Home';
 
 class App extends Component {
   render() {

@@ -2,7 +2,7 @@ import axios from 'axios';
 import Cookies from 'universal-cookie';
 import { AUTH_USER,
          AUTH_ERROR,
-         UNAUTH_USER } from './types';
+         UNAUTH_USER } from '../types/auth';
 
 const cookie = new Cookies();
 

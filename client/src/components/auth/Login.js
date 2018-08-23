@@ -3,21 +3,13 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { loginUser, logoutUser } from '../../actions/auth';
+import InputField from '../fields/InputField';
 
 class Login extends Component {
   componentDidMount() {
     if (this.props.authenticated) { 
       this.props.logoutUser();
     }
-  }
-
-  renderField(field) {
-    return (
-      <div>
-        <input className="form-control" {...field.input} type={field.type} />
-        {field.meta.touched && field.meta.error && <div className="error">{field.meta.error}</div>}
-      </div>
-    );
   }
 
   handleFormSubmit(formProps) {
@@ -33,13 +25,13 @@ class Login extends Component {
         <div className="row">
           <div className="col-md-12">
             <label>Email</label>
-            <Field name="email" className="form-control" component={this.renderField} type="email" />
+            <Field name="email" className="form-control" component={InputField} type="email" />
           </div>
         </div>
         <div className="row">
           <div className="col-md-12">
             <label>Password</label>
-            <Field name="password" className="form-control" component={this.renderField} type="password" />
+            <Field name="password" className="form-control" component={InputField} type="password" />
           </div>
         </div>
         <button type="submit" className="btn btn-primary">Login</button>

@@ -1,18 +1,12 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
+import { Link } from 'react-router-dom';
 import { registerUser } from '../../actions/auth';
 
-class Register extends Component {
-  renderField(field) {
-    return (
-      <div>
-        <input className="form-control" {...field.input} type={field.type} />
-        {field.meta.touched && field.meta.error && <div className="error">{field.meta.error}</div>}
-      </div>
-    );
-  }
+import InputField from '../fields/InputField';
 
+class Register extends Component {
   handleFormSubmit(formProps) {
     this.props.registerUser(formProps, () => window.location.href = '/');
   }
@@ -26,22 +20,23 @@ class Register extends Component {
         <div className="row">
           <div className="col-md-12">
             <label>Name</label>
-            <Field name="name" className="form-control" component={this.renderField} type="text" />
+            <Field name="name" className="form-control" component={InputField} type="text" />
           </div>
         </div>
         <div className="row">
           <div className="col-md-12">
             <label>Email</label>
-            <Field name="email" className="form-control" component={this.renderField} type="email" />
+            <Field name="email" className="form-control" component={InputField} type="email" />
           </div>
         </div>
         <div className="row">
           <div className="col-md-12">
             <label>Password</label>
-            <Field name="password" className="form-control" component={this.renderField} type="password" />
+            <Field name="password" className="form-control" component={InputField} type="password" />
           </div>
         </div>
         <button type="submit" className="btn btn-primary">Register</button>
+        <div>Already registered? <Link to="/login">Login</Link></div>
       </form>
     );
   }
