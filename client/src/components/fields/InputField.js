@@ -1,6 +1,7 @@
 import React from 'react';
 
 const InputField = props => {
+  console.log(props)
   return (
     <div>
       <input className="form-control" {...props.input} placeholder={props.placeholder} type={props.type} />

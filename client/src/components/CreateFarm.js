@@ -40,7 +40,7 @@ function validate(values) {
     errors.name = 'Name cannot be longer than 100 characters.';
   }
 
-  console.log('TODO: make sure form is validating');
+  return errors;
 }
 
 CreateFarm = connect(null, { saveFarm })(CreateFarm);  
