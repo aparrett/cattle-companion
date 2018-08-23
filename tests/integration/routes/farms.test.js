@@ -1,5 +1,9 @@
 const request = require('supertest');
 const { User } = require('../../../models/User');
+const { UserFarm } = require('../../../models/UserFarm');
+const { Farm } = require('../../../models/Farm');
+const config = require('../../../config');
+const jwt = require('jsonwebtoken');
 
 let server;
 
@@ -50,7 +54,27 @@ describe('/api/farms', () => {
       expect(res.status).toBe(400);
     });
 
-    // it should save farm is it is valid
-    // it should return farm if it is valid
+    it('should save farm if it is valid', async () => {
+      const res = await doRequest();
+
+      const farm = await Farm.find({ _id: res.body._id });
+
+      expect(farm).not.toBeNull();
+    });
+
+    it('should save farm and user farm if it is valid', async () => {
+      const res = await doRequest();
+
+      const user = jwt.verify(token, config.jwtPrivateKey);
+      const userFarm = await UserFarm.find({ farm: res.body._id, user: user._id });
+
+      expect(userFarm).not.toBeNull();
+    });
+
+    it('should return the farm if it is valid', async () => {
+      const res = await doRequest();
+
+      expect(res.body.name).toBe(name);
+    });
   });
 });
