@@ -44,8 +44,26 @@ describe('/api/auth', () => {
       expect(res.status).toBe(400);
     });
 
-    // it should return 400 if password not correct
+    it('should return 400 if invalid password for user', async () => {
+      password = 'invalid';
 
-    // it should return token and 200 if email and password are correct
+      const res = await doRequest();
+
+      expect(res.status).toBe(400);
+    });
+
+    it('should return token if user is valid', async () => {
+      const res = await doRequest();
+
+      expect(res.body.token).toBeTruthy();
+    });
+
+    it('should return user if user is valid', async () => {
+      const res = await doRequest();
+
+      expect(res.body.user).toHaveProperty('_id');
+      expect(res.body.user.name).toBe(name);
+      expect(res.body.user.email).toBe(email);
+    });
   });
 });
