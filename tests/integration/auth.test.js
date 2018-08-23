@@ -33,7 +33,7 @@ describe('/api/auth', () => {
     });
 
     afterEach(async () => {
-      await User.remove({});
+      await User.deleteMany({});
     });
 
     it('should return 400 if user not found with given email', async () => {

@@ -34,7 +34,7 @@
     "joi": "^13.6.0",
     "jsonwebtoken": "^8.3.0",
     "lodash": "^4.17.10",
-    "mongoose": "^5.2.9",
+    "mongoose": "^5.2.8",
     "redux-promise": "^0.6.0",
     "supertest": "^3.1.0",
     "winston": "^2.4.0"
