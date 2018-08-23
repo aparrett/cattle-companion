@@ -30,6 +30,12 @@ describe('/api/farms', () => {
       name = 'Farm1';
     });
 
+    afterEach(async () => {
+      await User.deleteMany({});
+      await Farm.deleteMany({});
+      await UserFarm.deleteMany({});
+    });
+
     it('should return 401 if client is not logged in', async () => {
       token = '';
 
