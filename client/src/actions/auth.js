@@ -51,7 +51,7 @@ export function logoutUser() {
 
 export function fetchUser(callback) {
   return dispatch => {
-    axios.get('/api/users/me', {
+    axios.get('/api/me', {
       headers: { 'x-auth-token': cookie.get('token') }
     })
     .then(response => {

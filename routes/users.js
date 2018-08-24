@@ -3,13 +3,6 @@ const _ = require('lodash');
 const { User, validate } = require('../models/User');
 const express = require('express');
 const router = express.Router();
-const auth = require('../middleware/auth');
-const validateObjectId = require('../middleware/validateObjectId');
-
-router.get('/me', auth, async (req, res) => {
-  const user = await User.findById(req.user._id).select('-password');
-  res.send(user);
-});
 
 router.post('/', async (req, res) => {
   const { error } = validate(req.body);
@@ -25,13 +18,6 @@ router.post('/', async (req, res) => {
 
   const token = user.generateAuthToken();
   res.send({ user: _.pick(user, ['_id', 'name', 'email']), token });
-});
-
-router.get('/:id/farms', auth, validateObjectId, async (req, res) => {
-  let user = await User.findOne({ _id: req.params.id });
-  if (!user) res.status(404).send('User not found.');
-
-  res.send(500);
 });
 
 module.exports = router;

@@ -3,12 +3,14 @@ const error = require('../middleware/error');
 const users = require('../routes/users');
 const auth = require('../routes/auth');
 const farms = require('../routes/farms');
+const me = require('../routes/me');
 
 module.exports = function(app) {
   app.use(express.json());
 
   app.use('/api/users', users);
   app.use('/api/auth', auth);
+  app.use('/api/me', me);
   app.use('/api/farms', farms);
 
   if (process.env.NODE_ENV === 'production') {
