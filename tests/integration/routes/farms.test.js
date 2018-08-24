@@ -86,4 +86,30 @@ describe('/api/farms', () => {
       expect(res.body.name).toBe(name);
     });
   });
+
+  describe('POST /:id/cattle', () => {
+    let name;
+    let token;
+    let id;
+
+    const doRequest = () => {
+      return request(server)
+        .post(`/api/farms/${id}/cattle`)
+        .set('x-auth-header', token);
+    };
+
+    // it should return 401 if user not given
+
+    // should return 401 if farm does not belong to user
+
+    // should return 404 if farm not found
+
+    // should return 400 if cow not valid
+
+    // should return cow 
+
+    // should save the cow
+
+    // cow should be in farm's cattle
+  });
 });

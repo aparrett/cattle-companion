@@ -1,5 +1,4 @@
 import { DISMISS_ERROR } from '../types/error';
-import { logoutUser } from './auth';
 
 export function dismissError() {
   return dispatch => {
@@ -14,7 +13,10 @@ export function errorHandler(dispatch, type, status, error) {
       payload: error
     });
   } else if (status === 401) {
-    logoutUser();
+    dispatch({
+      type: type,
+      payload: 'You are not authorized to perform this action.'
+    });
   } else {
     dispatch({
       type: type,

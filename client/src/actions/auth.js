@@ -45,6 +45,10 @@ export function fetchUser(callback) {
       });
     })
     .catch(({ response }) => {
+      if (response.status === 401) {
+        return logoutUser();
+      }
+
       errorHandler(dispatch, AUTH_ERROR, response.status, response.data);
       if (callback) {
         callback();
