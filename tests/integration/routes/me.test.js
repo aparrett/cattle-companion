@@ -1,6 +1,7 @@
 const request = require('supertest');
-const { User } = require('../../../models/User');
 const mongoose = require('mongoose');
+const { User } = require('../../../models/User');
+const { Farm } = require('../../../models/Farm');
 
 let server;
 
@@ -14,39 +15,22 @@ describe('/api/me', () => {
   describe('GET /farms', () => {
     let user;
     let token;
-    let id;
 
     const doRequest = () => {
       return request(server)
-        .get(`/api/me/farms`)
+        .get('/api/me/farms')
         .set('x-auth-token', token);
     };
 
     beforeEach(async () => {
       user = new User({ name: 'test', email: 'test1@test.com', password: 'password' });
       user = await user.save();
-      id = user._id;
       token = user.generateAuthToken();
     });
 
     afterEach(async () => {
       await User.deleteMany({});
-    });
-
-    it('should return 404 if given id is not a valid id', async () => {
-      id = 1;
-
-      const res = await doRequest();
-
-      expect(res.status).toBe(404);
-    });
-    
-    it('should return 404 if user not found with given id', async () => {
-      id = mongoose.Types.ObjectId();
-
-      const res = await doRequest();
-
-      expect(res.status).toBe(404);
+      await Farm.deleteMany({});
     });
 
     it('should return 401 if user not authorized', async () => {
@@ -57,6 +41,21 @@ describe('/api/me', () => {
       expect(res.status).toBe(401);
     });
 
-    // it should return farms for user if user is valid
+    it('should return farms for user if user is valid', async () => {
+      let farm1 = new Farm({ name: 'Farm'});
+      let farm2 = new Farm({ name: 'Farm2'});
+      
+      farm1.users.push(user._id);
+      farm2.users.push(user._id);
+     
+      await Promise.all([farm1.save(), farm2.save()]);
+
+      const res = await doRequest();
+
+      expect(res.status).toBe(200);
+      expect(res.body.length).toBe(2);
+      expect(res.body.some(f => f.name === 'Farm')).toBeTruthy();
+      expect(res.body.some(f => f.name === 'Farm2')).toBeTruthy();
+    });
   });
 });
