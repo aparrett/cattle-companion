@@ -1,8 +1,7 @@
+import { AUTH_USER, AUTH_ERROR } from '../types/auth';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
-import { AUTH_USER,
-         AUTH_ERROR,
-         UNAUTH_USER } from '../types/auth';
+import { errorHandler } from './error';
 
 const cookie = new Cookies();
 
@@ -15,11 +14,7 @@ export function registerUser({ email, name, password }, callback) {
       callback();
     })
     .catch(({response}) => {
-      if (response.status === 400) {
-        errorHandler(dispatch, response, AUTH_ERROR);
-      } else {
-        errorHandler(dispatch, 'Unable to register at this time.', AUTH_ERROR);
-      }
+      errorHandler(dispatch, AUTH_ERROR, response.status, response.data);
     });
   }
 }
@@ -33,19 +28,8 @@ export function loginUser({ email, password }, callback) {
       callback();
     })
     .catch(({response}) => {
-      if (response.status === 400) {
-        errorHandler(dispatch, response, AUTH_ERROR);
-      } else {
-        errorHandler(dispatch, 'Unable to login at this time.', AUTH_ERROR);
-      }
+      errorHandler(dispatch, AUTH_ERROR, response.status, response.data);
     });
-  }
-}
-
-export function logoutUser() {  
-  return dispatch => {
-    dispatch({ type: UNAUTH_USER });
-    cookie.remove('token', { path: '/' });
   }
 }
 
@@ -60,8 +44,8 @@ export function fetchUser(callback) {
         payload: response.data.user,
       });
     })
-    .catch(error => {
-      errorHandler(dispatch, error.response, AUTH_ERROR);
+    .catch(({ response }) => {
+      errorHandler(dispatch, AUTH_ERROR, response.status, response.data);
       if (callback) {
         callback();
       }
@@ -69,27 +53,7 @@ export function fetchUser(callback) {
   }
 }
 
-export function errorHandler(dispatch, error, type) {  
-  let errorMessage = '';
-
-  if (error && error.data && error.data.error) {
-    errorMessage = error.data.error;
-  } else if (error && error.data) {
-    errorMessage = error.data;
-  } else {
-    errorMessage = error;
-  }
-
-  if (error && error.status === 401) {
-    dispatch({
-      type: type,
-      payload: 'You are not authorized to do this. Please login and try again.'
-    });
-    logoutUser();
-  } else {
-    dispatch({
-      type: type,
-      payload: errorMessage
-    });
-  }
+export function logoutUser() {  
+  cookie.remove('token', { path: '/' });
+  window.location.href = '/login';
 }
