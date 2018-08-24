@@ -28,8 +28,7 @@ describe('/api/farms', () => {
     });
 
     afterEach(async () => {
-      await Farm.deleteMany({});
-      await User.deleteMany({});
+      await Promise.all([Farm.deleteMany({}), User.deleteMany({})]);
     });
 
     it('should return 401 if client is not logged in', async () => {

@@ -29,8 +29,7 @@ describe('/api/me', () => {
     });
 
     afterEach(async () => {
-      await User.deleteMany({});
-      await Farm.deleteMany({});
+      await Promise.all([User.deleteMany({}), Farm.deleteMany({})]);
     });
 
     it('should return 401 if user not authorized', async () => {
