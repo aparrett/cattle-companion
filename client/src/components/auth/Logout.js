@@ -6,7 +6,7 @@ class Logout extends Component {
   render() {
     return (
       this.props.authenticated
-        ? <Link to="/login">Logout</Link>
+        ? <Link style={{ float: 'right' }} to="/login">Logout</Link>
         : <div />
     );
   }

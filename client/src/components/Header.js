@@ -2,6 +2,7 @@ import React from 'react';
 import Logout from './auth/Logout';
 import { connect } from 'react-redux';
 import { dismissError } from '../actions/error';
+import { Link } from 'react-router-dom';
 
 const Header = props => {
   function handleDismissClick() {
@@ -23,7 +24,7 @@ const Header = props => {
 
   return (
     <div>
-      Header
+      <Link to="/">Cattle Companion</Link>
       <Logout />
       { renderError() }
     </div>

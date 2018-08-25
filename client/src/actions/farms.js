@@ -1,4 +1,4 @@
-import { FETCH_FARMS, SAVE_FARM } from '../types/farms';
+import { FETCH_FARMS, SAVE_FARM, FETCH_FARM } from '../types/farms';
 import { ERROR } from '../types/error';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
@@ -16,6 +16,20 @@ export function saveFarm({ name }) {
     })
     .catch(({ response }) => {
       errorHandler(dispatch, ERROR, response.status, response.data);
+    });
+  }
+}
+
+export function fetchFarm(id) {
+  return dispatch => {
+    axios.get(`/api/farms/${id}`, {
+      headers: { 'x-auth-token': cookie.get('token') }
+    })
+    .then(res => {
+      dispatch({ type: FETCH_FARM, payload: res.data })
+    })
+    .catch(({ response }) => {
+      errorHandler(dispatch, ERROR, response.status);
     });
   }
 }

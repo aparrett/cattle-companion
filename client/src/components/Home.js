@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { fetchFarms } from '../actions/farms';
 import CreateFarm from './CreateFarm';
 
@@ -9,17 +10,21 @@ class Home extends Component {
   }
 
   renderFarms() {
-    return (
-      <ul>
-        { this.props.farms.map(farm => <li key={farm._id}>{farm.name}</li>) }
-      </ul>
-    );
+    return this.props.farms.map(farm => {
+      return (
+      <li key={farm._id}>
+        <Link to={`/farms/${farm._id}`}>{farm.name}</Link>
+      </li>
+      );
+    });
   }
 
   render() {
     return(
       <div>
-        { this.renderFarms() }
+        <ul>
+          { this.renderFarms() }
+        </ul>
         <CreateFarm />
       </div>
     );

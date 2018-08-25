@@ -132,7 +132,7 @@ describe('/api/farms', () => {
     it('should return 401 if farm does not belong to user', async () => {
       const user2Id = mongoose.Types.ObjectId(); 
 
-      farm = new Farm({ name: 'Test', users: [user2Id]});
+      farm = new Farm({ name: 'foo', users: [user2Id]});
       farm = await farm.save();
       farmId = farm._id;
 
@@ -220,6 +220,51 @@ describe('/api/farms', () => {
       expect(res.status).toBe(200);
       expect(res.body.name).toBe(name);
       expect(res.body.gender).toBe(CowGenders.Cow);
+    });
+  });
+
+  describe('GET /:id', () => {
+    it('should return 401 if not authorized', async () => {
+      const farmId = mongoose.Types.ObjectId();
+      const res = await request(server).get(`/api/farms/${farmId}`);
+
+      expect(res.status).toBe(401);
+    });
+
+    it('should return 404 if invalid id', async () => {
+      const token = new User().generateAuthToken();
+      const res = await request(server)
+        .get(`/api/farms/1`)
+        .set('x-auth-token', token);
+
+      expect(res.status).toBe(404);
+    });
+
+    it('should return 404 if farm not found', async () => {
+      const token = new User().generateAuthToken();
+      const farmId = mongoose.Types.ObjectId();
+      const res = await request(server)
+        .get(`/api/farms/${farmId}`)
+        .set('x-auth-token', token);
+
+      expect(res.status).toBe(404);
+    });
+
+    it('should return the farm with the given id', async () => {
+      let user = new User({ name: 'test', email: 'foo@bar.com', password: 'password' });
+      user = await user.save();
+
+      let token = user.generateAuthToken();
+
+      let farm = new Farm({ name: 'foo', users: [user._id]});
+      farm = await farm.save();
+      
+      const res = await request(server)
+        .get(`/api/farms/${farm._id}`)
+        .set('x-auth-token', token);
+
+      expect(res.status).toBe(200);
+      expect(res.body.name).toBe('foo');
     });
   });
 });

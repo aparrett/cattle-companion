@@ -17,9 +17,15 @@ router.post('/', auth, async (req, res) => {
   res.send(_.pick(farm, ['_id', 'name']));
 });
 
+router.get('/:id', auth, validateObjectId, async (req, res) => {
+  const farm = await Farm.findById(req.params.id);
+  if (!farm) return res.status(404).send('Farm not found.');
+
+  res.send(farm);
+});
+
 router.post('/:id/cattle', auth, validateObjectId, async (req, res) => {
   const farm = await Farm.findById(req.params.id).populate('User');
-  
   if (!farm) return res.status(404).send('Farm not found.');
 
   if (farm.users.indexOf(req.user._id) === -1){

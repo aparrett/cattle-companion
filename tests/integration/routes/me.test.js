@@ -27,8 +27,8 @@ describe('/api/me', () => {
       expect(res.status).toBe(404);
     });
 
-    it('should return user if user exists', async () => {
-      let user = new User({ name: 'test', email: 'test1@test.com', password: 'password' });
+    it('should return user with the given email', async () => {
+      let user = new User({ name: 'foo', email: 'foo@bar.com', password: 'password' });
       user = await user.save();
       token = user.generateAuthToken();
 
@@ -37,8 +37,8 @@ describe('/api/me', () => {
         .set('x-auth-token', token);
 
       expect(res.status).toBe(200);
-      expect(res.body.name).toBe('test');
-      expect(res.body.email).toBe('test1@test.com');
+      expect(res.body.name).toBe('foo');
+      expect(res.body.email).toBe('foo@bar.com');
 
       await User.deleteMany({});
     });
@@ -52,11 +52,11 @@ describe('/api/me', () => {
     });
 
     it('should return farms for user if user is valid', async () => {
-      let user = new User({ name: 'test', email: 'test1@test.com', password: 'password' });
+      let user = new User({ name: 'foo', email: 'foo@bar.com', password: 'password' });
       user = await user.save();
       token = user.generateAuthToken();
 
-      let farm1 = new Farm({ name: 'Farm'});
+      let farm1 = new Farm({ name: 'Farm1'});
       let farm2 = new Farm({ name: 'Farm2'});
       
       farm1.users.push(user._id);
@@ -70,7 +70,7 @@ describe('/api/me', () => {
 
       expect(res.status).toBe(200);
       expect(res.body.length).toBe(2);
-      expect(res.body.some(f => f.name === 'Farm')).toBeTruthy();
+      expect(res.body.some(f => f.name === 'Farm1')).toBeTruthy();
       expect(res.body.some(f => f.name === 'Farm2')).toBeTruthy();
       
       await Promise.all([User.deleteMany({}), Farm.deleteMany({})]);

@@ -1,4 +1,4 @@
-import { AUTH_USER, AUTH_ERROR } from '../types/auth';
+import { AUTH_USER, AUTH_ERROR, UNAUTH_USER } from '../types/auth';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import { errorHandler } from './error';
@@ -46,7 +46,9 @@ export function fetchUser(callback) {
     })
     .catch(({ response }) => {
       if (response.status === 401) {
-        return logoutUser();
+        dispatch({ type: UNAUTH_USER });
+        cookie.remove('token', { path: '/' });
+        window.location.href = '/login';
       }
 
       errorHandler(dispatch, AUTH_ERROR, response.status, response.data);
@@ -58,6 +60,9 @@ export function fetchUser(callback) {
 }
 
 export function logoutUser() {  
-  cookie.remove('token', { path: '/' });
-  window.location.href = '/login';
+  return dispatch => {
+    dispatch({ type: UNAUTH_USER });
+    cookie.remove('token', { path: '/' });
+    window.location.href = '/login';
+  }
 }
