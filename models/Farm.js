@@ -19,4 +19,4 @@ function validate(farm) {
 }
 
 exports.Farm = Farm;
-exports.validate = validate;
+exports.validateFarm = validate;

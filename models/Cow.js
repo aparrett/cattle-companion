@@ -1,15 +1,14 @@
-import mongoose from 'mongoose';
-import Joi from 'joi';
+const Joi = require('joi');
+const mongoose = require('mongoose');
 
 const CowGenders = Object.freeze({
   Cow: 'cow',
   Bull: 'bull'
 });
 
-const Cow = new mongoose.model('Cow', new mongoose.Schema({
+const Cow = mongoose.model('Cow', new mongoose.Schema({
   name: {
     type: String,
-    minlength: 2,
     maxlength: 100,
     required: true
   },
@@ -18,20 +17,28 @@ const Cow = new mongoose.model('Cow', new mongoose.Schema({
     enum: Object.values(CowGenders),
     required: true
   },
-  birthday: {
+  dateOfBirth: {
     type: Date,
+    required: true
+  },
+  parents: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Cow' }],
+  farmId: {
+    type: mongoose.Schema.Types.ObjectId, 
+    ref: 'Farm',
     required: true
   }
 }));
 
 function validate(cow) {
   return Joi.validate(cow, {
-    name: Joi.string().min(2).max(100).required(),
+    name: Joi.string().max(100).required(),
     gender: Joi.string().valid(Object.values(CowGenders)).required(),
-    birthday: Joi.date().required()
+    dateOfBirth: Joi.date().required(),
+    parents: Joi.array().max(2),
+    farmId: Joi.objectId().required()
   });
 }
 
 module.exports.Cow = Cow;
-module.exports.validate = validate;
+module.exports.validateCow = validate;
 module.exports.CowGenders = CowGenders;
