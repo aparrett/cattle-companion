@@ -18,10 +18,23 @@ class Farm extends Component {
     this.props.showCreateCow(this.props.match.params.id);
   }
 
+  renderCattle() {
+    return this.props.farm.cattle.map(cow => {
+      return(
+        <li key={cow._id}>
+          <p>Name: {cow.name}</p>
+          <p>Gender: {cow.gender}</p>
+          <p>Date of Birth: {cow.dateOfBirth}</p>
+        </li>
+      );
+    });
+  }
+
   renderFarm() {
     return(
       <div>
         <h1>{this.props.farm.name}</h1>
+        {this.props.farm.cattle && <ul>{this.renderCattle()}</ul>}
         <button className="btn btn-primary" onClick={this.handleNewCowClick}>New Cow</button>
       </div>
     );

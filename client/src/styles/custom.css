@@ -1,0 +1,4 @@
+/* Bootstrap Overrides */
+.modal {
+  display:block;
+}
