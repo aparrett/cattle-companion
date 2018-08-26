@@ -18,7 +18,7 @@ class CreateFarm extends Component {
         <h5>Create a New Farm</h5>
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
           <Field name="name" className="form-control" component={InputField} placeholder="Name" type="text" />
-          <button type="submit" className="btn btn-primary">Create</button>
+          <button type="submit" className="btn btn-primary">Save Farm</button>
         </form>
       </div>
     );

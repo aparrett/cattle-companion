@@ -1,17 +1,28 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchFarm } from '../actions/farms.js';
+import { fetchFarm } from '../actions/farms';
+import { showCreateCow } from '../actions/modals';
 
 class Farm extends Component {
+  constructor() {
+    super();
+
+    this.handleNewCowClick = this.handleNewCowClick.bind(this);
+  }
+
   componentDidMount() {
-    const { id } = this.props.match.params;
-    this.props.fetchFarm(id);
+    this.props.fetchFarm(this.props.match.params.id);
+  }
+
+  handleNewCowClick() {
+    this.props.showCreateCow(this.props.match.params.id);
   }
 
   renderFarm() {
     return(
       <div>
         <h1>{this.props.farm.name}</h1>
+        <button className="btn btn-primary" onClick={this.handleNewCowClick}>New Cow</button>
       </div>
     );
   }
@@ -25,4 +36,4 @@ function mapStateToProps({ farm }) {
   return { farm };
 }
 
-export default connect(mapStateToProps, { fetchFarm })(Farm);
+export default connect(mapStateToProps, { fetchFarm, showCreateCow })(Farm);

@@ -21,7 +21,7 @@ class Login extends Component {
 
     return (
       <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-        {error && <div className="error">{error}</div>}
+        {error && <div className="alert-danger">{error}</div>}
         <div className="row">
           <div className="col-md-12">
             <label>Email</label>

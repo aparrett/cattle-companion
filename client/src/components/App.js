@@ -4,6 +4,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom';
 import PrivateRoute from './PrivateRoute';
 
 import Header from './Header';
+import ModalRoot from './modals/ModalRoot';
 import Login from './auth/Login';
 import Register from './auth/Register';
 import Home from './Home';
@@ -15,6 +16,7 @@ class App extends Component {
       <BrowserRouter>
         <div>
           <Header />
+          <ModalRoot />
           <div className="container body-content">
             <Switch>
               <Route exact path="/login" component={Login} />

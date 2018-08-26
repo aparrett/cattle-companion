@@ -1,0 +1,1 @@
+export const SAVE_COW = 'save_cow';
