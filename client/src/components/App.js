@@ -10,6 +10,7 @@ import Login from './auth/Login';
 import Register from './auth/Register';
 import Home from './Home';
 import Farm from './Farm';
+import Page404 from './Page404';
 
 class App extends Component {
   render() {
@@ -24,6 +25,7 @@ class App extends Component {
               <Route exact path="/register" component={Register} />
               <PrivateRoute exact path="/" component={Home} />
               <PrivateRoute exact path="/farms/:id" component={Farm} />
+              <Route component={Page404} />
             </Switch>
           </div>
         </div>
