@@ -14,6 +14,10 @@ export function saveCow(farmId, { name, gender, dateOfBirth }) {
       headers: { 'x-auth-token': cookie.get('token') }
     })
     .then(res => dispatch({ type: SAVE_COW_SUCCESS, payload: res.data }))
-    .catch(({ response }) => errorHandler(dispatch, ERROR, response.status, response.data));
+    .catch(({ response }) => {
+      console.log(response)
+      errorHandler(dispatch, ERROR, response.status, response.data)
+
+    });
   }
 }

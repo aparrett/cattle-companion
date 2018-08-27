@@ -8,9 +8,9 @@ export default function farmReducer(state = {}, action) {
     case FETCH_FARM_SUCCESS:
       return { farm: action.payload, isLoading: false };
     case SAVE_COW_SUCCESS:
-      const farm = state.farm;
+      const farm = { ...state.farm };
       (farm.cattle = farm.cattle || []).push(action.payload);
-      return { ...state, farm };
+      return { ...state, farm, isLoading: false };
     default:
       return state;
   }
