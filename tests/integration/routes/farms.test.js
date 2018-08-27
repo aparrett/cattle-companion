@@ -224,6 +224,10 @@ describe('/api/farms', () => {
   });
 
   describe('GET /:id', () => {
+    afterEach(async () => {
+      await Promise.all([User.deleteMany({}), Farm.deleteMany({}), Cow.deleteMany({})]);
+    });
+
     it('should return 401 if not authorized', async () => {
       const farmId = mongoose.Types.ObjectId();
       const res = await request(server).get(`/api/farms/${farmId}`);
@@ -258,13 +262,39 @@ describe('/api/farms', () => {
 
       let farm = new Farm({ name: 'foo', users: [user._id]});
       farm = await farm.save();
-      
+
       const res = await request(server)
         .get(`/api/farms/${farm._id}`)
         .set('x-auth-token', token);
 
       expect(res.status).toBe(200);
       expect(res.body.name).toBe('foo');
+    });
+
+    it('farm should contain its cattle if they exist', async () => {
+      let user = new User({ name: 'test', email: 'foo@bar.com', password: 'password' });
+      user = await user.save();
+
+      let token = user.generateAuthToken();
+
+      let farm = new Farm({ name: 'foo', users: [user._id]});
+      farm = await farm.save();
+
+      let cow = new Cow({ 
+        name: 'cow', 
+        gender: CowGenders.Cow, 
+        dateOfBirth: '12/12/2012',
+        farmId: farm._id
+      });
+
+      cow = await cow.save();
+
+      const res = await request(server)
+        .get(`/api/farms/${farm._id}`)
+        .set('x-auth-token', token);
+
+      expect(res.body.cattle.length).toBe(1);
+      expect(res.body.cattle[0].name).toBe('cow');
     });
   });
 });

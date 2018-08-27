@@ -18,8 +18,13 @@ router.post('/', auth, async (req, res) => {
 });
 
 router.get('/:id', auth, validateObjectId, async (req, res) => {
-  const farm = await Farm.findById(req.params.id);
+  let farm = await Farm.findById(req.params.id);
   if (!farm) return res.status(404).send('Farm not found.');
+
+  farm = _.pick(farm, ['_id', 'name']);
+
+  const cattle = await Cow.find({ farmId: farm._id });
+  farm.cattle = cattle || [];
 
   res.send(farm);
 });
