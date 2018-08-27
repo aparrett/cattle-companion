@@ -7,9 +7,7 @@ export default function farmsReducer(state = { farms: [], isLoading: false }, ac
     case FETCH_FARMS_SUCCESS: 
       return { farms: action.payload, isLoading: false };
     case SAVE_FARM_SUCCESS:
-      const farms = [ ...state.farms];
-      farms.push(action.payload);
-      return { farms, isLoading: false };
+      return { farms: [ ...state.farms, action.payload], isLoading: false };
     default: 
       return state;
   }
