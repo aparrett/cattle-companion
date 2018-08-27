@@ -1,1 +1,1 @@
-export const SAVE_COW = 'save_cow';
+export const SAVE_COW_SUCCESS = 'save_cow';

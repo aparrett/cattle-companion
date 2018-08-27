@@ -2,11 +2,11 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchFarm } from '../actions/farms';
 import { showCreateCow } from '../actions/modals';
+import LoadingSpinner from './LoadingSpinner';
 
 class Farm extends Component {
   constructor() {
     super();
-
     this.handleNewCowClick = this.handleNewCowClick.bind(this);
   }
 
@@ -41,12 +41,12 @@ class Farm extends Component {
   }
 
   render() {
-    return this.props.farm ? this.renderFarm() : <div>Loading...</div>;
+    return !this.props.farm || this.props.isLoading ? <LoadingSpinner /> : this.renderFarm();
   }
 }
 
-function mapStateToProps({ farm }) {
-  return { farm };
+function mapStateToProps({ farmReducer: { farm, isLoading } }) {
+  return { farm, isLoading };
 }
 
 export default connect(mapStateToProps, { fetchFarm, showCreateCow })(Farm);

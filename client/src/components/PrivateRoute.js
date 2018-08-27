@@ -7,21 +7,20 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={
-      props => {
-        if (rest.auth){
+      props => {      
+        if (rest.authenticated){
           return <Component {...props} />;
         } else {
-          // If error in fetchUser, user will be redirected to login page.
           rest.fetchUser(() => window.location.href = '/login');
-          return <Component {...props} />;
+          return <div />;
         }
       }
     }
   />
-)
+);
 
-function mapStateToProps(state) {
-  return { auth: state.auth.authenticated };
+function mapStateToProps({ auth }) {
+  return { authenticated: auth.authenticated };
 }
 
 export default connect(mapStateToProps, { fetchUser })(PrivateRoute);

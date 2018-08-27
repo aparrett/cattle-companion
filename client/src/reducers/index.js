@@ -10,7 +10,7 @@ export default combineReducers({
   auth: authReducer,
   form: formReducer,
   error: errorReducer,
-  farm: farmReducer,
+  farmReducer,
   farms: farmsReducer,
   modal: modalReducer
 });

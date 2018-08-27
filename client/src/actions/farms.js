@@ -1,4 +1,4 @@
-import { FETCH_FARMS, SAVE_FARM, FETCH_FARM } from '../types/farms';
+import { FETCH_FARMS_SUCCESS, SAVE_FARM_SUCCESS, FETCH_FARM_SUCCESS, LOADING_FARM } from '../types/farms';
 import { ERROR } from '../types/error';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
@@ -11,26 +11,22 @@ export function saveFarm({ name }) {
     axios.post('/api/farms', { name }, {
       headers: { 'x-auth-token': cookie.get('token') }
     })
-    .then(res => {
-      dispatch({ type: SAVE_FARM, payload: res.data });
-    })
-    .catch(({ response }) => {
-      errorHandler(dispatch, ERROR, response.status, response.data);
-    });
+    .then(res => dispatch({ type: SAVE_FARM_SUCCESS, payload: res.data }))
+    .catch(({ response }) => errorHandler(dispatch, ERROR, response.status, response.data));
   }
 }
 
 export function fetchFarm(id) {
   return dispatch => {
+    dispatch({ type: LOADING_FARM });
+
     axios.get(`/api/farms/${id}`, {
       headers: { 'x-auth-token': cookie.get('token') }
     })
     .then(res => {
-      dispatch({ type: FETCH_FARM, payload: res.data })
+      dispatch({ type: FETCH_FARM_SUCCESS, payload: res.data })
     })
-    .catch(({ response }) => {
-      errorHandler(dispatch, ERROR, response.status);
-    });
+    .catch(({ response }) => errorHandler(dispatch, ERROR, response.status));
   }
 }
 
@@ -39,11 +35,7 @@ export function fetchFarms() {
     axios.get('/api/me/farms', {
       headers: { 'x-auth-token': cookie.get('token') }
     })
-    .then(res => {
-      dispatch({ type: FETCH_FARMS, payload: res.data })
-    })
-    .catch(({ response }) => {
-      errorHandler(dispatch, ERROR, response.status);
-    });
+    .then(res => dispatch({ type: FETCH_FARMS_SUCCESS, payload: res.data }))
+    .catch(({ response }) => errorHandler(dispatch, ERROR, response.status));
   }
 }

@@ -13,9 +13,7 @@ export function registerUser({ email, name, password }, callback) {
       dispatch({ type: AUTH_USER, payload: res.data.user });
       callback();
     })
-    .catch(({response}) => {
-      errorHandler(dispatch, AUTH_ERROR, response.status, response.data);
-    });
+    .catch(({response}) => errorHandler(dispatch, AUTH_ERROR, response.status, response.data));
   }
 }
 
@@ -27,9 +25,7 @@ export function loginUser({ email, password }, callback) {
       dispatch({ type: AUTH_USER, payload: res.data.user });
       callback();
     })
-    .catch(({response}) => {
-      errorHandler(dispatch, AUTH_ERROR, response.status, response.data);
-    });
+    .catch(({response}) => errorHandler(dispatch, AUTH_ERROR, response.status, response.data));
   }
 }
 
@@ -38,12 +34,10 @@ export function fetchUser(callback) {
     axios.get('/api/me', {
       headers: { 'x-auth-token': cookie.get('token') }
     })
-    .then(response => {
-      dispatch({
-        type: AUTH_USER, 
-        payload: response.data.user,
-      });
-    })
+    .then(response => dispatch({
+      type: AUTH_USER, 
+      payload: response.data.user,
+    }))
     .catch(({ response }) => {
       if (response.status === 401) {
         dispatch({ type: UNAUTH_USER });

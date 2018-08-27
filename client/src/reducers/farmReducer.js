@@ -1,14 +1,16 @@
-import { FETCH_FARM } from '../types/farms';
-import { SAVE_COW } from '../types/cattle';
+import { FETCH_FARM_SUCCESS, LOADING_FARM } from '../types/farms';
+import { SAVE_COW_SUCCESS } from '../types/cattle';
 
 export default function farmReducer(state = {}, action) {
   switch (action.type) {
-    case FETCH_FARM:
-      return { ...action.payload };
-    case SAVE_COW:
-      const farm = { ...state };
+    case LOADING_FARM: 
+      return { ...state, isLoading: true };
+    case FETCH_FARM_SUCCESS:
+      return { farm: action.payload, isLoading: false };
+    case SAVE_COW_SUCCESS:
+      const farm = state.farm;
       (farm.cattle = farm.cattle || []).push(action.payload);
-      return farm;
+      return { ...state, farm };
     default:
       return state;
   }

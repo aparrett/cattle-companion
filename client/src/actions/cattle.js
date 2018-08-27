@@ -1,4 +1,4 @@
-import { SAVE_COW } from '../types/cattle';
+import { SAVE_COW_SUCCESS } from '../types/cattle';
 import { ERROR } from '../types/error';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
@@ -13,9 +13,7 @@ export function saveCow(farmId, { name, gender, dateOfBirth }) {
     }, {
       headers: { 'x-auth-token': cookie.get('token') }
     })
-    .then(res => dispatch({ type: SAVE_COW, payload: res.data }))
-    .catch(({ response }) => {
-      errorHandler(dispatch, ERROR, response.status, response.data);
-    });
+    .then(res => dispatch({ type: SAVE_COW_SUCCESS, payload: res.data }))
+    .catch(({ response }) => errorHandler(dispatch, ERROR, response.status, response.data));
   }
 }
