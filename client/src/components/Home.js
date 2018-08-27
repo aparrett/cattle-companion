@@ -20,19 +20,21 @@ class Home extends Component {
   }
 
   render() {
-    return(
-      <div>
-        <ul>
-          { this.renderFarms() }
-        </ul>
-        <CreateFarm />
-      </div>
+    return (
+      this.props.isLoading 
+        ? null
+        : <div>
+            <ul>
+              { this.renderFarms() }
+            </ul>
+            <CreateFarm />
+          </div>
     );
   }
 }
 
-function mapStateToProps({ farms }) {
-  return { farms };
+function mapStateToProps({ farmsReducer: { farms, isLoading } }) {
+  return { farms, isLoading };
 }
 
 export default connect(mapStateToProps, { fetchFarms })(Home);

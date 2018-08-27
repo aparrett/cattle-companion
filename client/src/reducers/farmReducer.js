@@ -1,9 +1,9 @@
-import { FETCH_FARM_SUCCESS, LOADING_FARM } from '../types/farms';
+import { FETCH_FARM_SUCCESS, FETCH_FARM_PENDING } from '../types/farms';
 import { SAVE_COW_SUCCESS } from '../types/cattle';
 
 export default function farmReducer(state = {}, action) {
   switch (action.type) {
-    case LOADING_FARM: 
+    case FETCH_FARM_PENDING: 
       return { ...state, isLoading: true };
     case FETCH_FARM_SUCCESS:
       return { farm: action.payload, isLoading: false };

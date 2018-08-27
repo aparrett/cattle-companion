@@ -11,6 +11,6 @@ export default combineReducers({
   form: formReducer,
   error: errorReducer,
   farmReducer,
-  farms: farmsReducer,
+  farmsReducer,
   modal: modalReducer
 });

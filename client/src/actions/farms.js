@@ -1,4 +1,9 @@
-import { FETCH_FARMS_SUCCESS, SAVE_FARM_SUCCESS, FETCH_FARM_SUCCESS, LOADING_FARM } from '../types/farms';
+import { FETCH_FARMS_SUCCESS, 
+         SAVE_FARM_SUCCESS, 
+         FETCH_FARM_SUCCESS, 
+         FETCH_FARM_PENDING,
+         FETCH_FARMS_PENDING } from '../types/farms';
+
 import { ERROR } from '../types/error';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
@@ -18,7 +23,7 @@ export function saveFarm({ name }) {
 
 export function fetchFarm(id) {
   return dispatch => {
-    dispatch({ type: LOADING_FARM });
+    dispatch({ type: FETCH_FARM_PENDING });
 
     axios.get(`/api/farms/${id}`, {
       headers: { 'x-auth-token': cookie.get('token') }
@@ -31,7 +36,10 @@ export function fetchFarm(id) {
 }
 
 export function fetchFarms() {
+  
   return dispatch => {
+    dispatch({ type: FETCH_FARMS_PENDING });
+
     axios.get('/api/me/farms', {
       headers: { 'x-auth-token': cookie.get('token') }
     })

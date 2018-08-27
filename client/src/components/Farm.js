@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchFarm } from '../actions/farms';
 import { showCreateCow } from '../actions/modals';
-import LoadingSpinner from './LoadingSpinner';
 
 class Farm extends Component {
   constructor() {
@@ -41,7 +40,7 @@ class Farm extends Component {
   }
 
   render() {
-    return !this.props.farm || this.props.isLoading ? <LoadingSpinner /> : this.renderFarm();
+    return !this.props.farm || this.props.isLoading ? null : this.renderFarm();
   }
 }
 
