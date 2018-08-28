@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 let server;
 
 describe('/api/farms', () => {
-  beforeEach(async () => server = require('../../../index'));
+  beforeEach(() => server = require('../../../index'));
 
   afterEach(async () => {
     await server.close();
