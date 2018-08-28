@@ -26,16 +26,34 @@ const Cow = mongoose.model('Cow', new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'Farm',
     required: true
-  }
+  },
+  incidents: [{ 
+    type: new mongoose.Schema({
+      name: {
+        type: String,
+        required: true,
+        maxlength: 255
+      },
+      date: {
+        type: Date
+      }
+    }) 
+  }]
 }));
 
 function validate(cow) {
+  const incident = Joi.object().keys({
+    name: Joi.string().max(255).required(),
+    date: Joi.date()
+  });
+  
   return Joi.validate(cow, {
     name: Joi.string().max(100).required(),
     gender: Joi.string().valid(Object.values(CowGenders)).required(),
     dateOfBirth: Joi.date().required(),
     parents: Joi.array().max(2),
-    farmId: Joi.objectId().required()
+    farmId: Joi.objectId().required(),
+    incidents: Joi.array().items(incident)
   });
 }
 
