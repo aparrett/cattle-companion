@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchFarm } from '../actions/farms';
 import { showCreateCow } from '../actions/modals';
+import { Link } from 'react-router-dom';
 
 class Farm extends Component {
   constructor() {
@@ -18,10 +19,12 @@ class Farm extends Component {
   }
 
   renderCattle() {
+    const farmId = this.props.match.params.id;
+
     return this.props.farm.cattle.map(cow => {
       return(
         <li key={cow._id}>
-          <p>Name: {cow.name}</p>
+          <p><Link to={`/farms/${farmId}/${cow._id}`}>Name: {cow.name}</Link></p>
           <p>Gender: {cow.gender}</p>
           <p>Date of Birth: {cow.dateOfBirth}</p>
         </li>

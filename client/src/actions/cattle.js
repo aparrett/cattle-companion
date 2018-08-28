@@ -1,4 +1,4 @@
-import { SAVE_COW_SUCCESS } from '../types/cattle';
+import { SAVE_COW_SUCCESS, FETCH_COW_PENDING, FETCH_COW_SUCCESS } from '../types/cattle';
 import { ERROR } from '../types/error';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
@@ -14,6 +14,18 @@ export function saveCow(farmId, { name, gender, dateOfBirth }) {
       headers: { 'x-auth-token': cookie.get('token') }
     })
     .then(res => dispatch({ type: SAVE_COW_SUCCESS, payload: res.data }))
+    .catch(({ response }) => errorHandler(dispatch, ERROR, response.status, response.data));
+  }
+}
+
+export function fetchCow(id) {
+  return dispatch => {
+    dispatch({ type: FETCH_COW_PENDING });
+
+    axios.get(`/api/cattle/${id}`, {
+      headers: { 'x-auth-token': cookie.get('token') }
+    })
+    .then(res => dispatch({ type: FETCH_COW_SUCCESS, payload: res.data }))
     .catch(({ response }) => errorHandler(dispatch, ERROR, response.status, response.data));
   }
 }
