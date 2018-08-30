@@ -8,10 +8,7 @@ let server;
 
 describe('/api/farms', () => {
   beforeEach(() => server = require('../../../index'));
-
-  afterEach(async () => {
-    await server.close();
-  });
+  afterEach(async () => await server.close());
 
   describe('POST /', () => {
     let name;
@@ -29,39 +26,29 @@ describe('/api/farms', () => {
       name = 'Farm1';
     });
 
-    afterEach(async () => {
-      await Promise.all([Farm.deleteMany({}), User.deleteMany({})]);
-    });
+    afterEach(async () => await Promise.all([Farm.deleteMany({}), User.deleteMany({})]));
 
     it('should return 401 if client is not logged in', async () => {
       token = '';
-
       const res = await doRequest();
-
       expect(res.status).toBe(401);
     });
 
     it('should return 400 if name is not given', async () => {
       name = '';
-      
       const res = await doRequest();
-
       expect(res.status).toBe(400);
     });
 
     it('should return 400 if name is greater than 100 characters', async () => {
       name = new Array(102).join('a');
-
       const res = await doRequest();
-
       expect(res.status).toBe(400);
     });
 
     it('should save the farm', async () => {
       const res = await doRequest();
-
       const farm = await Farm.find({ _id: res.body._id });
-
       expect(farm).not.toBeNull();
     });
 
@@ -84,7 +71,6 @@ describe('/api/farms', () => {
 
     it('should return the farm', async () => {
       const res = await doRequest();
-
       expect(res.body.name).toBe(name);
     });
   });
@@ -123,9 +109,7 @@ describe('/api/farms', () => {
 
     it('should return 401 if user not logged in', async () => {
       token = '';
-
       const res = await doRequest();
-
       expect(res.status).toBe(401);
     });
 
@@ -143,66 +127,50 @@ describe('/api/farms', () => {
 
     it('should return 404 if id is invalid', async () => {
       farmId = 1;
-
       const res = await doRequest();
-
       expect(res.status).toBe(404);
     });
 
     it('should return 404 if farm doesnt exist', async () => {
       farmId = mongoose.Types.ObjectId();
-
       const res = await doRequest();
-
       expect(res.status).toBe(404);
     });
 
     describe('validate Cow', () => {
       it('should return 400 if name is not given', async () => {
         name = '';
-        
         const res = await doRequest();
-
         expect(res.status).toBe(400);
       });
 
       it('should return 400 if name is greater than 100 characters', async  () => {
         name = new Array(102).join('a');
-
         const res = await doRequest();
-
         expect(res.status).toBe(400);
       });
 
       it('should return 400 if gender is not given', async () => {
         gender = '';
-
         const res = await doRequest();
-
         expect(res.status).toBe(400);
       });
 
       it('should return 400 if invalid gender', async () => {
         gender = 'foo';
-
         const res = await doRequest();
-
         expect(res.status).toBe(400);
       });
 
       it('should return 400 if dateOfBirth is not given', async () => {
         dateOfBirth = '';
-
         const res = await doRequest();
-
         expect(res.status).toBe(400);
       });
 
       it('should return 400 if dateOfBirth is not a date', async () => {
         dateOfBirth = 'foo';
-        
         const res = await doRequest();
-
         expect(res.status).toBe(400);
       });
     });

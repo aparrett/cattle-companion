@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import CreateCowModal from './CreateCowModal';
+import AddIncidentModal from './AddIncidentModal';
 
 const MODAL_COMPONENTS = {
-  'CREATE_COW': CreateCowModal
+  'CREATE_COW': CreateCowModal,
+  'ADD_INCIDENT': AddIncidentModal
 }
 
 const ModalRoot = ({ modalType, modalProps }) => {

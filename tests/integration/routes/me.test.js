@@ -6,15 +6,11 @@ let server;
 
 describe('/api/me', () => {
   beforeEach(() => server = require('../../../index'));
-  
-  afterEach(async () => {
-    await server.close();
-  });
+  afterEach(async () => await server.close());
 
   describe('GET /', () => {
     it('should return 401 if not authorized', async () => {
       const res = await request(server).get('/api/me');
-
       expect(res.status).toBe(401);
     });
 
@@ -47,7 +43,6 @@ describe('/api/me', () => {
   describe('GET /farms', () => {
     it('should return 401 if user not authorized', async () => {
       const res = await request(server).get('/api/me/farms');
-
       expect(res.status).toBe(401);
     });
 

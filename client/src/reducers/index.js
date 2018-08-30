@@ -6,6 +6,7 @@ import farmsReducer from './farmsReducer';
 import errorReducer from './errorReducer';
 import modalReducer from './modalReducer';
 import cowReducer from './cowReducer';
+import incidentsReducer from './incidentsReducer';
 
 export default combineReducers({
   auth: authReducer,
@@ -14,5 +15,6 @@ export default combineReducers({
   modal: modalReducer,
   farmReducer,
   farmsReducer,
-  cowReducer
+  cowReducer,
+  incidents: incidentsReducer
 });

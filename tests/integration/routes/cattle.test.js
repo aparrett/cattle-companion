@@ -10,9 +10,7 @@ let server;
 describe('/api/cattle', () => {
   beforeEach(() => server = require('../../../index.js'));
 
-  afterEach(async () => {
-    await server.close();
-  });
+  afterEach(async () => await server.close());
 
   describe('GET /:id', () => {
     let token;
@@ -133,10 +131,11 @@ describe('/api/cattle', () => {
       expect(res.status).toBe(404);
     });
 
-    it('should return updated cow', async () => {
+    it('should return updated cow with incidents', async () => {
       const res = await doRequest();
       
       expect(res.status).toBe(200);
+      expect(res.body.name).toBe('cow');
       expect(res.body.incidents[0].name).toBe(cowUpdate.incidents[0].name);
       expect(res.body.incidents[1].name).toBe(cowUpdate.incidents[1].name);
     });

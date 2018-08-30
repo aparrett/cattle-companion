@@ -5,6 +5,7 @@ const auth = require('../routes/auth');
 const farms = require('../routes/farms');
 const me = require('../routes/me');
 const cattle = require('../routes/cattle');
+const incidents = require('../routes/incidents');
 
 module.exports = function(app) {
   app.use(express.json());
@@ -14,6 +15,7 @@ module.exports = function(app) {
   app.use('/api/me', me);
   app.use('/api/farms', farms);
   app.use('/api/cattle', cattle);
+  app.use('/api/incidents', incidents);
 
   if (process.env.NODE_ENV === 'production') {
     // Use express to serve up production assets like main.js and main.css.

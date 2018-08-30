@@ -6,10 +6,7 @@ let server;
 
 describe('/api/auth', () => {
   beforeEach(() => server = require('../../../index'));
-
-  afterEach(async () => {
-    await server.close();
-  });
+  afterEach(async () => await server.close());
 
   describe('POST /', () => {
     const name = 'tester';
