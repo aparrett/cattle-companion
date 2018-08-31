@@ -3,6 +3,7 @@ import React from 'react';
 const InputField = props => {
   return (
     <div>
+      <label htmlFor={props.name}>{props.label}</label>
       <input className="form-control" {...props.input} placeholder={props.placeholder} type={props.type} pattern={props.pattern} />
       {props.meta.touched 
         && props.meta.error 

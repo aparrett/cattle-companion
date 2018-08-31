@@ -26,14 +26,14 @@ class CreateCowModal extends Component {
               </button>
             </div>
             <div className="modal-body">
-                <Field name="name" type="text" className="form-control" component={InputField} placeholder="Name" />
+                <Field name="name" type="text" label="Name" className="form-control" component={InputField} />
                 <label>
                   <Field name="gender" type="radio" className="form-control" component={InputField} value={CowGenders.Cow} />Cow
                 </label>
                 <label>
                   <Field name="gender" type="radio" ignoreError="true" className="form-control" component={InputField} value={CowGenders.Bull} />Bull
                 </label>
-                <Field name="dateOfBirth" type="date" className="form-control" component={InputField} pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+                <Field name="dateOfBirth" label="Date of Birth" type="date" className="form-control" component={InputField} pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
                 />
             </div>
             <div className="modal-footer">

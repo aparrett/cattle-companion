@@ -97,8 +97,8 @@ describe('/api/cattle', () => {
 
       cowUpdate = { 
         incidents: [          
-          { name: incident1.name, date: new Date() }, 
-          { name: incident2.name, date: new Date() }
+          { name: incident1.name, random: 'random', date: new Date() }, 
+          { name: incident2.name, random: 'random', date: new Date() }
         ] 
       };
     });
