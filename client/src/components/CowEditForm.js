@@ -13,8 +13,8 @@ class CowEditForm extends Component {
   }
 
   handleFormSubmit(formProps) {
-    const { match, editCow, history} = this.props;
-    const cow = { ...formProps, farmId: match.params.farmId };
+    const { match: { params: { id, farmId } }, editCow, history} = this.props;
+    const cow = { ...formProps, _id: id, farmId: farmId };
     editCow(cow, history);
   }
   

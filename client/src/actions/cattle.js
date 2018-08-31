@@ -33,10 +33,10 @@ export function saveCow({ name, gender, dateOfBirth, farmId }, history) {
   }
 }
 
-export function editCow({ name, gender, dateOfBirth, farmId }, history) {
+export function editCow({ _id, name, gender, dateOfBirth, farmId }, history) {
   return dispatch => {
-    axios.put(`/api/farms/${farmId}/cattle`, {
-      name, gender, dateOfBirth
+    axios.put(`/api/cattle/${_id}`, {
+      name, gender, dateOfBirth, farmId
     }, {
       headers: { 'x-auth-token': cookie.get('token') }
     })

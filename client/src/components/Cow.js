@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import { fetchCow } from '../actions/cattle';
 import { fetchIncidents } from '../actions/incidents';
 import { showAddIncident } from '../actions/modals';
@@ -22,14 +23,15 @@ class Cow extends Component {
   }
 
   render() {
+    const { isLoading, cow } = this.props;
     return (
       <div>
-        { this.props.isLoading 
+        { isLoading 
           ? null 
           : <div>
-              <h1>{this.props.cow.name}</h1> 
+              <h1>{cow.name} <Link to={`/farms/${cow.farmId}/cattle/${cow._id}/edit`}>Edit</Link></h1> 
               <ul>
-                {this.props.cow.incidents && this.renderIncidents()}
+                {cow.incidents && this.renderIncidents()}
               </ul>
               <button onClick={this.handleAddIncidentClick.bind(this)}>Add Incident</button>
             </div>
