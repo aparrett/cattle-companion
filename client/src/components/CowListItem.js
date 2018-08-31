@@ -6,7 +6,7 @@ import { connect } from 'react-redux';
 
 const CowListItem = ({ cow, deleteCow, showConfirmation }) => (
   <li key={cow._id}>
-    <p><Link to={`/farms/${cow.farmId}/${cow._id}`}>Name: {cow.name}</Link></p>
+    <p><Link to={`/farms/${cow.farmId}/cattle/${cow._id}`}>Name: {cow.name}</Link></p>
     <p>Gender: {cow.gender}</p>
     <p>Date of Birth: {cow.dateOfBirth}</p>
     <button className="btn-danger" 

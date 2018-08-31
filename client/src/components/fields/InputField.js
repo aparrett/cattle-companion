@@ -1,16 +1,14 @@
 import React from 'react';
 
-const InputField = props => {
-  return (
-    <div>
-      <label htmlFor={props.name}>{props.label}</label>
-      <input className="form-control" {...props.input} placeholder={props.placeholder} type={props.type} pattern={props.pattern} />
-      {props.meta.touched 
-        && props.meta.error 
-        && !props.ignoreError
-        && <div className="alert-danger">{props.meta.error}</div>}
-    </div>
-  );
-}
+const InputField = props => (
+  <div>
+    {props.label && <label htmlFor={props.name}>{props.label}</label>}
+    <input className="form-control" {...props.input} placeholder={props.placeholder} type={props.type} pattern={props.pattern} />
+    {props.meta.touched 
+      && props.meta.error 
+      && !props.ignoreError
+      && <div className="alert-danger">{props.meta.error}</div>}
+  </div>
+);
 
 export default InputField;

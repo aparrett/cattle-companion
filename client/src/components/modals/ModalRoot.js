@@ -1,11 +1,9 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import CreateCowModal from './CreateCowModal';
 import AddIncidentModal from './AddIncidentModal';
 import ConfirmationModal from './ConfirmationModal';
 
 const MODAL_COMPONENTS = {
-  'CREATE_COW': CreateCowModal,
   'ADD_INCIDENT': AddIncidentModal,
   'CONFIRMATION': ConfirmationModal
 };

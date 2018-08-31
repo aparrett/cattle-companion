@@ -1,33 +1,25 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { fetchFarm } from '../actions/farms';
-import { showCreateCow } from '../actions/modals';
 import CowListItem from './CowListItem';
+import { Link } from 'react-router-dom';
 
 class Farm extends Component {
-  constructor() {
-    super();
-    this.handleNewCowClick = this.handleNewCowClick.bind(this);
-  }
-
   componentDidMount() {
     this.props.fetchFarm(this.props.match.params.id);
   }
 
-  handleNewCowClick() {
-    this.props.showCreateCow(this.props.match.params.id);
-  }
-
   renderCattle() {
-    return this.props.farm.cattle.map(cow => <CowListItem cow={cow} />);
+    return this.props.farm.cattle.map(cow => <CowListItem key={cow._id} cow={cow} />);
   }
 
   renderFarm() {
+    const { farm } = this.props;
     return(
       <div>
-        <h1>{this.props.farm.name}</h1>
-        {this.props.farm.cattle && <ul>{this.renderCattle()}</ul>}
-        <button className="btn btn-primary" onClick={this.handleNewCowClick}>New Cow</button>
+        <h1>{farm.name}</h1>
+        {farm.cattle && <ul>{this.renderCattle()}</ul>}
+        <Link to={`/farms/${farm._id}/cattle/new`}>New Cow</Link>
       </div>
     );
   }
@@ -41,4 +33,4 @@ function mapStateToProps({ farmReducer: { farm, isLoading } }) {
   return { farm, isLoading };
 }
 
-export default connect(mapStateToProps, { fetchFarm, showCreateCow })(Farm);
+export default connect(mapStateToProps, { fetchFarm })(Farm);

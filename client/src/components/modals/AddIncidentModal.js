@@ -4,34 +4,13 @@ import { Field, reduxForm } from 'redux-form';
 import { addIncident } from '../../actions/cattle';
 import { hideModal } from '../../actions/modals';
 import InputField from '../fields/InputField';
+import IncidentSelect from '../fields/IncidentSelect';
 
 class AddIncidentModal extends Component {
   handleFormSubmit(formProps) {
     this.props.addIncident(this.props.cow, formProps);
     this.props.reset();
     this.props.hideModal();
-  }
-
-  renderIncidentsSelect(field) {
-    const renderIncidentOptions = incidents => incidents
-      .sort((a, b) => {
-        if (a.name < b.name) return -1;
-        if (a.name > b.name) return 1;
-        return 0;
-      })
-      .map((incident, i) => (
-        <option key={i} value={incident.name}>{incident.name}</option>
-      ));
-
-    return (
-      <div className="form-group">
-        <label>{field.label}</label>
-        <select className="form-control" {...field.input}>
-          <option value="">Select...</option>
-          {renderIncidentOptions(field.incidents)}
-        </select>
-      </div>
-    )
   }
 
   render() {
@@ -55,7 +34,7 @@ class AddIncidentModal extends Component {
                 label="Incident"
                 className="form-control" 
                 incidents={this.props.incidents}
-                component={this.renderIncidentsSelect} 
+                component={IncidentSelect} 
                 placeholder="Name" 
               />
               <Field 

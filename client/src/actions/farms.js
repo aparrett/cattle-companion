@@ -36,7 +36,6 @@ export function fetchFarm(id) {
 }
 
 export function fetchFarms() {
-  
   return dispatch => {
     dispatch({ type: FETCH_FARMS_PENDING });
 
