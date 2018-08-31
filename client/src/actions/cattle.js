@@ -9,18 +9,6 @@ import { errorHandler } from './error';
 
 const cookie = new Cookies();
 
-export function saveCow({ name, gender, dateOfBirth, farmId }, history) {
-  return dispatch => {
-    axios.post(`/api/farms/${farmId}/cattle`, {
-      name, gender, dateOfBirth
-    }, {
-      headers: { 'x-auth-token': cookie.get('token') }
-    })
-    .then(res => history.push(`/farms/${farmId}/cattle/${res.data._id}`))
-    .catch(({ response }) => errorHandler(dispatch, ERROR, response.status, response.data));
-  }
-}
-
 export function fetchCow(id) {
   return dispatch => {
     dispatch({ type: FETCH_COW_PENDING });
@@ -29,6 +17,31 @@ export function fetchCow(id) {
       headers: { 'x-auth-token': cookie.get('token') }
     })
     .then(res => dispatch({ type: FETCH_COW_SUCCESS, payload: res.data }))
+    .catch(({ response }) => errorHandler(dispatch, ERROR, response.status, response.data));
+  }
+}
+
+export function saveCow({ name, gender, dateOfBirth, farmId }, history) {
+  console.log('cow', { name, gender, dateOfBirth, farmId })
+  // return dispatch => {
+  //   axios.post(`/api/farms/${farmId}/cattle`, {
+  //     name, gender, dateOfBirth
+  //   }, {
+  //     headers: { 'x-auth-token': cookie.get('token') }
+  //   })
+  //   .then(res => history.push(`/farms/${farmId}/cattle/${res.data._id}`))
+  //   .catch(({ response }) => errorHandler(dispatch, ERROR, response.status, response.data));
+  // }
+}
+
+export function editCow({ name, gender, dateOfBirth, farmId }, history) {
+  return dispatch => {
+    axios.put(`/api/farms/${farmId}/cattle`, {
+      name, gender, dateOfBirth
+    }, {
+      headers: { 'x-auth-token': cookie.get('token') }
+    })
+    .then(res => history.push(`/farms/${farmId}/cattle/${res.data._id}`))
     .catch(({ response }) => errorHandler(dispatch, ERROR, response.status, response.data));
   }
 }

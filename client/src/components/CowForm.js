@@ -6,7 +6,7 @@ import InputField from './fields/InputField';
 import { CowGenders } from '../enums';
 
 class CowForm extends Component {
-  async handleFormSubmit(formProps) {
+  handleFormSubmit(formProps) {
     const cow = { ...formProps, farmId: this.props.farmId };
     this.props.action(cow, this.props.history);
   }
