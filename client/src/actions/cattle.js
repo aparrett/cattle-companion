@@ -22,16 +22,15 @@ export function fetchCow(id) {
 }
 
 export function saveCow({ name, gender, dateOfBirth, farmId }, history) {
-  console.log('cow', { name, gender, dateOfBirth, farmId })
-  // return dispatch => {
-  //   axios.post(`/api/farms/${farmId}/cattle`, {
-  //     name, gender, dateOfBirth
-  //   }, {
-  //     headers: { 'x-auth-token': cookie.get('token') }
-  //   })
-  //   .then(res => history.push(`/farms/${farmId}/cattle/${res.data._id}`))
-  //   .catch(({ response }) => errorHandler(dispatch, ERROR, response.status, response.data));
-  // }
+  return dispatch => {
+    axios.post(`/api/farms/${farmId}/cattle`, {
+      name, gender, dateOfBirth
+    }, {
+      headers: { 'x-auth-token': cookie.get('token') }
+    })
+    .then(res => history.push(`/farms/${farmId}/cattle/${res.data._id}`))
+    .catch(({ response }) => errorHandler(dispatch, ERROR, response.status, response.data));
+  }
 }
 
 export function editCow({ name, gender, dateOfBirth, farmId }, history) {

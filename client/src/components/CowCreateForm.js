@@ -4,18 +4,13 @@ import { Field, reduxForm } from 'redux-form';
 import { withRouter } from 'react-router';
 import InputField from './fields/InputField';
 import { CowGenders } from '../enums';
-import { fetchCow, editCow } from '../actions/cattle';
-import moment from 'moment';
+import { saveCow } from '../actions/cattle';
 
-class CowEditForm extends Component {
-  componentDidMount() {
-    this.props.fetchCow(this.props.match.params.id);
-  }
-
+class CowCreateForm extends Component {
   handleFormSubmit(formProps) {
-    const { match, editCow, history} = this.props;
+    const { match, saveCow, history} = this.props;
     const cow = { ...formProps, farmId: match.params.farmId };
-    editCow(cow, history);
+    saveCow(cow, history);
   }
   
   render() {
@@ -33,7 +28,7 @@ class CowEditForm extends Component {
             <Field name="gender" type="radio" ignoreError="true" className="form-control" component={InputField} value={CowGenders.Bull} />Bull
           </label>
           <Field name="dateOfBirth" label="Date of Birth" type="date" className="form-control" component={InputField} pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" />
-          <button type="submit" className="btn btn-primary">Save</button>
+          <button type="submit" className="btn btn-primary">Save Cow</button>
         </form>
       </div>
     );
@@ -62,15 +57,9 @@ function validate(values) {
   return errors;
 }
 
-CowEditForm = reduxForm({
-  form: 'cowEditForm',
-  validate,
-  enableReinitialize: true
-})(CowEditForm);
+CowCreateForm = reduxForm({
+  form: 'cowCreateForm',
+  validate
+})(CowCreateForm);
 
-function mapStateToProps({ cowReducer: { cow } }) {
-  cow.dateOfBirth = moment(cow.dateOfBirth).format('YYYY-MM-DD');
-  return { initialValues: cow }
-}
-
-export default withRouter(connect(mapStateToProps, { fetchCow, editCow })(CowEditForm));
+export default withRouter(connect(null, { saveCow })(CowCreateForm));

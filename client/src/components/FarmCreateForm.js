@@ -4,7 +4,7 @@ import { saveFarm } from '../actions/farms';
 import { Field, reduxForm } from 'redux-form';
 import InputField from './fields/InputField';
 
-class CreateFarm extends Component {
+class FarmCreateForm extends Component {
   handleFormSubmit(formProps) {
     this.props.saveFarm(formProps);
     this.props.reset();
@@ -39,9 +39,9 @@ function validate(values) {
   return errors;
 }
 
-CreateFarm = connect(null, { saveFarm })(CreateFarm);  
+FarmCreateForm = connect(null, { saveFarm })(FarmCreateForm);  
 
 export default reduxForm({
-  form: 'createFarm',
+  form: 'farmCreateForm',
   validate
-})(CreateFarm);
+})(FarmCreateForm);

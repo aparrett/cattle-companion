@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { fetchFarms } from '../actions/farms';
-import CreateFarm from './CreateFarm';
+import FarmCreateForm from './FarmCreateForm';
 
 class Home extends Component {
   componentDidMount() {
@@ -27,7 +27,7 @@ class Home extends Component {
             <ul>
               { this.renderFarms() }
             </ul>
-            <CreateFarm />
+            <FarmCreateForm />
           </div>
     );
   }
