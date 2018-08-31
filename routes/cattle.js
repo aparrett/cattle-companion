@@ -18,13 +18,26 @@ router.patch('/:id', auth, validateObjectId, async (req, res) => {
   let cow = await Cow.findById(id);
   if (!cow) return res.status(404).send('Cow not found.');
 
-  let farm = await Farm.findById(cow.farmId).populate('User');
+  const farm = await Farm.findById(cow.farmId).populate('User');
   if (farm.users.indexOf(req.user._id) === -1){
     return res.status(401).send('Unauthorized.');
   } 
 
   cow = await Cow.findByIdAndUpdate(id, { $set: req.body }, { new: true });
   res.send(cow);
+}); 
+
+router.delete('/:id', auth, validateObjectId, async (req, res) => {
+  const cow = await Cow.findById(req.params.id);
+  if (!cow) return res.status(404).send('Cow not found.');
+
+  const farm = await Farm.findById(cow.farmId).populate('User');
+  if (farm.users.indexOf(req.user._id) === -1) {
+    return res.status(401).send('Unauthorized.');
+  }
+
+  await cow.remove();
+  res.status(204).send();
 });
 
 module.exports = router;
