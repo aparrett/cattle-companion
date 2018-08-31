@@ -321,7 +321,7 @@ describe('/api/cattle', () => {
       expect(res.body.length).toBe(0);
     });
 
-    it('should not return cow with given id', async () => {
+    it('should not return itself (cow with given id)', async () => {
       const res = await doRequest();
       expect(res.status).toBe(200);
       expect(res.body.length).toBe(0);
@@ -347,6 +347,93 @@ describe('/api/cattle', () => {
       expect(res.status).toBe(200);
       expect(res.body.length).toBe(1);
       expect(res.body[0].name).toBe('cow2');
+    });
+  });
+
+  describe('GET /:id/eligible-fathers', () => {
+    let token;
+    let cowId;
+
+    beforeEach(async () => {
+      token = new User().generateAuthToken();
+      
+      let farm = new Farm({ name: 'farm' });
+      farm = await farm.save();
+      farmId = farm._id;
+
+      let cow = new Cow({ name: 'bull', gender: CowGenders.Bull, dateOfBirth: new Date('08/15/2018'), farmId });
+      cow = await cow.save();
+      cowId = cow._id;
+    });
+
+    afterEach(async () => await Promise.all([ Cow.deleteMany({}), Farm.deleteMany({}) ]));
+
+    const doRequest = () => request(server)
+      .get(`/api/cattle/${cowId}/eligible-fathers`)
+      .set('x-auth-token', token);
+    
+    it('should return 401 if user not logged in', async () => {
+      token = '';
+      const res = await doRequest();
+      expect(res.status).toBe(401);
+    });
+
+    it('should return 404 if id is invalid', async () => {
+      cowId = 1;
+      const res = await doRequest();
+      expect(res.status).toBe(404);
+    });
+
+    it('should return 404 if cow with id does not exist', async () => {
+      cowId = mongoose.Types.ObjectId();
+      const res = await doRequest();
+      expect(res.status).toBe(404);
+    });
+
+    it('should not return younger cattle', async () => {
+      const cow2 = new Cow({ name: 'bull2', gender: CowGenders.Bull, dateOfBirth: new Date('08/16/2018'), farmId });
+      await cow2.save();
+      
+      const res = await doRequest();
+      expect(res.status).toBe(200);
+      expect(res.body.length).toBe(0);
+    });
+
+    it('should not return (female) cows', async () => {
+      const cow2 = new Cow({ name: 'cow2', gender: CowGenders.Cow, dateOfBirth: new Date('08/14/2018'), farmId });
+      await cow2.save();
+      
+      const res = await doRequest();
+      expect(res.status).toBe(200);
+      expect(res.body.length).toBe(0);
+    });
+
+    it('should not return itself (cow with given id)', async () => {
+      const res = await doRequest();
+      expect(res.status).toBe(200);
+      expect(res.body.length).toBe(0);
+    });
+
+    it('should not return a cow from a different farm', async () => {
+      let farm2 = new Farm({ name: 'farm2' });
+      farm2 = await farm2.save();
+
+      const cow2 = new Cow({ name: 'bull2', gender: CowGenders.Bull, dateOfBirth: new Date('08/14/2018'), farmId: farm2._id });
+      await cow2.save();
+      
+      const res = await doRequest();
+      expect(res.status).toBe(200);
+      expect(res.body.length).toBe(0);
+    });
+
+    it('should return older bulls from the same farm', async () => {
+      const bull2 = new Cow({ name: 'bull2', gender: CowGenders.Bull, dateOfBirth: new Date('08/14/2018'), farmId });
+      await bull2.save();
+
+      const res = await doRequest();
+      expect(res.status).toBe(200);
+      expect(res.body.length).toBe(1);
+      expect(res.body[0].name).toBe('bull2');
     });
   });
 });

@@ -53,7 +53,7 @@ function validate(cow) {
     gender: Joi.string().valid(Object.values(CowGenders)).required(),
     dateOfBirth: Joi.date().required(),
     mother: Joi.objectId(),
-    father: Joi.objectid(),
+    father: Joi.objectId(),
     farmId: Joi.objectId().required(),
     incidents: Joi.array().items(incident)
   });

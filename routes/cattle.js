@@ -71,4 +71,18 @@ router.get('/:id/eligible-mothers', auth, validateObjectId, async (req, res) => 
   res.send(cattle);
 });
 
+router.get('/:id/eligible-fathers', auth, validateObjectId, async (req, res) => {
+  const cow = await Cow.findById(req.params.id);
+  if (!cow) return res.status(404).send('Cow not found.');
+
+  const cattle = await Cow.find({
+    dateOfBirth: { $lt: cow.dateOfBirth },
+    gender: CowGenders.Bull,
+    _id: { $ne: cow._id },
+    farmId
+  });
+
+  res.send(cattle);
+});
+
 module.exports = router;
