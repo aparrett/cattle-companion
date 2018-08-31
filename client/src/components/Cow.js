@@ -15,9 +15,10 @@ class Cow extends Component {
   }
 
   renderIncidents() {
-    return this.props.cow.incidents.map((incident, i) => (
-      <li key={i}>{incident.name} {incident.date}</li>
-    ));
+    return this.props.cow.incidents
+      .map((incident, i) => (
+        <li key={i}>{incident.name} {incident.date}</li>
+      ));
   }
 
   render() {

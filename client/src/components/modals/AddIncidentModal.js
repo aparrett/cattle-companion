@@ -13,14 +13,22 @@ class AddIncidentModal extends Component {
   }
 
   renderIncidentsSelect(field) {
+    const renderIncidentOptions = incidents => incidents
+      .sort((a, b) => {
+        if (a.name < b.name) return -1;
+        if (a.name > b.name) return 1;
+        return 0;
+      })
+      .map((incident, i) => (
+        <option key={i} value={incident.name}>{incident.name}</option>
+      ));
+
     return (
       <div className="form-group">
         <label>{field.label}</label>
         <select className="form-control" {...field.input}>
-            <option value="">Select...</option>
-          {field.incidents.map((incident, i) => (
-            <option key={i} value={incident.name}>{incident.name}</option>
-          ))}
+          <option value="">Select...</option>
+          {renderIncidentOptions(field.incidents)}
         </select>
       </div>
     )
