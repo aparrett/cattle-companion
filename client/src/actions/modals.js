@@ -4,9 +4,7 @@ export function showCreateCow(farmId) {
   return dispatch => dispatch({
     type: SHOW_MODAL,
     modalType: 'CREATE_COW',
-    modalProps: {
-      farmId
-    }
+    modalProps: { farmId }
   });
 }
 
@@ -14,9 +12,15 @@ export function showAddIncident(cow) {
   return dispatch => dispatch({
     type: SHOW_MODAL,
     modalType: 'ADD_INCIDENT',
-    modalProps: {
-      cow
-    }
+    modalProps: { cow }
+  });
+}
+
+export function showConfirmation(action, id, title) {
+  return dispatch => dispatch({
+    type: SHOW_MODAL,
+    modalType: 'CONFIRMATION',
+    modalProps: { action, id, title }
   });
 }
 

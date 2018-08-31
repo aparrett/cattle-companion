@@ -1,4 +1,7 @@
-import { SAVE_COW_SUCCESS, FETCH_COW_PENDING, FETCH_COW_SUCCESS } from '../types/cattle';
+import {  SAVE_COW_SUCCESS, 
+          FETCH_COW_PENDING, 
+          FETCH_COW_SUCCESS,
+          DELETE_COW_SUCCESS } from '../types/cattle';
 import { ADD_INCIDENT_SUCCESS } from '../types/incidents';
 import { ERROR } from '../types/error';
 import axios from 'axios';
@@ -38,5 +41,13 @@ export function addIncident(cow, incident) {
     headers: { 'x-auth-token': cookie.get('token') }
   })
   .then(() => dispatch({ type: ADD_INCIDENT_SUCCESS, payload: incident }))
+  .catch(({ response }) => errorHandler(dispatch, ERROR, response.status, response.data));
+}
+
+export function deleteCow(id) {
+  return dispatch => axios.delete(`/api/cattle/${id}`, {
+    headers: { 'x-auth-token': cookie.get('token') }
+  })
+  .then(() => dispatch({ type: DELETE_COW_SUCCESS, payload: id }))
   .catch(({ response }) => errorHandler(dispatch, ERROR, response.status, response.data));
 }
