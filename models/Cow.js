@@ -21,7 +21,8 @@ const Cow = mongoose.model('Cow', new mongoose.Schema({
     type: Date,
     required: true
   },
-  parents: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Cow' }],
+  mother: { type: mongoose.Schema.Types.ObjectId, ref: 'Cow' },
+  father: { type: mongoose.Schema.Types.ObjectId, ref: 'Cow' },
   farmId: {
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'Farm',
@@ -51,7 +52,8 @@ function validate(cow) {
     name: Joi.string().max(100).required(),
     gender: Joi.string().valid(Object.values(CowGenders)).required(),
     dateOfBirth: Joi.date().required(),
-    parents: Joi.array().max(2),
+    mother: Joi.objectId(),
+    father: Joi.objectid(),
     farmId: Joi.objectId().required(),
     incidents: Joi.array().items(incident)
   });

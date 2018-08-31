@@ -12,11 +12,9 @@ describe('/api/users', () => {
     let email;
     let password;
 
-    const doRequest = () => {
-      return request(server)
-        .post('/api/users')
-        .send({ name, email, password });
-    };
+    const doRequest = () => request(server)
+      .post('/api/users')
+      .send({ name, email, password });
 
     beforeEach(() => {
       name = 'person'

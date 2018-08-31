@@ -82,12 +82,10 @@ describe('/api/farms', () => {
     let farmId;
     let dateOfBirth;
 
-    const doRequest = () => {
-      return request(server)
-        .post(`/api/farms/${farmId}/cattle`)
-        .set('x-auth-token', token)
-        .send({ name, gender, dateOfBirth });
-    };
+    const doRequest = () => request(server)
+      .post(`/api/farms/${farmId}/cattle`)
+      .set('x-auth-token', token)
+      .send({ name, gender, dateOfBirth });
 
     beforeEach(async () => {
       user = new User({ name: 'test', email: 'test1@test.com', password: 'password' });

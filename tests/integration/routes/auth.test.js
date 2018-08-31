@@ -13,11 +13,9 @@ describe('/api/auth', () => {
     let email;
     let password;
 
-    const doRequest = () => {
-      return request(server)
-        .post('/api/auth')
-        .send({ email, password });
-    }
+    const doRequest = () => request(server)
+      .post('/api/auth')
+      .send({ email, password });
 
     beforeEach(async () => {
       email = 'test@email.com';

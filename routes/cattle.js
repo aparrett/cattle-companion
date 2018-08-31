@@ -2,7 +2,7 @@ const express = require('express');
 const router = express.Router();
 const auth = require('../middleware/auth');
 const validateObjectId = require('../middleware/validateObjectId');
-const { Cow } = require('../models/Cow');
+const { Cow, CowGenders } = require('../models/Cow');
 const { Farm } = require('../models/Farm');
 
 router.get('/:id', auth, validateObjectId, async (req, res) => {
@@ -12,7 +12,7 @@ router.get('/:id', auth, validateObjectId, async (req, res) => {
   res.send(cow);
 });
 
-// The imlementation for put and patch is the same but could change in 
+// The implementation for put and patch is currently the same but it could change in 
 // the future.  The PUT route should be used for putting a new resource in place
 // of the old and the PATCH used for updating parts of a resource.
 router.put('/:id', auth, validateObjectId, async (req, res) => {
@@ -55,6 +55,20 @@ router.delete('/:id', auth, validateObjectId, async (req, res) => {
 
   await cow.remove();
   res.status(204).send();
+});
+
+router.get('/:id/eligible-mothers', auth, validateObjectId, async (req, res) => {
+  const cow = await Cow.findById(req.params.id);
+  if (!cow) return res.status(404).send('Cow not found.');
+
+  const cattle = await Cow.find({
+    dateOfBirth: { $lt: cow.dateOfBirth },
+    gender: CowGenders.Cow,
+    _id: { $ne: cow._id },
+    farmId
+  });
+
+  res.send(cattle);
 });
 
 module.exports = router;
