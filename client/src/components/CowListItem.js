@@ -9,7 +9,7 @@ const CowListItem = ({ cow, deleteCow, showConfirmation }) => (
     <p><Link to={`/farms/${cow.farmId}/${cow._id}`}>Name: {cow.name}</Link></p>
     <p>Gender: {cow.gender}</p>
     <p>Date of Birth: {cow.dateOfBirth}</p>
-    <button className="alert-danger" 
+    <button className="btn-danger" 
       onClick={() => showConfirmation(deleteCow, cow._id, `Are you sure you want to delete cow ${cow.name}?`)}>
         Delete
     </button>

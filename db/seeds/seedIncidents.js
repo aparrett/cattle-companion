@@ -1,6 +1,8 @@
 const { Incident } = require('../../models/Incident');
 
-function seedIncidents() {
+async function seedIncidents() {
+  await Incident.deleteMany({});
+  
   const incidents = [
     { name: 'Assisted Delivery' },
     { name: 'Twins' },
