@@ -66,6 +66,74 @@ describe('/api/cattle', () => {
     });
   });
 
+  describe('PUT /:id', () => {
+    let cowId;
+    let user;
+    let token;
+    let farm;
+    let cowUpdate;
+
+    const doRequest = () => {
+      return request(server)
+        .put(`/api/cattle/${cowId}`)
+        .set('x-auth-token', token)
+        .send(cowUpdate);
+    }
+
+    beforeEach(async () => {
+      user = new User({ name: 'user', email: 'user@test.com', password: 'password' });
+      user = await user.save();
+      token = user.generateAuthToken();
+
+      farm = new Farm({ name: 'farm', users: [user] });
+      farm = await farm.save();
+
+      cow = new Cow({ name: 'cow', gender: CowGenders.Cow, dateOfBirth: new Date(), farmId: farm._id });
+      cow = await cow.save();
+      cowId = cow._id;
+
+      cow.name = 'newName';
+      cow.gender = CowGenders.Bull;
+      cowUpdate = cow;
+    });
+
+    afterEach(async () => {
+      await Promise.all([ User.deleteMany({}), Farm.deleteMany({}), Cow.deleteMany({}) ]);
+    });
+
+    it('should return 401 if user not logged in', async () => {
+      token = '';
+      const res = await doRequest();
+      expect(res.status).toBe(401);
+    });
+
+    it('should return 401 if cow does not belong to users farm', async () => {
+      token = new User().generateAuthToken();
+      const res = await doRequest();
+      expect(res.status).toBe(401);
+    });
+
+    it('should return 404 if id is invalid', async () => {
+      cowId = 1;
+      const res = await doRequest();
+      expect(res.status).toBe(404);
+    });
+
+    it('should return 404 if cow does not exist', async () => {
+      cowId = mongoose.Types.ObjectId();
+      const res = await doRequest();
+      expect(res.status).toBe(404);
+    });
+
+    it('should return updated cow', async () => {
+      const res = await doRequest();
+      
+      expect(res.status).toBe(200);
+      expect(res.body.name).toBe('newName');
+      expect(res.body.gender).toBe(CowGenders.Bull);
+    });
+  });
+
   describe('PATCH /:id', () => {
     let cowId;
     let user;

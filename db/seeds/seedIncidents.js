@@ -21,7 +21,7 @@ async function seedIncidents() {
 
   for (incident of incidents) {
     const newIncident = new Incident(incident);
-    newIncident.save();
+    await newIncident.save();
   }
 }
 
