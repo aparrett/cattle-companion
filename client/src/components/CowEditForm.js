@@ -5,7 +5,7 @@ import { withRouter } from 'react-router';
 import InputField from './fields/InputField';
 import { CowGenders } from '../enums';
 import { fetchCow, editCow } from '../actions/cattle';
-import MotherSelect from './fields/MotherSelect'
+import MotherSelect from './fields/MotherSelect';
 import FatherSelect from './fields/FatherSelect';
 import moment from 'moment';
 

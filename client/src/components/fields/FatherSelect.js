@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchEligibleFathers } from '../../actions/cattle';
+import { fetchEligibleFathers, fetchEligibleFathersByFarm } from '../../actions/cattle';
 
 class FatherSelect extends Component {
   componentDidMount() {
-    this.props.fetchEligibleFathers(this.props.cowId);
+    const { cowId, farmId } = this.props;
+
+    if (!cowId) {
+      this.props.fetchEligibleFathersByFarm(farmId);
+    } else {
+      this.props.fetchEligibleFathers(cowId);
+    }
   }
 
   renderFatherOptions(eligibleFathers){
@@ -36,4 +42,6 @@ const mapStateToProps = ({ eligibleParents: { eligibleFathers } }) => ({
   eligibleFathers 
 });
 
-export default connect(mapStateToProps, { fetchEligibleFathers })(FatherSelect);
+export default connect(mapStateToProps, { 
+  fetchEligibleFathers, fetchEligibleFathersByFarm 
+})(FatherSelect);

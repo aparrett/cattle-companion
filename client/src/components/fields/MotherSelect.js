@@ -1,10 +1,16 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { fetchEligibleMothers } from '../../actions/cattle';
+import { fetchEligibleMothers, fetchEligibleMothersByFarm } from '../../actions/cattle';
 
 class MotherSelect extends Component {
   componentDidMount() {
-    this.props.fetchEligibleMothers(this.props.cowId);
+    const { cowId, farmId } = this.props;
+
+    if (!cowId) {
+      this.props.fetchEligibleMothersByFarm(farmId);
+    } else {
+      this.props.fetchEligibleMothers(cowId);
+    }
   }
 
   renderMotherOptions(eligibleMothers){
@@ -36,4 +42,6 @@ const mapStateToProps = ({ eligibleParents: { eligibleMothers } }) => ({
   eligibleMothers 
 });
 
-export default connect(mapStateToProps, { fetchEligibleMothers })(MotherSelect);
+export default connect(mapStateToProps, { 
+  fetchEligibleMothers, fetchEligibleMothersByFarm 
+})(MotherSelect);

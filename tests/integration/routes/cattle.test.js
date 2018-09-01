@@ -414,12 +414,12 @@ describe('/api/cattle', () => {
       expect(res.body.length).toBe(0);
     });
 
-    it('should not return a cow from a different farm', async () => {
+    it('should not return a bull from a different farm', async () => {
       let farm2 = new Farm({ name: 'farm2' });
       farm2 = await farm2.save();
 
-      const cow2 = new Cow({ name: 'bull2', gender: CowGenders.Bull, dateOfBirth: new Date('08/14/2018'), farmId: farm2._id });
-      await cow2.save();
+      const bull2 = new Cow({ name: 'bull2', gender: CowGenders.Bull, dateOfBirth: new Date('08/14/2018'), farmId: farm2._id });
+      await bull2.save();
       
       const res = await doRequest();
       expect(res.status).toBe(200);

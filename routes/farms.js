@@ -3,7 +3,7 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const validateObjectId = require('../middleware/validateObjectId');
 const { Farm, validateFarm } = require('../models/Farm');
-const { Cow, validateCow } = require('../models/Cow');
+const { Cow, validateCow, CowGenders } = require('../models/Cow');
 const _ = require('lodash');
 
 router.post('/', auth, async (req, res) => {
@@ -45,6 +45,30 @@ router.post('/:id/cattle', auth, validateObjectId, async (req, res) => {
   cow = new Cow(cow);
   cow = await cow.save();
   res.send(cow);
+});
+
+router.get('/:id/cattle/eligible-mothers', auth, validateObjectId, async (req, res) => {
+  const farm = await Farm.findById(req.params.id);
+  if (!farm) return res.status(404).send('Farm not found.');
+
+  const cattle = await Cow.find({
+    gender: CowGenders.Cow,
+    farmId: req.params.id
+  });
+
+  res.send(cattle);
+});
+
+router.get('/:id/cattle/eligible-fathers', auth, validateObjectId, async (req, res) => {
+  const farm = await Farm.findById(req.params.id);
+  if (!farm) return res.status(404).send('Farm not found.');
+
+  const cattle = await Cow.find({
+    gender: CowGenders.Bull,
+    farmId: req.params.id
+  });
+
+  res.send(cattle);
 });
 
 module.exports = router;

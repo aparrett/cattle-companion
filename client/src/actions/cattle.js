@@ -82,3 +82,21 @@ export function fetchEligibleMothers(cowId) {
     .then(res => dispatch({ type: FETCH_ELIGIBLE_MOTHERS_SUCCESS, payload: res.data }))
     .catch(({ response }) => errorHandler(dispatch, ERROR, response.status, response.data));
 }
+
+export function fetchEligibleFathersByFarm(farmId) {
+  return dispatch => axios
+    .get(`/api/farms/${farmId}/cattle/eligible-fathers`, {
+      headers: { 'x-auth-token': cookie.get('token') }
+    })
+    .then(res => dispatch({ type: FETCH_ELIGIBLE_FATHERS_SUCCESS, payload: res.data }))
+    .catch(({ response }) => errorHandler(dispatch, ERROR, response.status, response.data));
+}
+
+export function fetchEligibleMothersByFarm(farmId) {
+  return dispatch => axios
+    .get(`/api/farms/${farmId}/cattle/eligible-mothers`, {
+      headers: { 'x-auth-token': cookie.get('token') }
+    })
+    .then(res => dispatch({ type: FETCH_ELIGIBLE_MOTHERS_SUCCESS, payload: res.data }))
+    .catch(({ response }) => errorHandler(dispatch, ERROR, response.status, response.data));
+}

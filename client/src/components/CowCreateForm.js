@@ -3,7 +3,8 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { withRouter } from 'react-router';
 import InputField from './fields/InputField';
-
+import MotherSelect from './fields/MotherSelect';
+import FatherSelect from './fields/FatherSelect';
 import { CowGenders } from '../enums';
 import { saveCow } from '../actions/cattle';
 
@@ -15,11 +16,11 @@ class CowCreateForm extends Component {
   }
   
   render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit, match } = this.props;
 
     return (
       <div>
-        <h1>Edit Cow</h1>
+        <h1>New Cow</h1>
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
           <Field name="name" type="text" label="Name" className="form-control" component={InputField} />
           <label>
@@ -29,6 +30,8 @@ class CowCreateForm extends Component {
             <Field name="gender" type="radio" ignoreError="true" className="form-control" component={InputField} value={CowGenders.Bull} />Bull
           </label>
           <Field name="dateOfBirth" label="Date of Birth" type="date" className="form-control" component={InputField} pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" />
+          <Field name="mother" label="Mother" type="text" farmId={match.params.farmId} className="form-control" component={MotherSelect} />
+          <Field name="father" label="Father" type="text" farmId={match.params.farmId} className="form-control" component={FatherSelect} />
           <button type="submit" className="btn btn-primary">Save Cow</button>
         </form>
       </div>
