@@ -3,7 +3,7 @@ const router = express.Router();
 const auth = require('../middleware/auth');
 const validateObjectId = require('../middleware/validateObjectId');
 const { Farm, validateFarm } = require('../models/Farm');
-const { Cow, validateCow, CowGenders } = require('../models/Cow');
+const { Cow, validateCow, CowGenders, validateCowParents } = require('../models/Cow');
 const _ = require('lodash');
 
 router.post('/', auth, async (req, res) => {
@@ -39,8 +39,12 @@ router.post('/:id/cattle', auth, validateObjectId, async (req, res) => {
 
   let cow = { ...req.body, farmId: String(farm._id) };
 
-  const { error } = validateCow(cow);
-  if (error) return res.status(400).send(error.details[0].message);
+  let validateResult;
+  validateResult = validateCow(cow);
+  if (validateResult.error) return res.status(400).send(validateResult.error.details[0].message);
+  
+  validateResult = await validateCowParents(cow);
+  if (validateResult.error) return res.status(400).send(validateResult.error.details[0].message);
 
   cow = new Cow(cow);
   cow = await cow.save();

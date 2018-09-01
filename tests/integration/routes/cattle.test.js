@@ -69,12 +69,16 @@ describe('/api/cattle', () => {
     let user;
     let token;
     let farm;
-    let cowUpdate;
+    let farmId;
+    let gender;
+    let name;
+    let mother;
+    let father;
 
     const doRequest = () => request(server)
       .put(`/api/cattle/${cowId}`)
       .set('x-auth-token', token)
-      .send(cowUpdate);
+      .send({ name, gender, dateOfBirth, mother: mother._id, father: father._id });
 
     beforeEach(async () => {
       user = new User({ name: 'user', email: 'user@test.com', password: 'password' });
@@ -83,14 +87,20 @@ describe('/api/cattle', () => {
 
       farm = new Farm({ name: 'farm', users: [user] });
       farm = await farm.save();
+      farmId = farm._id;
 
-      cow = new Cow({ name: 'cow', gender: CowGenders.Cow, dateOfBirth: new Date(), farmId: farm._id });
+      cow = new Cow({ name: 'cow', gender: CowGenders.Cow, dateOfBirth: new Date('08/01/2018'), farmId });
       cow = await cow.save();
       cowId = cow._id;
 
-      cow.name = 'newName';
-      cow.gender = CowGenders.Bull;
-      cowUpdate = cow;
+      name = 'newName';
+      gender = CowGenders.Bull;
+      dateOfBirth = new Date('08/01/2018');
+
+      mother = new Cow({ name: 'mother', gender: CowGenders.Cow, dateOfBirth: new Date('07/31/2018'), farmId });
+      father = new Cow({ name: 'father', gender: CowGenders.Bull, dateOfBirth: new Date('07/31/2018'), farmId });
+
+      [mother, father] = await Promise.all([ mother.save(), father.save() ]);
     });
 
     afterEach(async () => {
@@ -121,9 +131,133 @@ describe('/api/cattle', () => {
       expect(res.status).toBe(404);
     });
 
-    it('should return updated cow', async () => {
+    describe('validate Cow', () => {
+      it('should return 400 if name is not given', async () => {
+        name = '';
+        const res = await doRequest();
+        expect(res.status).toBe(400);
+      });
+
+      it('should return 400 if name is greater than 100 characters', async  () => {
+        name = new Array(102).join('a');
+        const res = await doRequest();
+        expect(res.status).toBe(400);
+      });
+
+      it('should return 400 if gender is not given', async () => {
+        gender = '';
+        const res = await doRequest();
+        expect(res.status).toBe(400);
+      });
+
+      it('should return 400 if invalid gender', async () => {
+        gender = 'foo';
+        const res = await doRequest();
+        expect(res.status).toBe(400);
+      });
+
+      it('should return 400 if dateOfBirth is not given', async () => {
+        dateOfBirth = '';
+        const res = await doRequest();
+        expect(res.status).toBe(400);
+      });
+
+      it('should return 400 if dateOfBirth is not a date', async () => {
+        dateOfBirth = 'foo';
+        const res = await doRequest();
+        expect(res.status).toBe(400);
+      });
+
+      it('should return 400 if selected father belongs to another farm', async () => {
+        const otherFarmId = mongoose.Types.ObjectId();
+        father = new Cow({ 
+          name: 'father', 
+          gender: CowGenders.Bull, 
+          dateOfBirth: new Date('07/31/2018'), 
+          farmId: otherFarmId 
+        });
+
+        father = await father.save();
+
+        const res = await doRequest();
+        expect(res.status).toBe(400);
+      });
+
+      it('should return 400 if selected father is a (female) cow', async () => {
+        father = new Cow({ 
+          name: 'father', 
+          gender: CowGenders.Cow, 
+          dateOfBirth: new Date('07/31/2018'), 
+          farmId 
+        });
+
+        father = await father.save();
+
+        const res = await doRequest();
+        expect(res.status).toBe(400);
+      });
+
+      it('should return 400 if selected father is younger than the given cow', async () => {
+        father = new Cow({ 
+          name: 'father', 
+          gender: CowGenders.Bull, 
+          dateOfBirth: new Date('08/02/2018'), 
+          farmId 
+        });
+
+        father = await father.save();
+
+        const res = await doRequest();
+        expect(res.status).toBe(400);
+      });
+
+      it('should return 400 if selected mother belongs to another farm', async () => {
+        const otherFarmId = mongoose.Types.ObjectId();
+        mother = new Cow({ 
+          name: 'mother', 
+          gender: CowGenders.Cow, 
+          dateOfBirth: new Date('07/31/2018'), 
+          farmId: otherFarmId 
+        });
+
+        mother = await mother.save();
+
+        const res = await doRequest();
+        expect(res.status).toBe(400);
+      });
+
+      it('should return 400 if selected mother is a bull', async () => {
+        mother = new Cow({ 
+          name: 'mother', 
+          gender: CowGenders.Bull, 
+          dateOfBirth: new Date('07/31/2018'), 
+          farmId 
+        });
+
+        mother = await mother.save();
+
+        const res = await doRequest();
+        expect(res.status).toBe(400);
+      });
+
+      it('should return 400 if selected mother is younger than the given cow', async () => {
+        mother = new Cow({ 
+          name: 'mother', 
+          gender: CowGenders.Cow, 
+          dateOfBirth: new Date('08/02/2018'), 
+          farmId 
+        });
+
+        mother = await mother.save();
+
+        const res = await doRequest();
+        expect(res.status).toBe(400);
+      });
+    });
+
+    it('should return updated cow 2', async () => {
       const res = await doRequest();
-      
+
       expect(res.status).toBe(200);
       expect(res.body.name).toBe('newName');
       expect(res.body.gender).toBe(CowGenders.Bull);
