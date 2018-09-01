@@ -65,7 +65,7 @@ router.get('/:id/eligible-mothers', auth, validateObjectId, async (req, res) => 
     dateOfBirth: { $lt: cow.dateOfBirth },
     gender: CowGenders.Cow,
     _id: { $ne: cow._id },
-    farmId
+    farmId: cow.farmId
   });
 
   res.send(cattle);
@@ -79,7 +79,7 @@ router.get('/:id/eligible-fathers', auth, validateObjectId, async (req, res) => 
     dateOfBirth: { $lt: cow.dateOfBirth },
     gender: CowGenders.Bull,
     _id: { $ne: cow._id },
-    farmId
+    farmId: cow.farmId
   });
 
   res.send(cattle);

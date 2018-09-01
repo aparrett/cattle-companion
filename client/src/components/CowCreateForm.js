@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { withRouter } from 'react-router';
 import InputField from './fields/InputField';
+
 import { CowGenders } from '../enums';
 import { saveCow } from '../actions/cattle';
 

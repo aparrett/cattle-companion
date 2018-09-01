@@ -7,6 +7,7 @@ import errorReducer from './errorReducer';
 import modalReducer from './modalReducer';
 import cowReducer from './cowReducer';
 import incidentsReducer from './incidentsReducer';
+import eligibleParentsReducer from './eligibleParentsReducer';
 
 export default combineReducers({
   auth: authReducer,
@@ -16,5 +17,6 @@ export default combineReducers({
   farmReducer,
   farmsReducer,
   cowReducer,
-  incidents: incidentsReducer
+  incidents: incidentsReducer,
+  eligibleParents: eligibleParentsReducer
 });

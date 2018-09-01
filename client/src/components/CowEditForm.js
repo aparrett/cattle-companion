@@ -5,6 +5,8 @@ import { withRouter } from 'react-router';
 import InputField from './fields/InputField';
 import { CowGenders } from '../enums';
 import { fetchCow, editCow } from '../actions/cattle';
+import MotherSelect from './fields/MotherSelect'
+import FatherSelect from './fields/FatherSelect';
 import moment from 'moment';
 
 class CowEditForm extends Component {
@@ -19,7 +21,7 @@ class CowEditForm extends Component {
   }
   
   render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit, match } = this.props;
 
     return (
       <div>
@@ -33,6 +35,8 @@ class CowEditForm extends Component {
             <Field name="gender" type="radio" ignoreError="true" className="form-control" component={InputField} value={CowGenders.Bull} />Bull
           </label>
           <Field name="dateOfBirth" label="Date of Birth" type="date" className="form-control" component={InputField} pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" />
+          <Field name="mother" label="Mother" type="text" cowId={match.params.id} className="form-control" component={MotherSelect} />
+          <Field name="father" label="Father" type="text" cowId={match.params.id} className="form-control" component={FatherSelect} />
           <button type="submit" className="btn btn-primary">Save</button>
         </form>
       </div>
