@@ -14,7 +14,7 @@ class AddIncidentModal extends Component {
   }
 
   render() {
-    const { handleSubmit } = this.props;
+    const { handleSubmit, incidents, cow, hideModal } = this.props;
 
     return (
       <form className="modal show" 
@@ -23,8 +23,8 @@ class AddIncidentModal extends Component {
         <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title">Add Incident to Cow - {this.props.cow.name}</h5>
-              <button type="button" className="close" onClick={this.props.hideModal}>
+              <h5 className="modal-title">Add Incident to Cow - {cow.name}</h5>
+              <button type="button" className="close" onClick={hideModal}>
                 <span aria-hidden="true">&times;</span>
               </button>
             </div>
@@ -33,7 +33,7 @@ class AddIncidentModal extends Component {
                 name="name" 
                 label="Incident"
                 className="form-control" 
-                incidents={this.props.incidents}
+                incidents={incidents}
                 component={IncidentSelect} 
                 placeholder="Name" 
               />
@@ -47,7 +47,7 @@ class AddIncidentModal extends Component {
               />
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" onClick={this.props.hideModal}>Close</button>
+              <button type="button" className="btn btn-secondary" onClick={hideModal}>Close</button>
               <button type="submit" className="btn btn-primary">Add Incident</button>
             </div>
           </div>

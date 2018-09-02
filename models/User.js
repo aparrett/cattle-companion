@@ -3,6 +3,10 @@ const jwt = require ('jsonwebtoken');
 const Joi = require('joi');
 const mongoose = require('mongoose');
 
+function toLower(v) {
+  return v.toLowerCase();
+}
+
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
@@ -15,7 +19,8 @@ const userSchema = new mongoose.Schema({
     required: true,
     minlength: 5,
     maxlength: 255,
-    unique: true
+    unique: true,
+    set: toLower
   },
   password: {
     type: String,
