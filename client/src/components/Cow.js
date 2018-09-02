@@ -23,7 +23,16 @@ class Cow extends Component {
     return this.props.cow.incidents
       .sort((a, b) => new Date(a.date) - new Date(b.date))
       .map((incident, i) => (
-        <li className="list-group-item" key={i}>{incident.name} {incident.date}</li>
+        <li className="list-group-item" key={i}>
+          <div className="row justify-content-between">
+            <div className="col-4">
+              {incident.name}
+            </div>
+            <div className="col-4 text-right">
+              {incident.date}
+            </div>
+          </div>
+        </li>
       ));
   }
 
@@ -41,7 +50,6 @@ class Cow extends Component {
                     <Link className="heading-icon-link" to={`/farms/${cow.farmId}/cattle/${cow._id}/edit`}>
                       <FontAwesomeIcon className="text-secondary fa-lg d-inline-block" icon="pencil-alt" />
                     </Link>
-
                     <a className="heading-icon-link">
                       <FontAwesomeIcon className="text-danger fa-lg d-inline-block" icon="trash-alt" />
                     </a>
@@ -51,11 +59,17 @@ class Cow extends Component {
                 <h4 className="text-muted">DOB: {cow.dateOfBirth}</h4>
               </div>
               <div className="mt-4">
-                <h3>Incidents</h3>
-                <ul className="list-group mt-3">
+                <h3 className="text-center">Incidents</h3>
+                <ul className="list-group mt-4">
                   {cow.incidents && this.renderIncidents()}
                 </ul>
-                <button className="btn btn-outline-primary mt-3" onClick={this.handleAddIncidentClick.bind(this)}>Add Incident</button>
+                <div className="text-right">
+                  <button className="btn btn-outline-primary mt-3" onClick={this.handleAddIncidentClick.bind(this)}>Add Incident</button>
+                </div>
+              </div>
+              <div className="mt-4">
+                <h3 className="text-center">Parents</h3>
+                
               </div>
             </div>
         }
