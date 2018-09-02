@@ -4,12 +4,12 @@ import { fetchEligibleFathers, fetchEligibleFathersByFarm } from '../../actions/
 
 class FatherSelect extends Component {
   componentDidMount() {
-    const { cowId, farmId } = this.props;
+    const { cowId, farmId, fetchEligibleFathersByFarm, fetchEligibleFathers } = this.props;
 
     if (!cowId) {
-      this.props.fetchEligibleFathersByFarm(farmId);
+      fetchEligibleFathersByFarm(farmId);
     } else {
-      this.props.fetchEligibleFathers(cowId);
+      fetchEligibleFathers(cowId);
     }
   }
 
@@ -26,13 +26,19 @@ class FatherSelect extends Component {
   }
 
   render() {
+    const { eligibleFathers, label, input } = this.props;
     return (
       <div className="form-group">
-        <label>{this.props.label}</label>
-        <select className="form-control" {...this.props.input}>
-          <option value="">Select...</option>
-          {this.renderFatherOptions(this.props.eligibleFathers)}
-        </select>
+        <label>{label}</label>
+        { eligibleFathers.length > 0 
+          ? 
+            <select className="form-control" {...input}>
+              <option value="">Select...</option>
+              {this.renderFatherOptions(eligibleFathers)}
+            </select>
+          :
+            <p>There are no eligible fathers for this cow.</p>
+        }
       </div>
     );
   }

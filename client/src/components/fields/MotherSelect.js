@@ -4,12 +4,12 @@ import { fetchEligibleMothers, fetchEligibleMothersByFarm } from '../../actions/
 
 class MotherSelect extends Component {
   componentDidMount() {
-    const { cowId, farmId } = this.props;
+    const { cowId, farmId, fetchEligibleMothersByFarm, fetchEligibleMothers  } = this.props;
 
     if (!cowId) {
-      this.props.fetchEligibleMothersByFarm(farmId);
+      fetchEligibleMothersByFarm(farmId);
     } else {
-      this.props.fetchEligibleMothers(cowId);
+      fetchEligibleMothers(cowId);
     }
   }
 
@@ -26,13 +26,19 @@ class MotherSelect extends Component {
   }
 
   render() {
+    const { eligibleMothers, input, label } = this.props;
     return (
       <div className="form-group">
-        <label>{this.props.label}</label>
-        <select className="form-control" {...this.props.input}>
-          <option value="">Select...</option>
-          {this.renderMotherOptions(this.props.eligibleMothers)}
-        </select>
+        <label>{label}</label>
+        { eligibleMothers.length > 0 
+          ? 
+            <select className="form-control" {...input}>
+              <option value="">Select...</option>
+              {this.renderMotherOptions(eligibleMothers)}
+            </select>
+          :
+            <p>There are no eligible mothers for this cow.</p>
+        }
       </div>
     );
   }
