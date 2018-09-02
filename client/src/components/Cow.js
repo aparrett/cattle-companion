@@ -38,6 +38,7 @@ class Cow extends Component {
 
   render() {
     const { isLoading, cow } = this.props;
+
     return (
       <div>
         { isLoading 

@@ -7,7 +7,10 @@ const { Farm } = require('../models/Farm');
 const _ = require('lodash');
 
 router.get('/:id', auth, validateObjectId, async (req, res) => {
-  const cow = await Cow.findById(req.params.id);
+  const cow = await Cow.findById(req.params.id)
+    .populate('mother')
+    .populate('father');
+    
   if (!cow) return res.status(404).send('Cow not found.');
 
   res.send(cow);

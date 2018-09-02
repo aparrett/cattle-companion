@@ -42,6 +42,42 @@ describe('/api/cattle', () => {
       expect(res.status).toBe(404);
     });
 
+    it('should contain parent objects if they exist', async () => {
+      const farmId = mongoose.Types.ObjectId();
+      let mother = new Cow({ 
+        name: 'mother', 
+        gender: CowGenders.Cow, 
+        dateOfBirth: new Date('08/08/2018'),
+        farmId
+      });
+
+      let father = new Cow({ 
+        name: 'father', 
+        gender: CowGenders.Bull, 
+        dateOfBirth: new Date('08/08/2018'),
+        farmId
+      });
+
+      [mother, father] = await Promise.all([ mother.save(), father.save() ]);
+
+      let cow = new Cow({ 
+        name: 'foo', 
+        gender: CowGenders.Cow, 
+        dateOfBirth: new Date('08/09/2018'),
+        farmId,
+        mother: mother._id,
+        father: father._id
+      });
+
+      cow = await cow.save();
+      cowId = cow._id;
+
+      const res = await doRequest();
+      console.log('mother', res.body.mother);
+      expect(res.body.mother.name).toBe('mother');
+      expect(res.body.father.name).toBe('father');
+    });
+
     it('should return the cow if it exits', async () => {
       let farmId = mongoose.Types.ObjectId();
       let cow = new Cow({ 
