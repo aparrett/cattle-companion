@@ -21,6 +21,7 @@ class Cow extends Component {
 
   renderIncidents() {
     return this.props.cow.incidents
+      .sort((a, b) => new Date(a.date) - new Date(b.date))
       .map((incident, i) => (
         <li className="list-group-item" key={i}>{incident.name} {incident.date}</li>
       ));

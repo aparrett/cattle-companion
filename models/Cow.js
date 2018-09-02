@@ -8,7 +8,6 @@ const CowGenders = Object.freeze({
 });
 
 function dateFromDateTime(dt) {
-  console.log('getter', dt)
   return moment.utc(dt).format('MM/DD/YYYY');
 }
 
