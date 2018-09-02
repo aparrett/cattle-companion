@@ -8,6 +8,13 @@ import Header from './Header';
 import ModalRoot from './modals/ModalRoot';
 import Router from './Router';
 
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { faTrashAlt, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+
+library.add(faTrashAlt);
+library.add(faPencilAlt);
+
+
 const App = () => (
   <BrowserRouter>
     <div>

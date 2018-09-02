@@ -8,8 +8,24 @@ const CowGenders = Object.freeze({
 });
 
 function dateFromDateTime(dt) {
-  return moment(dt).format('MM/DD/YYYY');
+  console.log('getter', dt)
+  return moment.utc(dt).format('MM/DD/YYYY');
 }
+
+const cowIncidentSchema = new mongoose.Schema({
+  name: {
+    type: String,
+    required: true,
+    maxlength: 255
+  },
+  date: {
+    type: Date,
+    get: dateFromDateTime
+  }
+});
+
+cowIncidentSchema.set('toObject', { getters: true });
+cowIncidentSchema.set('toJSON', { getters: true });
 
 const cowSchema = new mongoose.Schema({
   name: {
@@ -35,16 +51,7 @@ const cowSchema = new mongoose.Schema({
     required: true
   },
   incidents: [{ 
-    type: new mongoose.Schema({
-      name: {
-        type: String,
-        required: true,
-        maxlength: 255
-      },
-      date: {
-        type: Date
-      }
-    }) 
+    type: cowIncidentSchema
   }]
 });
 

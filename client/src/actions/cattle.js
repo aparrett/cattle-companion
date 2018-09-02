@@ -8,6 +8,7 @@ import { ERROR } from '../types/error';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import { errorHandler } from './error';
+import moment from 'moment';
 
 const cookie = new Cookies();
 
@@ -46,6 +47,8 @@ export function editCow({ _id, name, gender, dateOfBirth, farmId, mother, father
 }
 
 export function addIncident(cow, incident) {
+  incident.date = moment(incident.date).format('MM/DD/YYYY');
+  
   return dispatch => axios
     .patch(`/api/cattle/${cow._id}`, {
       incidents: [...cow.incidents, incident]

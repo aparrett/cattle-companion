@@ -47,8 +47,8 @@ class AddIncidentModal extends Component {
               />
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-secondary" onClick={hideModal}>Close</button>
-              <button type="submit" className="btn btn-primary">Add Incident</button>
+              <button type="button" className="btn btn-outline-secondary" onClick={hideModal}>Close</button>
+              <button type="submit" className="btn btn-outline-primary">Add Incident</button>
             </div>
           </div>
         </div>

@@ -1,6 +1,22 @@
 /* Bootstrap Overrides */
 .modal {
   display:block;
+  background-color: #00000063;
+}
+
+.modal-header {
+  border-bottom: none;
+}
+
+.modal-footer {
+  border-top: none;
+}
+
+/* Custom CSS */
+.heading-icon-link {
+  margin-left: .5rem;
+  vertical-align: super;
+  cursor: pointer;
 }
 
 /* Loading spinner */

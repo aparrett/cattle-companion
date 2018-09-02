@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom';
 import { fetchCow } from '../actions/cattle';
 import { fetchIncidents } from '../actions/incidents';
 import { showAddIncident } from '../actions/modals';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+
 
 class Cow extends Component {
   componentDidMount() {
@@ -20,7 +22,7 @@ class Cow extends Component {
   renderIncidents() {
     return this.props.cow.incidents
       .map((incident, i) => (
-        <li key={i}>{incident.name} {incident.date}</li>
+        <li className="list-group-item" key={i}>{incident.name} {incident.date}</li>
       ));
   }
 
@@ -31,14 +33,29 @@ class Cow extends Component {
         { isLoading 
           ? null 
           : <div>
-              <h1 className="font-weight-bold">{cow.name}</h1>
-              <h2>Gender: {cow.gender}</h2>
-              <h2>DOB: {cow.dateOfBirth}</h2>
-              <Link to={`/farms/${cow.farmId}/cattle/${cow._id}/edit`}>Edit</Link>
-              <ul>
-                {cow.incidents && this.renderIncidents()}
-              </ul>
-              <button onClick={this.handleAddIncidentClick.bind(this)}>Add Incident</button>
+              <div className="mt-5">
+                <div>
+                  <h1 className="font-weight-bold d-inline-block">{cow.name}</h1>
+                  <div className="ml-2 d-inline-block">
+                    <Link className="heading-icon-link" to={`/farms/${cow.farmId}/cattle/${cow._id}/edit`}>
+                      <FontAwesomeIcon className="text-secondary fa-lg d-inline-block" icon="pencil-alt" />
+                    </Link>
+
+                    <a className="heading-icon-link">
+                      <FontAwesomeIcon className="text-danger fa-lg d-inline-block" icon="trash-alt" />
+                    </a>
+                  </div>
+                </div>
+                <h4 className="text-muted">Gender: {cow.gender}</h4>
+                <h4 className="text-muted">DOB: {cow.dateOfBirth}</h4>
+              </div>
+              <div className="mt-4">
+                <h3>Incidents</h3>
+                <ul className="list-group mt-3">
+                  {cow.incidents && this.renderIncidents()}
+                </ul>
+                <button className="btn btn-outline-primary mt-3" onClick={this.handleAddIncidentClick.bind(this)}>Add Incident</button>
+              </div>
             </div>
         }
       </div>
