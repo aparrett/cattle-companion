@@ -31,7 +31,7 @@ class Cow extends Component {
         { isLoading 
           ? null 
           : <div>
-              <h1>{cow.name}</h1>
+              <h1 className="font-weight-bold">{cow.name}</h1>
               <h2>Gender: {cow.gender}</h2>
               <h2>DOB: {cow.dateOfBirth}</h2>
               <Link to={`/farms/${cow.farmId}/cattle/${cow._id}/edit`}>Edit</Link>

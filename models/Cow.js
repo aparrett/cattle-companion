@@ -1,12 +1,17 @@
 const Joi = require('joi');
 const mongoose = require('mongoose');
+const moment = require('moment');
 
 const CowGenders = Object.freeze({
-  Cow: 'cow',
-  Bull: 'bull'
+  Cow: 'Cow',
+  Bull: 'Bull'
 });
 
-const Cow = mongoose.model('Cow', new mongoose.Schema({
+function dateFromDateTime(dt) {
+  return moment(dt).format('MM/DD/YYYY');
+}
+
+const cowSchema = new mongoose.Schema({
   name: {
     type: String,
     maxlength: 100,
@@ -19,7 +24,8 @@ const Cow = mongoose.model('Cow', new mongoose.Schema({
   },
   dateOfBirth: {
     type: Date,
-    required: true
+    required: true,
+    get: dateFromDateTime
   },
   mother: { type: mongoose.Schema.Types.ObjectId, ref: 'Cow' },
   father: { type: mongoose.Schema.Types.ObjectId, ref: 'Cow' },
@@ -40,7 +46,12 @@ const Cow = mongoose.model('Cow', new mongoose.Schema({
       }
     }) 
   }]
-}));
+});
+
+cowSchema.set('toObject', { getters: true });
+cowSchema.set('toJSON', { getters: true });
+
+const Cow = mongoose.model('Cow', cowSchema);
 
 function validate(cow) {
   const incident = Joi.object().keys({
