@@ -19,7 +19,7 @@ class Farm extends Component {
       <div>
         <h1>{farm.name}</h1>
         {farm.cattle && <ul>{this.renderCattle()}</ul>}
-        <Link to={`/farms/${farm._id}/cattle/new`}>New Cow</Link>
+        <Link to={`/farms/${farm._id}/cattle/new`}><button className="btn">New Cow</button></Link>
       </div>
     );
   }
