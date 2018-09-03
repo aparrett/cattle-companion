@@ -10,24 +10,25 @@ class Home extends Component {
   }
 
   renderFarms() {
-    return this.props.farms.map(farm => {
-      return (
-      <li key={farm._id}>
+    return this.props.farms.map(farm => (
+      <li className="list-group-item" key={farm._id}>
         <Link to={`/farms/${farm._id}`}>{farm.name}</Link>
       </li>
-      );
-    });
+    ));
   }
 
   render() {
     return (
       this.props.isLoading 
         ? null
-        : <div>
-            <ul>
+        : <div className="mt-5">
+            <h1 className="font-weight-bold">Farms</h1>
+            <ul className="list-group mt-4">
               { this.renderFarms() }
             </ul>
-            <FarmCreateForm />
+            <div className="mt-4">
+              <FarmCreateForm />
+            </div>
           </div>
     );
   }

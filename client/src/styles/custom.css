@@ -12,6 +12,10 @@
   border-top: none;
 }
 
+.invalid-feedback {
+  display: block;
+}
+
 /* Custom CSS */
 
 /* 
@@ -43,6 +47,10 @@ a {
 a:hover {
   color: #49311c;
   text-decoration: none;
+}
+
+input.error, select.error {
+  border-color: #dc3545;
 }
 
 /* Loading spinner */

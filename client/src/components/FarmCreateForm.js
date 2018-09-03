@@ -15,10 +15,10 @@ class FarmCreateForm extends Component {
 
     return (
       <div>
-        <h5>Create a New Farm</h5>
+        <h5 className="mb-3">Create a New Farm</h5>
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
           <Field name="name" className="form-control" component={InputField} placeholder="Name" type="text" />
-          <button type="submit" className="btn btn-primary">Save Farm</button>
+          <button type="submit" className="btn btn-primary mt-3">Save Farm</button>
         </form>
       </div>
     );
