@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { fetchCow } from '../actions/cattle';
+import { fetchCow, deleteCow } from '../actions/cattle';
 import { fetchIncidents } from '../actions/incidents';
 import { showAddIncident } from '../actions/modals';
 import { showConfirmation } from '../actions/modals';
@@ -26,6 +26,11 @@ class Cow extends Component {
 
   handleAddIncidentClick() {
     this.props.showAddIncident(this.props.cow);
+  }
+
+  handleDeleteClick() {
+    const { showConfirmation, deleteCow, cow } = this.props;
+    showConfirmation(deleteCow, cow._id, `Are you sure you want to delete cow ${cow.name}?`);
   }
 
   renderIncidents() {
@@ -60,7 +65,7 @@ class Cow extends Component {
                     <Link className="heading-icon-link" to={`/farms/${farmId}/cattle/${_id}/edit`}>
                       <FontAwesomeIcon className="text-secondary fa-lg d-inline-block" icon="pencil-alt" />
                     </Link>
-                    <a className="heading-icon-link">
+                    <a onClick={this.handleDeleteClick.bind(this)} className="heading-icon-link">
                       <FontAwesomeIcon className="text-danger fa-lg d-inline-block" icon="trash-alt" />
                     </a>
                   </div>
@@ -73,9 +78,8 @@ class Cow extends Component {
                 <ul className="list-group mt-4">
                   {incidents && this.renderIncidents()}
                 </ul>
-                <div className="text-right">
-                  <button className="btn btn-outline-primary mt-3" onClick={this.handleAddIncidentClick.bind(this)}>Add Incident</button>
-                </div>
+                <button className="btn btn-outline-primary mt-3" 
+                  onClick={this.handleAddIncidentClick.bind(this)}>Add Incident</button>
               </div>
               <div className="mt-4">
                 <h3 className="text-center">Parents</h3>
@@ -108,5 +112,5 @@ function mapStateToProps({ cowReducer: { cow, isLoading } }) {
   return { cow, isLoading };
 }
 export default connect(mapStateToProps, 
-  { fetchCow, fetchIncidents, showAddIncident, showConfirmation }
+  { fetchCow, fetchIncidents, showAddIncident, showConfirmation, deleteCow }
 )(Cow);

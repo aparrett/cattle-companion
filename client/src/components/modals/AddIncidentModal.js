@@ -23,7 +23,7 @@ class AddIncidentModal extends Component {
         <div className="modal-dialog modal-dialog-centered" role="document">
           <div className="modal-content">
             <div className="modal-header">
-              <h5 className="modal-title">Add Incident to Cow - {cow.name}</h5>
+              <h5 className="modal-title">Add Incident to {cow.name}</h5>
               <button type="button" className="close" onClick={hideModal}>
                 <span aria-hidden="true">&times;</span>
               </button>
