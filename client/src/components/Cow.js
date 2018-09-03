@@ -15,6 +15,14 @@ class Cow extends Component {
     this.props.fetchIncidents();
   }
 
+  componentDidUpdate() {
+    const { cow, fetchCow, isLoading, match: { params: { id } } } = this.props;
+
+    if (!isLoading && cow._id !== id) {
+      fetchCow(id);
+    }
+  }
+
   handleAddIncidentClick() {
     this.props.showAddIncident(this.props.cow);
   }
@@ -37,18 +45,18 @@ class Cow extends Component {
   }
 
   render() {
-    const { isLoading, cow } = this.props;
+    const { isLoading, cow: { _id, name, farmId, gender, dateOfBirth, mother, father, incidents } } = this.props;
 
     return (
-      <div>
+      <div className="mb-5">
         { isLoading 
           ? null 
           : <div>
               <div className="mt-5">
                 <div>
-                  <h1 className="font-weight-bold d-inline-block">{cow.name}</h1>
+                  <h1 className="font-weight-bold d-inline-block">{name}</h1>
                   <div className="ml-2 d-inline-block">
-                    <Link className="heading-icon-link" to={`/farms/${cow.farmId}/cattle/${cow._id}/edit`}>
+                    <Link className="heading-icon-link" to={`/farms/${farmId}/cattle/${_id}/edit`}>
                       <FontAwesomeIcon className="text-secondary fa-lg d-inline-block" icon="pencil-alt" />
                     </Link>
                     <a className="heading-icon-link">
@@ -56,13 +64,13 @@ class Cow extends Component {
                     </a>
                   </div>
                 </div>
-                <h4 className="text-muted">Gender: {cow.gender}</h4>
-                <h4 className="text-muted">DOB: {cow.dateOfBirth}</h4>
+                <h4 className="text-muted">Gender: {gender}</h4>
+                <h4 className="text-muted">DOB: {dateOfBirth}</h4>
               </div>
               <div className="mt-4">
                 <h3 className="text-center">Incidents</h3>
                 <ul className="list-group mt-4">
-                  {cow.incidents && this.renderIncidents()}
+                  {incidents && this.renderIncidents()}
                 </ul>
                 <div className="text-right">
                   <button className="btn btn-outline-primary mt-3" onClick={this.handleAddIncidentClick.bind(this)}>Add Incident</button>
@@ -70,7 +78,23 @@ class Cow extends Component {
               </div>
               <div className="mt-4">
                 <h3 className="text-center">Parents</h3>
-                
+                {!mother && !father 
+                  ? <p>{name} does not have any parents.</p>
+                  : <ul className="list-group mt-4">
+                      {mother && 
+                        <li className="list-group-item" key={mother._id}>
+                          <Link to={`/farms/${mother.farmId}/cattle/${mother._id}`}>{mother.name}</Link>
+                          &nbsp;- Mother
+                        </li>
+                      }
+                      {father && 
+                        <li className="list-group-item" key={father._id}>
+                          <Link to={`/farms/${father.farmId}/cattle/${father._id}`}>{father.name}</Link>
+                          &nbsp;- Father
+                        </li>
+                      }
+                    </ul>
+                }
               </div>
             </div>
         }
