@@ -4,7 +4,8 @@ import { Link } from 'react-router-dom';
 import { fetchCow } from '../actions/cattle';
 import { fetchIncidents } from '../actions/incidents';
 import { showAddIncident } from '../actions/modals';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { showConfirmation } from '../actions/modals';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
 class Cow extends Component {
@@ -106,4 +107,6 @@ class Cow extends Component {
 function mapStateToProps({ cowReducer: { cow, isLoading } }) {
   return { cow, isLoading };
 }
-export default connect(mapStateToProps, { fetchCow, fetchIncidents, showAddIncident })(Cow);
+export default connect(mapStateToProps, 
+  { fetchCow, fetchIncidents, showAddIncident, showConfirmation }
+)(Cow);

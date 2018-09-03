@@ -16,10 +16,12 @@ class Farm extends Component {
   renderFarm() {
     const { farm } = this.props;
     return(
-      <div>
+      <div className="mt-5">
         <h1>{farm.name}</h1>
-        {farm.cattle && <ul>{this.renderCattle()}</ul>}
-        <Link to={`/farms/${farm._id}/cattle/new`}><button className="btn">New Cow</button></Link>
+        {farm.cattle && <ul className="list-group mt-4">{this.renderCattle()}</ul>}
+        <Link to={`/farms/${farm._id}/cattle/new`}>
+          <button className="btn btn-outline-primary mt-3">New Cow</button>
+        </Link>
       </div>
     );
   }

@@ -47,6 +47,7 @@ a {
 a:hover {
   color: #49311c;
   text-decoration: none;
+  cursor: pointer;
 }
 
 input.error, select.error {
