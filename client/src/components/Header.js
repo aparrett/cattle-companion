@@ -24,8 +24,17 @@ const Header = props => {
 
   return (
     <div>
-      <Link to="/">Cattle Companion</Link>
-      <Logout />
+      <div className="d-flex p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+        <div className="container">
+          <div className="text-center">
+            <Link className="logo" to="/">Cattle Companion</Link>
+          </div>
+          <nav className="text-center">
+            <Link className="mr-2" to="/">Farms</Link>
+            <Logout />
+          </nav>
+        </div>
+      </div>
       { renderError() }
     </div>
   );
