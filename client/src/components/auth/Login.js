@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { loginUser, logoutUser } from '../../actions/auth';
+import { loginUser, logoutUser, clearAuthError } from '../../actions/auth';
 import InputField from '../fields/InputField';
 
 class Login extends Component {
   componentDidMount() {
+    this.props.clearAuthError();
+    
     if (this.props.authenticated) { 
       this.props.logoutUser();
     }
@@ -21,7 +23,7 @@ class Login extends Component {
 
     return (
       <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-        {error && <div className="alert-danger">{error}</div>}
+        {error && <div className="invalid-feedback mb-3">{error}</div>}
         <div className="row">
           <div className="col-md-12">
             <label>Email</label>
@@ -35,7 +37,9 @@ class Login extends Component {
           </div>
         </div>
         <button type="submit" className="btn btn-primary">Login</button>
-        <div>Not signed up? <Link to="/register">Register</Link></div>
+        <div className="mt-3">
+          Not signed up? <Link to="/register">Register</Link>
+        </div>
       </form>
     );
   }
@@ -75,7 +79,7 @@ function mapStateToProps({ auth }) {
   return { error: auth.error, authenticated: auth.authenticated };
 }
 
-Login = connect(mapStateToProps, { loginUser, logoutUser })(Login);  
+Login = connect(mapStateToProps, { loginUser, logoutUser, clearAuthError })(Login);  
 
 export default reduxForm({
   form: 'login',

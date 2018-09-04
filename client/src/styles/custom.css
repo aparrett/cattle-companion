@@ -22,9 +22,9 @@
 
 Palette
 
-Brand-dark: #49311c 
+Brand-dark: #442317 
 
-Brand-light: #ad9179
+Brand-light: #e19b4e
 
 */
 
@@ -37,15 +37,15 @@ Brand-light: #ad9179
 .logo {
   font-size: 1.75rem;
   font-weight: bold;
-  color: #49311c;
+  color: #442317;
 }
 
 a {
-  color: #ad9179;
+  color: #e19b4e;
 }
 
 a:hover {
-  color: #49311c;
+  color: #442317;
   text-decoration: none;
   cursor: pointer;
 }

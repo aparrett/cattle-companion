@@ -2,11 +2,15 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
-import { registerUser } from '../../actions/auth';
+import { registerUser, clearAuthError } from '../../actions/auth';
 
 import InputField from '../fields/InputField';
 
 class Register extends Component {
+  componentDidMount() {
+    this.props.clearAuthError();
+  }
+
   handleFormSubmit(formProps) {
     this.props.registerUser(formProps, () => window.location.href = '/');
   }
@@ -16,7 +20,7 @@ class Register extends Component {
 
     return (
       <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-        {error && <div className="alert-danger">{error}</div>}
+        {error && <div className="invalid-feedback mb-3">{error}</div>}
         <div className="row">
           <div className="col-md-12">
             <label>Name</label>
@@ -36,7 +40,9 @@ class Register extends Component {
           </div>
         </div>
         <button type="submit" className="btn btn-primary">Register</button>
-        <div>Already registered? <Link to="/login">Login</Link></div>
+        <div className="mt-3">
+          Already registered? <Link to="/login">Login</Link>
+        </div>
       </form>
     );
   }
@@ -88,7 +94,7 @@ function mapStateToProps({ auth }) {
   return { error: auth.error };
 }
 
-Register = connect(mapStateToProps, { registerUser })(Register);  
+Register = connect(mapStateToProps, { registerUser, clearAuthError })(Register);  
 
 export default reduxForm({
   form: 'register',

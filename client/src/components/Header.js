@@ -1,5 +1,4 @@
 import React from 'react';
-import Logout from './auth/Logout';
 import { connect } from 'react-redux';
 import { dismissError } from '../actions/error';
 import { Link } from 'react-router-dom';
@@ -29,10 +28,12 @@ const Header = props => {
           <div className="text-center">
             <Link className="logo" to="/">Cattle Companion</Link>
           </div>
-          <nav className="text-center">
-            <Link className="mr-2" to="/">Farms</Link>
-            <Logout />
-          </nav>
+          {props.authenticated &&
+            <nav className="text-center">
+              <Link className="mr-2" to="/">Farms</Link>
+              <Link to="/login">Logout</Link>
+            </nav>
+          }
         </div>
       </div>
       { renderError() }
@@ -40,8 +41,8 @@ const Header = props => {
   );
 }
 
-function mapStateToProps({ error }) {
-  return { error };
+function mapStateToProps({ error, auth: { authenticated } }) {
+  return { error, authenticated };
 }
 
 export default connect(mapStateToProps, { dismissError })(Header);
