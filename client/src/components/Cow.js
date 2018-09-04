@@ -17,9 +17,9 @@ class Cow extends Component {
   }
 
   componentDidUpdate() {
-    const { cow, fetchCow, isLoading, match: { params: { id } } } = this.props;
+    const { cow, fetchCow, isLoading, error, match: { params: { id } } } = this.props;
 
-    if (!isLoading && cow._id !== id) {
+    if (!isLoading && !error && cow._id !== id) {
       fetchCow(id);
     }
   }
@@ -29,8 +29,11 @@ class Cow extends Component {
   }
 
   handleDeleteClick() {
-    const { showConfirmation, deleteCow, cow } = this.props;
-    showConfirmation(deleteCow, cow._id, `Are you sure you want to delete cow ${cow.name}?`);
+    const { showConfirmation, deleteCow, history, cow, match: { params: { farmId } } } = this.props;
+    showConfirmation(id => {
+      deleteCow(id);
+      history.push(`/farms/${farmId}`);
+    }, cow._id, `Are you sure you want to delete cow ${cow.name}?`);
   }
 
   renderIncidents() {
@@ -51,12 +54,14 @@ class Cow extends Component {
   }
 
   render() {
-    const { isLoading, cow: { _id, name, farmId, gender, dateOfBirth, mother, father, incidents } } = this.props;
+    const { isLoading, error, cow: { _id, name, farmId, gender, dateOfBirth, mother, father, incidents } } = this.props;
 
     return (
       <div className="mb-5">
-        { isLoading 
+        { isLoading
           ? null 
+          : error
+          ? <div className="invalid-feedback">Something went wrong. Please try again later.</div>
           : <div>
               <div className="mt-5">
                 <div>
@@ -108,8 +113,8 @@ class Cow extends Component {
   }
 }
 
-function mapStateToProps({ cowReducer: { cow, isLoading } }) {
-  return { cow, isLoading };
+function mapStateToProps({ cowReducer: { cow, isLoading, error } }) {
+  return { cow, isLoading, error };
 }
 export default connect(mapStateToProps, 
   { fetchCow, fetchIncidents, showAddIncident, showConfirmation, deleteCow }

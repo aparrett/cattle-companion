@@ -1,5 +1,6 @@
 import {  FETCH_COW_PENDING, 
           FETCH_COW_SUCCESS,
+          FETCH_COW_ERROR,
           DELETE_COW_SUCCESS,
           FETCH_ELIGIBLE_FATHERS_SUCCESS,
           FETCH_ELIGIBLE_MOTHERS_SUCCESS } from '../types/cattle';
@@ -20,7 +21,7 @@ export function fetchCow(id) {
       headers: { 'x-auth-token': cookie.get('token') }
     })
     .then(res => dispatch({ type: FETCH_COW_SUCCESS, payload: res.data }))
-    .catch(({ response }) => errorHandler(dispatch, ERROR, response.status, response.data));
+    .catch(({ response }) => errorHandler(dispatch, FETCH_COW_ERROR, response.status, response.data));
   }
 }
 
