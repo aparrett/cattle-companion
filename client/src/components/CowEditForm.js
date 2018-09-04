@@ -2,12 +2,13 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { withRouter } from 'react-router';
-import InputField from './fields/InputField';
+import moment from 'moment';
 import { CowGenders } from '../enums';
 import { fetchCow, editCow } from '../actions/cattle';
+import InputField from './fields/InputField';
+import VerticalRadioField from './fields/VerticalRadioField';
 import MotherSelect from './fields/MotherSelect';
 import FatherSelect from './fields/FatherSelect';
-import moment from 'moment';
 
 class CowEditForm extends Component {
   componentDidMount() {
@@ -24,16 +25,12 @@ class CowEditForm extends Component {
     const { handleSubmit, match } = this.props;
 
     return (
-      <div>
+      <div className="mt-5">
         <h1>Edit Cow</h1>
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
           <Field name="name" type="text" label="Name" className="form-control" component={InputField} />
-          <label>
-            <Field name="gender" type="radio" className="form-control" component={InputField} value={CowGenders.Cow} />Cow
-          </label>
-          <label>
-            <Field name="gender" type="radio" ignoreError="true" className="form-control" component={InputField} value={CowGenders.Bull} />Bull
-          </label>
+          <Field name="gender" component={VerticalRadioField} label="Cow" radioValue={CowGenders.Cow} ignoreError="true" />
+          <Field name="gender" component={VerticalRadioField} label="Bull" radioValue={CowGenders.Bull} />
           <Field name="dateOfBirth" label="Date of Birth" type="date" className="form-control" component={InputField} pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" />
           <Field name="mother" label="Mother" type="text" cowId={match.params.id} className="form-control" component={MotherSelect} />
           <Field name="father" label="Father" type="text" cowId={match.params.id} className="form-control" component={FatherSelect} />

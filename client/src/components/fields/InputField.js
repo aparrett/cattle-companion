@@ -10,9 +10,7 @@ const InputField = props => {
     <div className="form-group">
       {props.label && <label htmlFor={props.name}>{props.label}</label>}
       <input className={inputClasses} {...props.input} placeholder={props.placeholder} type={props.type} pattern={props.pattern} />
-      {props.meta.touched 
-        && props.meta.error 
-        && !props.ignoreError
+      {props.meta.touched && props.meta.error && !props.ignoreError 
         && <div className="invalid-feedback">{props.meta.error}</div>}
     </div>
   );
