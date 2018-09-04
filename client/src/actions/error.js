@@ -12,6 +12,11 @@ export function errorHandler(dispatch, type, status, error) {
       type: type,
       payload: 'You are not authorized to perform this action.'
     });
+  } else if (status === 404) {
+    dispatch({
+      type: type,
+      payload: 'Page not found.'
+    });
   } else {
     dispatch({
       type: type,

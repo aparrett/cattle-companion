@@ -16,6 +16,10 @@
   display: block;
 }
 
+.alert {
+  border-radius: 0;
+}
+
 /* Custom CSS */
 
 /* 

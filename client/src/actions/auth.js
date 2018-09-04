@@ -23,7 +23,9 @@ export function loginUser({ email, password }, callback) {
     .then(res => {
       cookie.set('token', res.data.token, { path: '/' });
       dispatch({ type: AUTH_USER, payload: res.data.user });
-      callback();
+      if (callback) {
+        callback();
+      }
     })
     .catch(({response}) => errorHandler(dispatch, AUTH_ERROR, response.status, response.data));
   }
@@ -54,7 +56,6 @@ export function fetchUser(callback) {
 }
 
 export function clearAuthError() {
-  console.log('auth error cleared supposedly');
   return dispatch => dispatch({ type: CLEAR_AUTH_ERROR });
 }
 

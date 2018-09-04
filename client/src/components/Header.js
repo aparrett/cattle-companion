@@ -12,10 +12,12 @@ const Header = props => {
     if (props.error) {
       return (
         <div>
-          <div className="alert-danger">
+          <div className="alert alert-secondary">
             { props.error }
+            <button type="button" className="close" onClick={handleDismissClick.bind(this)}> 
+              <span aria-hidden="true">&times;</span>
+            </button>
           </div>
-          <button onClick={handleDismissClick.bind(this)}>Dismiss</button>
         </div>
       );
     }
@@ -23,7 +25,7 @@ const Header = props => {
 
   return (
     <div>
-      <div className="d-flex p-3 px-md-4 mb-3 bg-white border-bottom box-shadow">
+      <div className="d-flex p-3 px-md-4 bg-white border-bottom box-shadow">
         <div className="container">
           <div className="text-center">
             <Link className="logo" to="/">Cattle Companion</Link>

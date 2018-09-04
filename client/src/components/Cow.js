@@ -61,52 +61,52 @@ class Cow extends Component {
         { isLoading
           ? null 
           : error
-          ? <div className="invalid-feedback">Something went wrong. Please try again later.</div>
-          : <div>
-              <div className="mt-5">
-                <div>
-                  <h1 className="font-weight-bold d-inline-block">{name}</h1>
-                  <div className="ml-2 d-inline-block">
-                    <Link className="heading-icon-link" to={`/farms/${farmId}/cattle/${_id}/edit`}>
-                      <FontAwesomeIcon className="text-secondary fa-lg d-inline-block" icon="pencil-alt" />
-                    </Link>
-                    <a onClick={this.handleDeleteClick.bind(this)} className="heading-icon-link">
-                      <FontAwesomeIcon className="text-danger fa-lg d-inline-block" icon="trash-alt" />
-                    </a>
+            ? <div className="invalid-feedback">{error}</div>
+            : <div>
+                <div className="mt-5">
+                  <div>
+                    <h1 className="font-weight-bold d-inline-block">{name}</h1>
+                    <div className="ml-2 d-inline-block">
+                      <Link className="heading-icon-link" to={`/farms/${farmId}/cattle/${_id}/edit`}>
+                        <FontAwesomeIcon className="text-secondary fa-lg d-inline-block" icon="pencil-alt" />
+                      </Link>
+                      <a onClick={this.handleDeleteClick.bind(this)} className="heading-icon-link">
+                        <FontAwesomeIcon className="text-danger fa-lg d-inline-block" icon="trash-alt" />
+                      </a>
+                    </div>
                   </div>
+                  <h4 className="text-muted">Gender: {gender}</h4>
+                  <h4 className="text-muted">DOB: {dateOfBirth}</h4>
                 </div>
-                <h4 className="text-muted">Gender: {gender}</h4>
-                <h4 className="text-muted">DOB: {dateOfBirth}</h4>
+                <div className="mt-4">
+                  <h3 className="text-center">Incidents</h3>
+                  <ul className="list-group mt-4">
+                    {incidents && this.renderIncidents()}
+                  </ul>
+                  <button className="btn btn-outline-primary mt-3" 
+                    onClick={this.handleAddIncidentClick.bind(this)}>Add Incident</button>
+                </div>
+                <div className="mt-4">
+                  <h3 className="text-center">Parents</h3>
+                  {!mother && !father 
+                    ? <p>{name} does not have any parents.</p>
+                    : <ul className="list-group mt-4">
+                        {mother && 
+                          <li className="list-group-item" key={mother._id}>
+                            <Link to={`/farms/${mother.farmId}/cattle/${mother._id}`}>{mother.name}</Link>
+                            &nbsp;- Mother
+                          </li>
+                        }
+                        {father && 
+                          <li className="list-group-item" key={father._id}>
+                            <Link to={`/farms/${father.farmId}/cattle/${father._id}`}>{father.name}</Link>
+                            &nbsp;- Father
+                          </li>
+                        }
+                      </ul>
+                  }
+                </div>
               </div>
-              <div className="mt-4">
-                <h3 className="text-center">Incidents</h3>
-                <ul className="list-group mt-4">
-                  {incidents && this.renderIncidents()}
-                </ul>
-                <button className="btn btn-outline-primary mt-3" 
-                  onClick={this.handleAddIncidentClick.bind(this)}>Add Incident</button>
-              </div>
-              <div className="mt-4">
-                <h3 className="text-center">Parents</h3>
-                {!mother && !father 
-                  ? <p>{name} does not have any parents.</p>
-                  : <ul className="list-group mt-4">
-                      {mother && 
-                        <li className="list-group-item" key={mother._id}>
-                          <Link to={`/farms/${mother.farmId}/cattle/${mother._id}`}>{mother.name}</Link>
-                          &nbsp;- Mother
-                        </li>
-                      }
-                      {father && 
-                        <li className="list-group-item" key={father._id}>
-                          <Link to={`/farms/${father.farmId}/cattle/${father._id}`}>{father.name}</Link>
-                          &nbsp;- Father
-                        </li>
-                      }
-                    </ul>
-                }
-              </div>
-            </div>
         }
       </div>
     );
