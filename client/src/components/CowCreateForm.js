@@ -24,8 +24,11 @@ class CowCreateForm extends Component {
         <h1>New Cow</h1>
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
           <Field name="name" type="text" label="Name" className="form-control" component={InputField} />
-          <Field name="gender" component={VerticalRadioField} label="Cow" radioValue={CowGenders.Cow} ignoreError="true" />
-          <Field name="gender" component={VerticalRadioField} label="Bull" radioValue={CowGenders.Bull} />
+          <div className="mb-3">
+            <label>Gender</label>
+            <Field name="gender" component={VerticalRadioField} label="Cow" radioValue={CowGenders.Cow} ignoreError="true" />
+            <Field name="gender" component={VerticalRadioField} label="Bull" radioValue={CowGenders.Bull} />
+          </div>
           <Field name="dateOfBirth" label="Date of Birth" type="date" className="form-control" component={InputField} pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" />
           <Field name="mother" label="Mother" type="text" farmId={match.params.farmId} className="form-control" component={MotherSelect} />
           <Field name="father" label="Father" type="text" farmId={match.params.farmId} className="form-control" component={FatherSelect} />

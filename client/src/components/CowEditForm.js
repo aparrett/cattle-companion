@@ -29,8 +29,11 @@ class CowEditForm extends Component {
         <h1>Edit Cow</h1>
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
           <Field name="name" type="text" label="Name" className="form-control" component={InputField} />
-          <Field name="gender" component={VerticalRadioField} label="Cow" radioValue={CowGenders.Cow} ignoreError="true" />
-          <Field name="gender" component={VerticalRadioField} label="Bull" radioValue={CowGenders.Bull} />
+          <div className="mb-3">
+            <label>Gender</label>
+            <Field name="gender" component={VerticalRadioField} label="Cow" radioValue={CowGenders.Cow} ignoreError="true" />
+            <Field name="gender" component={VerticalRadioField} label="Bull" radioValue={CowGenders.Bull} />
+          </div>
           <Field name="dateOfBirth" label="Date of Birth" type="date" className="form-control" component={InputField} pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" />
           <Field name="mother" label="Mother" type="text" cowId={match.params.id} className="form-control" component={MotherSelect} />
           <Field name="father" label="Father" type="text" cowId={match.params.id} className="form-control" component={FatherSelect} />
@@ -70,8 +73,20 @@ CowEditForm = reduxForm({
 })(CowEditForm);
 
 function mapStateToProps({ cowReducer: { cow } }) {
-  cow.dateOfBirth = moment(cow.dateOfBirth).format('YYYY-MM-DD');
-  return { initialValues: cow }
+  const initialValues = { 
+    ...cow, 
+    dateOfBirth: moment(cow.dateOfBirth).format('YYYY-MM-DD')
+  };
+
+  if (cow.mother) {
+    initialValues.mother = cow.mother._id;
+  }
+
+  if (cow.father) {
+    initialValues.father = cow.father._id;
+  }
+
+  return { initialValues }
 }
 
 export default withRouter(connect(mapStateToProps, { fetchCow, editCow })(CowEditForm));
