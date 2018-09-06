@@ -7,11 +7,18 @@ const { Farm } = require('../models/Farm');
 const _ = require('lodash');
 
 router.get('/:id', auth, validateObjectId, async (req, res) => {
-  const cow = await Cow.findById(req.params.id)
+  let cow = await Cow.findById(req.params.id)
     .populate('mother')
     .populate('father');
-    
+
   if (!cow) return res.status(404).send('Cow not found.');
+
+  const children = await Cow.find({ $or: [{ 'mother': cow._id }, { 'father': cow._id }] })
+    .populate('mother')
+    .populate('father');
+
+  cow = _.pick(cow, ['_id', 'name', 'gender', 'dateOfBirth', 'farmId', 'incidents', 'mother', 'father']);
+  cow.children = children;
 
   res.send(cow);
 });
