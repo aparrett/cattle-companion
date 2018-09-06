@@ -73,7 +73,6 @@ describe('/api/cattle', () => {
       cowId = cow._id;
 
       const res = await doRequest();
-      console.log('mother', res.body.mother);
       expect(res.body.mother.name).toBe('mother');
       expect(res.body.father.name).toBe('father');
     });
