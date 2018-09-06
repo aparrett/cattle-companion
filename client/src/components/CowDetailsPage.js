@@ -8,7 +8,7 @@ import { showConfirmation } from '../actions/modals';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 
-class Cow extends Component {
+class CowDetailsPage extends Component {
   componentDidMount() {
     this.props.fetchCow(this.props.match.params.id);
 
@@ -131,4 +131,4 @@ function mapStateToProps({ cowReducer: { cow, isLoading, error } }) {
 }
 export default connect(mapStateToProps, 
   { fetchCow, fetchIncidents, showAddIncident, showConfirmation, deleteCow }
-)(Cow);
+)(CowDetailsPage);

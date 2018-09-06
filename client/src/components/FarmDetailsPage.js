@@ -4,7 +4,7 @@ import { fetchFarm } from '../actions/farms';
 import CowListItem from './CowListItem';
 import { Link } from 'react-router-dom';
 
-class Farm extends Component {
+class FarmDetailsPage extends Component {
   componentDidMount() {
     this.props.fetchFarm(this.props.match.params.id);
   }
@@ -35,4 +35,4 @@ function mapStateToProps({ farmReducer: { farm, isLoading } }) {
   return { farm, isLoading };
 }
 
-export default connect(mapStateToProps, { fetchFarm })(Farm);
+export default connect(mapStateToProps, { fetchFarm })(FarmDetailsPage);
