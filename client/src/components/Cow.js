@@ -54,7 +54,7 @@ class Cow extends Component {
   }
 
   render() {
-    const { isLoading, error, cow: { _id, name, farmId, gender, dateOfBirth, mother, father, incidents } } = this.props;
+    const { isLoading, error, cow: { _id, name, farmId, gender, dateOfBirth, mother, father, incidents, children } } = this.props;
 
     return (
       <div className="mb-5">
@@ -103,6 +103,19 @@ class Cow extends Component {
                             &nbsp;- Father
                           </li>
                         }
+                      </ul>
+                  }
+                </div>
+                <div className="mt-4">
+                  <h3 className="text-center">Children</h3>
+                  {!children || children.length === 0
+                    ? <p>{name} does not have any children.</p>
+                    : <ul className="list-group mt-4">
+                        {children.map(child => (
+                          <li className="list-group-item" key={child._id}>
+                            <Link to={`/farms/${child.farmId}/cattle/${child._id}`}>{child.name}</Link>
+                          </li>
+                        ))}
                       </ul>
                   }
                 </div>
