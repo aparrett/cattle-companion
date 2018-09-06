@@ -7,7 +7,6 @@ import { showAddIncident } from '../actions/modals';
 import { showConfirmation } from '../actions/modals';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-
 class CowDetailsPage extends Component {
   componentDidMount() {
     this.props.fetchCow(this.props.match.params.id);

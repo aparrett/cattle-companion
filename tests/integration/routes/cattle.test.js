@@ -410,6 +410,7 @@ describe('/api/cattle', () => {
   describe('DELETE /:id', () => {
     let cowId;
     let token;
+    let farmId;
     
     beforeEach(async () => {
       let user = new User({ name: 'user', email: 'user@email.com', password: 'password' });
@@ -418,6 +419,7 @@ describe('/api/cattle', () => {
       
       let farm = new Farm({ name: 'farm', users: [user] });
       farm = await farm.save();
+      farmId = farm._id;
 
       let cow = new Cow({ name: 'cow', gender: CowGenders.Cow, dateOfBirth: new Date(), farmId: farm._id });
       cow = await cow.save();
@@ -458,6 +460,20 @@ describe('/api/cattle', () => {
     it('should return 204', async () => {
       const res = await doRequest();
       expect(res.status).toBe(204);
+    });
+
+    it('should remove the cow as parent of other cows', async () => {
+      let mother = new Cow({ name: 'mother', gender: CowGenders.Cow, dateOfBirth: new Date('08/08/2018'), farmId });
+      mother = await mother.save();
+      cowId = mother._id;
+
+      let child = new Cow({ name: 'child', gender: CowGenders.Cow, dateOfBirth: new Date('08/09/2018'), farmId, mother: mother._id });
+      child = await child.save();
+
+      await doRequest();
+
+      child = await Cow.findById(child._id);
+      expect(child.mother).toBeUndefined();
     });
 
     it('cow should not be in database', async () => {

@@ -45,8 +45,15 @@ router.delete('/:id', auth, validateObjectId, async (req, res) => {
   if (farm.users.indexOf(req.user._id) === -1) {
     return res.status(401).send('Unauthorized.');
   }
-
+  
   await cow.remove();
+
+  if (cow.gender === CowGenders.Cow) {
+    await Cow.update({ mother: cow._id }, { $unset: { mother: 1 } });
+  } else {
+    await Cow.update({ father: cow._id }, { $unset: { father: 1 } });
+  }
+
   res.status(204).send();
 });
 
