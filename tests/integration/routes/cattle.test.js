@@ -476,10 +476,10 @@ describe('/api/cattle', () => {
       expect(child.mother).toBeUndefined();
     });
 
-    it('cow should not be in database', async () => {
+    it('should delete the cow', async () => {
       await doRequest();
       const cow = await Cow.findById(cowId);
-      expect(cow).toBeFalsy();
+      expect(cow).toBeNull();
     });
   });
 

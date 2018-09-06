@@ -29,11 +29,27 @@ router.get('/:id', auth, validateObjectId, async (req, res) => {
   res.send(farm);
 });
 
+router.delete('/:id', auth, validateObjectId, async (req, res) => {
+  let farm = await Farm.findById(req.params.id).populate('User');
+  if (!farm) return res.status(404).send('Farm not found.');
+
+  if (farm.users.indexOf(req.user._id) === -1) {
+    return res.status(401).send('Unauthorized.');
+  }
+
+  await Promise.all([
+    Farm.deleteOne({ _id: farm._id }),
+    Cow.deleteMany({ farmId: farm._id })
+  ]);
+
+  res.status(204).send();
+});
+
 router.post('/:id/cattle', auth, validateObjectId, async (req, res) => {
   const farm = await Farm.findById(req.params.id).populate('User');
   if (!farm) return res.status(404).send('Farm not found.');
 
-  if (farm.users.indexOf(req.user._id) === -1){
+  if (farm.users.indexOf(req.user._id) === -1) {
     return res.status(401).send('Unauthorized.');
   } 
 

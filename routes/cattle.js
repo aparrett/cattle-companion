@@ -13,7 +13,7 @@ router.get('/:id', auth, validateObjectId, async (req, res) => {
 
   if (!cow) return res.status(404).send('Cow not found.');
 
-  const children = await Cow.find({ $or: [{ 'mother': cow._id }, { 'father': cow._id }] })
+  const children = await Cow.find({ $or: [{ mother: cow._id }, { father: cow._id }] })
     .populate('mother')
     .populate('father');
 
