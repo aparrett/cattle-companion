@@ -1,11 +1,9 @@
-const seedIncidents = require('./seedIncidents');
 const { User } = require('../../models/User');
 const { Farm } = require('../../models/Farm');
 const { Cow, CowGenders } = require('../../models/Cow');
 const bcrypt = require('bcrypt');
 
 async function seedTestAccount() {
-  await seedIncidents();
   await deleteTestAccount();
 
   let guest = new User({ name: 'Guest', email: 'test@test.com', password: 'password' });
