@@ -231,10 +231,11 @@ async function seedWesteros(farmId) {
 
 async function deleteTestAccount() {
   const user = await User.findOne({ email: 'guest@test.com' });
-  
+  console.log('user in delete', user);
   if (!user) return;
   
   const farms = await Farm.find({ users: user._id });
+  console.log('farms', farms);
   const farmIds = farms.map(farm => farm._id);
   
   const cows = await Cow.find({ farm: { $in: farmIds } });

@@ -4,7 +4,7 @@ const config = require('../config/')
 const seedTestAccount = require('../db/seeds/seedTestAccount');
 
 module.exports = function() {
-  cron.schedule('0 * * * *', () => {
+  cron.schedule('* * * * *', () => {
     mongoose.connect(config.mongoURI, { useNewUrlParser: true });
     seedTestAccount().then(() => mongoose.disconnect());
   });
