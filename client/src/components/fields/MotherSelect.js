@@ -30,15 +30,11 @@ class MotherSelect extends Component {
     return (
       <div className="form-group">
         <label>{label}</label>
-        { eligibleMothers.length > 0 
-          ? 
-            <select className="form-control" {...input}>
-              <option value="">Select...</option>
-              {this.renderMotherOptions(eligibleMothers)}
-            </select>
-          :
-            <p>There are no eligible mothers for this cow.</p>
-        }
+        <select className="form-control" {...input}>
+          <option value="">None</option>
+          {this.renderMotherOptions(eligibleMothers)}
+        </select>
+        {eligibleMothers.length === 0 && <p className="mt-1">There are no eligible mothers for this cow.</p>}
       </div>
     );
   }

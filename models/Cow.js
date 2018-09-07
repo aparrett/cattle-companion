@@ -81,8 +81,8 @@ function validateUpdate(cow) {
     name: Joi.string().max(100),
     gender: Joi.string().valid(Object.values(CowGenders)),
     dateOfBirth: Joi.date(),
-    mother: Joi.objectId(),
-    father: Joi.objectId(),
+    mother: Joi.objectId().allow(null),
+    father: Joi.objectId().allow(null),
     farmId: Joi.objectId(),
     incidents: Joi.array().items(incident)
   });

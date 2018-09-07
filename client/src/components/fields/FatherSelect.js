@@ -30,15 +30,10 @@ class FatherSelect extends Component {
     return (
       <div className="form-group">
         <label>{label}</label>
-        { eligibleFathers.length > 0 
-          ? 
-            <select className="form-control" {...input}>
-              <option value="">Select...</option>
-              {this.renderFatherOptions(eligibleFathers)}
-            </select>
-          :
-            <p>There are no eligible fathers for this cow.</p>
-        }
+        <select className="form-control" {...input}>
+          <option value="">None</option>
+        </select>
+        {eligibleFathers.length === 0 && <p className="mt-1">There are no eligible fathers for this cow.</p>}
       </div>
     );
   }

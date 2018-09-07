@@ -37,26 +37,6 @@ router.patch('/:id', auth, validateObjectId, async (req, res) => {
   res.send(cow);
 }); 
 
-router.delete('/:id', auth, validateObjectId, async (req, res) => {
-  const cow = await Cow.findById(req.params.id);
-  if (!cow) return res.status(404).send('Cow not found.');
-
-  const farm = await Farm.findById(cow.farmId).populate('User');
-  if (farm.users.indexOf(req.user._id) === -1) {
-    return res.status(401).send('Unauthorized.');
-  }
-  
-  await cow.remove();
-
-  if (cow.gender === CowGenders.Cow) {
-    await Cow.update({ mother: cow._id }, { $unset: { mother: 1 } });
-  } else {
-    await Cow.update({ father: cow._id }, { $unset: { father: 1 } });
-  }
-
-  res.status(204).send();
-});
-
 router.put('/:id', auth, validateObjectId, async (req, res) => {
   const id = req.params.id;
   
@@ -86,6 +66,26 @@ router.put('/:id', auth, validateObjectId, async (req, res) => {
   cow = await Cow.findByIdAndUpdate(id, { $set: updateCow }, { new: true });
   res.send(cow);
 }); 
+
+router.delete('/:id', auth, validateObjectId, async (req, res) => {
+  const cow = await Cow.findById(req.params.id);
+  if (!cow) return res.status(404).send('Cow not found.');
+
+  const farm = await Farm.findById(cow.farmId).populate('User');
+  if (farm.users.indexOf(req.user._id) === -1) {
+    return res.status(401).send('Unauthorized.');
+  }
+  
+  await cow.remove();
+
+  if (cow.gender === CowGenders.Cow) {
+    await Cow.update({ mother: cow._id }, { $unset: { mother: 1 } });
+  } else {
+    await Cow.update({ father: cow._id }, { $unset: { father: 1 } });
+  }
+
+  res.status(204).send();
+});
 
 router.get('/:id/eligible-mothers', auth, validateObjectId, async (req, res) => {
   const cow = await Cow.findById(req.params.id);
