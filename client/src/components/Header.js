@@ -10,6 +10,8 @@ const Header = props => {
 
   function renderError() {
     if (props.error) {
+      setTimeout(() => props.dismissError(), 5 * 1000);
+
       return (
         <div>
           <div className="alert alert-secondary">

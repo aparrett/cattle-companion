@@ -8,10 +8,10 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 const CowListItem = ({ cow, deleteCow, showConfirmation }) => (
   <li className="list-group-item" key={cow._id}>
     <div className="row justify-content-between">
-      <div className="col-4">
+      <div className="col-6">
         <Link to={`/farms/${cow.farmId}/cattle/${cow._id}`}>{cow.name}</Link>
       </div>
-      <div className="col-4 text-right">
+      <div className="col-6 text-right">
         <Link to={`/farms/${cow.farmId}/cattle/${cow._id}/edit`}>
           <FontAwesomeIcon className="text-secondary fa-lg d-inline-block mr-3" icon="pencil-alt" />
         </Link>

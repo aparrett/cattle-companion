@@ -92,13 +92,17 @@ class CowDetailsPage extends Component {
                     : <ul className="list-group mt-4">
                         {mother && 
                           <li className="list-group-item" key={mother._id}>
-                            <Link to={`/farms/${mother.farmId}/cattle/${mother._id}`}>{mother.name}</Link>
+                            <Link to={`/farms/${mother.farmId}/cattle/${mother._id}`}>
+                              {mother.name}
+                            </Link>
                             &nbsp;- Mother
                           </li>
                         }
                         {father && 
                           <li className="list-group-item" key={father._id}>
-                            <Link to={`/farms/${father.farmId}/cattle/${father._id}`}>{father.name}</Link>
+                            <Link to={`/farms/${father.farmId}/cattle/${father._id}`}>
+                              {father.name}
+                            </Link>
                             &nbsp;- Father
                           </li>
                         }
