@@ -20,7 +20,7 @@ class CowCreateForm extends Component {
     const { handleSubmit, match } = this.props;
 
     return (
-      <div className="my-5">
+      <div>
         <h1>New Cow</h1>
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
           <Field name="name" type="text" label="Name" className="form-control" component={InputField} />

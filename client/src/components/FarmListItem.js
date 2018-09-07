@@ -12,7 +12,7 @@ const FarmListItem = ({ farm, deleteFarm, showConfirmation }) => (
         <Link to={`/farms/${farm._id}`}>{farm.name}</Link>
       </div>
       <div className="col-6 text-right">
-        <a onClick={() => showConfirmation(deleteFarm, farm._id, `Are you sure you want to delete farm ${farm.name}?`)}>
+        <a onClick={() => showConfirmation(farm._id, `Are you sure you want to delete farm ${farm.name}?`, deleteFarm)}>
           <FontAwesomeIcon className="text-danger fa-lg d-inline-block" icon="trash-alt" />
         </a>
       </div>

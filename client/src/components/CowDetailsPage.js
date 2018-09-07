@@ -29,10 +29,10 @@ class CowDetailsPage extends Component {
 
   handleDeleteClick() {
     const { showConfirmation, deleteCow, history, cow, match: { params: { farmId } } } = this.props;
-    showConfirmation(id => {
+    showConfirmation(cow._id, `Are you sure you want to delete cow ${cow.name}?`, id => {
       deleteCow(id);
       history.push(`/farms/${farmId}`);
-    }, cow._id, `Are you sure you want to delete cow ${cow.name}?`);
+    });
   }
 
   renderIncidents() {
@@ -55,7 +55,7 @@ class CowDetailsPage extends Component {
   render() {
     const { isLoading, error, cow: { _id, name, farm, gender, dateOfBirth, mother, father, incidents, children } } = this.props;
     return (
-      <div className="my-5">
+      <div>
         { isLoading || !this.props.cow.name
           ? null 
           : error

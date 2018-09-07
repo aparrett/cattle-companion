@@ -20,7 +20,7 @@ const App = () => (
     <div>
       <Header />
       <ModalRoot />
-      <div className="container body-content">
+      <div className="container my-5">
         <Router />
       </div>
     </div>

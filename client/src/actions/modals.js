@@ -8,7 +8,7 @@ export function showAddIncident(cow) {
   });
 }
 
-export function showConfirmation(action, id, title) {
+export function showConfirmation(id, title, action) {
   return dispatch => dispatch({
     type: SHOW_MODAL,
     modalType: 'CONFIRMATION',
