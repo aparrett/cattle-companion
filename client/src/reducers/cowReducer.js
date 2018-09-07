@@ -7,8 +7,12 @@ const initialState = { cow: {}, isLoading: false, error: null };
 export default function cowReducer(state = initialState, action) {
   switch (action.type) {
     case FETCH_COW_PENDING:
+    console.log('action', action)
+    console.log('state', state)
       return { ...state, isLoading: true };
     case FETCH_COW_SUCCESS:
+    console.log('action', action)
+    console.log('state', state)
       return { ...state, cow: action.payload, isLoading: false };
     case FETCH_COW_ERROR:
       return { ...state, error: action.payload, isLoading: false };
@@ -16,7 +20,7 @@ export default function cowReducer(state = initialState, action) {
       const cow = { ...state.cow, incidents: [...state.cow.incidents, action.payload] };
       return { ...state, cow };
     case ERROR:
-      return { ...initialState };
+      return { ...state };
     default:
       return state;
   }

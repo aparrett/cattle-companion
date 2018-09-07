@@ -12,7 +12,7 @@ import { saveCow } from '../actions/cattle';
 class CowCreateForm extends Component {
   handleFormSubmit(formProps) {
     const { match, saveCow, history} = this.props;
-    const cow = { ...formProps, farmId: match.params.farmId };
+    const cow = { ...formProps, farm: match.params.farmId };
     saveCow(cow, history);
   }
   
@@ -20,7 +20,7 @@ class CowCreateForm extends Component {
     const { handleSubmit, match } = this.props;
 
     return (
-      <div>
+      <div className="my-5">
         <h1>New Cow</h1>
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
           <Field name="name" type="text" label="Name" className="form-control" component={InputField} />

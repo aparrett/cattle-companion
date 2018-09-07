@@ -21,7 +21,7 @@ class CowEditForm extends Component {
     const cow = { 
       ...formProps, 
       _id: id, 
-      farmId: farmId,
+      farm: farmId,
       mother: formProps.mother === "" ? null : formProps.mother,
       father: formProps.father === "" ? null : formProps.father
     };
@@ -33,7 +33,7 @@ class CowEditForm extends Component {
     const { handleSubmit, match } = this.props;
 
     return (
-      <div className="mt-5">
+      <div className="my-5">
         <h1>Edit Cow</h1>
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
           <Field name="name" type="text" label="Name" className="form-control" component={InputField} />

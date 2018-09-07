@@ -53,11 +53,10 @@ class CowDetailsPage extends Component {
   }
 
   render() {
-    const { isLoading, error, cow: { _id, name, farmId, gender, dateOfBirth, mother, father, incidents, children } } = this.props;
-
+    const { isLoading, error, cow: { _id, name, farm, gender, dateOfBirth, mother, father, incidents, children } } = this.props;
     return (
-      <div className="mb-5">
-        { isLoading
+      <div className="my-5">
+        { isLoading || !this.props.cow.name
           ? null 
           : error
             ? <div className="invalid-feedback">{error}</div>
@@ -66,7 +65,7 @@ class CowDetailsPage extends Component {
                   <div>
                     <h1 className="font-weight-bold d-inline-block">{name}</h1>
                     <div className="ml-2 d-inline-block">
-                      <Link className="heading-icon-link" to={`/farms/${farmId}/cattle/${_id}/edit`}>
+                      <Link className="heading-icon-link" to={`/farms/${farm}/cattle/${_id}/edit`}>
                         <FontAwesomeIcon className="text-secondary fa-lg d-inline-block" icon="pencil-alt" />
                       </Link>
                       <a onClick={this.handleDeleteClick.bind(this)} className="heading-icon-link">
@@ -74,6 +73,7 @@ class CowDetailsPage extends Component {
                       </a>
                     </div>
                   </div>
+                  <h4><Link to={`/farms/${farm._id}`}>{farm.name}</Link></h4>
                   <h4 className="text-muted">Gender: {gender}</h4>
                   <h4 className="text-muted">DOB: {dateOfBirth}</h4>
                 </div>
@@ -92,7 +92,7 @@ class CowDetailsPage extends Component {
                     : <ul className="list-group mt-4">
                         {mother && 
                           <li className="list-group-item" key={mother._id}>
-                            <Link to={`/farms/${mother.farmId}/cattle/${mother._id}`}>
+                            <Link to={`/farms/${mother.farm}/cattle/${mother._id}`}>
                               {mother.name}
                             </Link>
                             &nbsp;- Mother
@@ -100,7 +100,7 @@ class CowDetailsPage extends Component {
                         }
                         {father && 
                           <li className="list-group-item" key={father._id}>
-                            <Link to={`/farms/${father.farmId}/cattle/${father._id}`}>
+                            <Link to={`/farms/${father.farm}/cattle/${father._id}`}>
                               {father.name}
                             </Link>
                             &nbsp;- Father
@@ -116,7 +116,7 @@ class CowDetailsPage extends Component {
                     : <ul className="list-group mt-4">
                         {children.map(child => (
                           <li className="list-group-item" key={child._id}>
-                            <Link to={`/farms/${child.farmId}/cattle/${child._id}`}>{child.name}</Link>
+                            <Link to={`/farms/${child.farm}/cattle/${child._id}`}>{child.name}</Link>
                           </li>
                         ))}
                       </ul>

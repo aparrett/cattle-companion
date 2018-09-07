@@ -1,5 +1,6 @@
 const request = require('supertest');
 const mongoose = require('mongoose');
+const seedIncidents = require('../../../db/seeds/seedIncidents');
 const { Cow, CowGenders } = require('../../../models/Cow');
 const { User } = require('../../../models/User');
 const { Incident } = require('../../../models/Incident');
@@ -42,20 +43,20 @@ describe('/api/cattle', () => {
       expect(res.status).toBe(404);
     });
 
-    it('should contain parent objects if they exist', async () => {
+    it('should contain parent objects if they exist 1', async () => {
       const farmId = mongoose.Types.ObjectId();
       let mother = new Cow({ 
         name: 'mother', 
         gender: CowGenders.Cow, 
         dateOfBirth: new Date('08/08/2018'),
-        farmId
+        farm: farmId
       });
 
       let father = new Cow({ 
         name: 'father', 
         gender: CowGenders.Bull, 
         dateOfBirth: new Date('08/08/2018'),
-        farmId
+        farm: farmId
       });
 
       [mother, father] = await Promise.all([ mother.save(), father.save() ]);
@@ -64,7 +65,7 @@ describe('/api/cattle', () => {
         name: 'foo', 
         gender: CowGenders.Cow, 
         dateOfBirth: new Date('08/09/2018'),
-        farmId,
+        farm: farmId,
         mother: mother._id,
         father: father._id
       });
@@ -78,13 +79,13 @@ describe('/api/cattle', () => {
     });
 
     it('should contain children if they exist', async () => {
-      const farmId = mongoose.Types.ObjectId();
+      const farm = mongoose.Types.ObjectId();
 
       let cow = new Cow({ 
         name: 'foo', 
         gender: CowGenders.Cow, 
         dateOfBirth: new Date('08/07/2018'),
-        farmId
+        farm
       });
 
       cow = await cow.save();
@@ -94,7 +95,7 @@ describe('/api/cattle', () => {
         name: 'child1', 
         gender: CowGenders.Cow, 
         dateOfBirth: new Date('08/08/2018'),
-        farmId,
+        farm,
         mother: cowId
       });
 
@@ -102,7 +103,7 @@ describe('/api/cattle', () => {
         name: 'child2', 
         gender: CowGenders.Bull, 
         dateOfBirth: new Date('08/08/2018'),
-        farmId,
+        farm,
         mother: cowId
       });
 
@@ -113,12 +114,12 @@ describe('/api/cattle', () => {
     });
 
     it('should return the cow if it exists', async () => {
-      let farmId = mongoose.Types.ObjectId();
+      let farm = mongoose.Types.ObjectId();
       let cow = new Cow({ 
         name: 'foo', 
         gender: CowGenders.Cow, 
         dateOfBirth: new Date(),
-        farmId
+        farm
       });
 
       cow = await cow.save();
@@ -159,7 +160,7 @@ describe('/api/cattle', () => {
       farm = await farm.save();
       farmId = farm._id;
 
-      cow = new Cow({ name: 'cow', gender: CowGenders.Cow, dateOfBirth: new Date('08/01/2018'), farmId });
+      cow = new Cow({ name: 'cow', gender: CowGenders.Cow, dateOfBirth: new Date('08/01/2018'), farm: farmId });
       cow = await cow.save();
       cowId = cow._id;
 
@@ -167,8 +168,8 @@ describe('/api/cattle', () => {
       gender = CowGenders.Bull;
       dateOfBirth = new Date('08/01/2018');
 
-      mother = new Cow({ name: 'mother', gender: CowGenders.Cow, dateOfBirth: new Date('07/31/2018'), farmId });
-      father = new Cow({ name: 'father', gender: CowGenders.Bull, dateOfBirth: new Date('07/31/2018'), farmId });
+      mother = new Cow({ name: 'mother', gender: CowGenders.Cow, dateOfBirth: new Date('07/31/2018'), farm: farmId });
+      father = new Cow({ name: 'father', gender: CowGenders.Bull, dateOfBirth: new Date('07/31/2018'), farm: farmId });
 
       [mother, father] = await Promise.all([ mother.save(), father.save() ]);
     });
@@ -244,7 +245,7 @@ describe('/api/cattle', () => {
           name: 'father', 
           gender: CowGenders.Bull, 
           dateOfBirth: new Date('07/31/2018'), 
-          farmId: otherFarmId 
+          farm: otherFarmId 
         });
 
         father = await father.save();
@@ -258,7 +259,7 @@ describe('/api/cattle', () => {
           name: 'father', 
           gender: CowGenders.Cow, 
           dateOfBirth: new Date('07/31/2018'), 
-          farmId 
+          farm: farmId 
         });
 
         father = await father.save();
@@ -272,7 +273,7 @@ describe('/api/cattle', () => {
           name: 'father', 
           gender: CowGenders.Bull, 
           dateOfBirth: new Date('08/02/2018'), 
-          farmId 
+          farm: farmId 
         });
 
         father = await father.save();
@@ -287,7 +288,7 @@ describe('/api/cattle', () => {
           name: 'mother', 
           gender: CowGenders.Cow, 
           dateOfBirth: new Date('07/31/2018'), 
-          farmId: otherFarmId 
+          farm: otherFarmId 
         });
 
         mother = await mother.save();
@@ -301,7 +302,7 @@ describe('/api/cattle', () => {
           name: 'mother', 
           gender: CowGenders.Bull, 
           dateOfBirth: new Date('07/31/2018'), 
-          farmId 
+          farm: farmId 
         });
 
         mother = await mother.save();
@@ -315,7 +316,7 @@ describe('/api/cattle', () => {
           name: 'mother', 
           gender: CowGenders.Cow, 
           dateOfBirth: new Date('08/02/2018'), 
-          farmId 
+          farm: farmId 
         });
 
         mother = await mother.save();
@@ -325,7 +326,7 @@ describe('/api/cattle', () => {
       });
     });
 
-    it('should return updated cow 2', async () => {
+    it('should return updated cow', async () => {
       const res = await doRequest();
 
       expect(res.status).toBe(200);
@@ -354,10 +355,11 @@ describe('/api/cattle', () => {
       farm = new Farm({ name: 'farm', users: [user] });
       farm = await farm.save();
 
-      cow = new Cow({ name: 'cow', gender: CowGenders.Cow, dateOfBirth: new Date(), farmId: farm._id });
+      cow = new Cow({ name: 'cow', gender: CowGenders.Cow, dateOfBirth: new Date(), farm: farm._id });
       cow = await cow.save();
       cowId = cow._id;
 
+      await seedIncidents();
       const incident1 = await Incident.findOne({});
       const incident2 = await Incident.findOne({ name: { $ne: incident1.name }});
 
@@ -370,7 +372,7 @@ describe('/api/cattle', () => {
     });
 
     afterEach(async () => {
-      await Promise.all([ User.deleteMany({}), Farm.deleteMany({}), Cow.deleteMany({}) ]);
+      await Promise.all([ User.deleteMany({}), Farm.deleteMany({}), Cow.deleteMany({}), Incident.deleteMany({}) ]);
     });
 
     it('should return 401 if user not logged in', async () => {
@@ -421,7 +423,7 @@ describe('/api/cattle', () => {
       farm = await farm.save();
       farmId = farm._id;
 
-      let cow = new Cow({ name: 'cow', gender: CowGenders.Cow, dateOfBirth: new Date(), farmId: farm._id });
+      let cow = new Cow({ name: 'cow', gender: CowGenders.Cow, dateOfBirth: new Date(), farm: farm._id });
       cow = await cow.save();
       cowId = cow._id;
     });
@@ -463,11 +465,11 @@ describe('/api/cattle', () => {
     });
 
     it('should remove the cow as parent of other cows', async () => {
-      let mother = new Cow({ name: 'mother', gender: CowGenders.Cow, dateOfBirth: new Date('08/08/2018'), farmId });
+      let mother = new Cow({ name: 'mother', gender: CowGenders.Cow, dateOfBirth: new Date('08/08/2018'), farm: farmId });
       mother = await mother.save();
       cowId = mother._id;
 
-      let child = new Cow({ name: 'child', gender: CowGenders.Cow, dateOfBirth: new Date('08/09/2018'), farmId, mother: mother._id });
+      let child = new Cow({ name: 'child', gender: CowGenders.Cow, dateOfBirth: new Date('08/09/2018'), farm: farmId, mother: mother._id });
       child = await child.save();
 
       await doRequest();
@@ -494,7 +496,7 @@ describe('/api/cattle', () => {
       farm = await farm.save();
       farmId = farm._id;
 
-      let cow = new Cow({ name: 'cow', gender: CowGenders.Cow, dateOfBirth: new Date('08/15/2018'), farmId });
+      let cow = new Cow({ name: 'cow', gender: CowGenders.Cow, dateOfBirth: new Date('08/15/2018'), farm: farmId });
       cow = await cow.save();
       cowId = cow._id;
     });
@@ -524,7 +526,7 @@ describe('/api/cattle', () => {
     });
 
     it('should not return younger cattle', async () => {
-      const cow2 = new Cow({ name: 'cow2', gender: CowGenders.Cow, dateOfBirth: new Date('08/16/2018'), farmId });
+      const cow2 = new Cow({ name: 'cow2', gender: CowGenders.Cow, dateOfBirth: new Date('08/16/2018'), farm: farmId });
       await cow2.save();
       
       const res = await doRequest();
@@ -533,7 +535,7 @@ describe('/api/cattle', () => {
     });
 
     it('should not return bulls', async () => {
-      const cow2 = new Cow({ name: 'cow2', gender: CowGenders.Bull, dateOfBirth: new Date('08/14/2018'), farmId });
+      const cow2 = new Cow({ name: 'cow2', gender: CowGenders.Bull, dateOfBirth: new Date('08/14/2018'), farm: farmId });
       await cow2.save();
       
       const res = await doRequest();
@@ -551,7 +553,7 @@ describe('/api/cattle', () => {
       let farm2 = new Farm({ name: 'farm2' });
       farm2 = await farm2.save();
 
-      const cow2 = new Cow({ name: 'cow2', gender: CowGenders.Cow, dateOfBirth: new Date('08/14/2018'), farmId: farm2._id });
+      const cow2 = new Cow({ name: 'cow2', gender: CowGenders.Cow, dateOfBirth: new Date('08/14/2018'), farm: farm2._id });
       await cow2.save();
       
       const res = await doRequest();
@@ -560,7 +562,7 @@ describe('/api/cattle', () => {
     });
 
     it('should return older (female) cows from the same farm', async () => {
-      const cow2 = new Cow({ name: 'cow2', gender: CowGenders.Cow, dateOfBirth: new Date('08/14/2018'), farmId });
+      const cow2 = new Cow({ name: 'cow2', gender: CowGenders.Cow, dateOfBirth: new Date('08/14/2018'), farm: farmId });
       await cow2.save();
 
       const res = await doRequest();
@@ -581,7 +583,7 @@ describe('/api/cattle', () => {
       farm = await farm.save();
       farmId = farm._id;
 
-      let cow = new Cow({ name: 'bull', gender: CowGenders.Bull, dateOfBirth: new Date('08/15/2018'), farmId });
+      let cow = new Cow({ name: 'bull', gender: CowGenders.Bull, dateOfBirth: new Date('08/15/2018'), farm: farmId });
       cow = await cow.save();
       cowId = cow._id;
     });
@@ -611,7 +613,7 @@ describe('/api/cattle', () => {
     });
 
     it('should not return younger cattle', async () => {
-      const cow2 = new Cow({ name: 'bull2', gender: CowGenders.Bull, dateOfBirth: new Date('08/16/2018'), farmId });
+      const cow2 = new Cow({ name: 'bull2', gender: CowGenders.Bull, dateOfBirth: new Date('08/16/2018'), farm: farmId });
       await cow2.save();
       
       const res = await doRequest();
@@ -620,7 +622,7 @@ describe('/api/cattle', () => {
     });
 
     it('should not return (female) cows', async () => {
-      const cow2 = new Cow({ name: 'cow2', gender: CowGenders.Cow, dateOfBirth: new Date('08/14/2018'), farmId });
+      const cow2 = new Cow({ name: 'cow2', gender: CowGenders.Cow, dateOfBirth: new Date('08/14/2018'), farm: farmId });
       await cow2.save();
       
       const res = await doRequest();
@@ -638,7 +640,7 @@ describe('/api/cattle', () => {
       let farm2 = new Farm({ name: 'farm2' });
       farm2 = await farm2.save();
 
-      const bull2 = new Cow({ name: 'bull2', gender: CowGenders.Bull, dateOfBirth: new Date('08/14/2018'), farmId: farm2._id });
+      const bull2 = new Cow({ name: 'bull2', gender: CowGenders.Bull, dateOfBirth: new Date('08/14/2018'), farm: farm2._id });
       await bull2.save();
       
       const res = await doRequest();
@@ -647,7 +649,7 @@ describe('/api/cattle', () => {
     });
 
     it('should return older bulls from the same farm', async () => {
-      const bull2 = new Cow({ name: 'bull2', gender: CowGenders.Bull, dateOfBirth: new Date('08/14/2018'), farmId });
+      const bull2 = new Cow({ name: 'bull2', gender: CowGenders.Bull, dateOfBirth: new Date('08/14/2018'), farm: farmId });
       await bull2.save();
 
       const res = await doRequest();

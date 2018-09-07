@@ -23,7 +23,7 @@ router.get('/:id', auth, validateObjectId, async (req, res) => {
 
   farm = _.pick(farm, ['_id', 'name']);
 
-  const cattle = await Cow.find({ farmId: farm._id });
+  const cattle = await Cow.find({ farm: farm._id });
   farm.cattle = cattle || [];
 
   res.send(farm);
@@ -39,7 +39,7 @@ router.delete('/:id', auth, validateObjectId, async (req, res) => {
 
   await Promise.all([
     Farm.deleteOne({ _id: farm._id }),
-    Cow.deleteMany({ farmId: farm._id })
+    Cow.deleteMany({ farm: farm._id })
   ]);
 
   res.status(204).send();
@@ -53,7 +53,7 @@ router.post('/:id/cattle', auth, validateObjectId, async (req, res) => {
     return res.status(401).send('Unauthorized.');
   } 
 
-  let cow = { ...req.body, farmId: String(farm._id) };
+  let cow = { ...req.body, farm: String(farm._id) };
 
   let validateResult;
   validateResult = validateCow(cow);
@@ -73,7 +73,7 @@ router.get('/:id/cattle/eligible-mothers', auth, validateObjectId, async (req, r
 
   const cattle = await Cow.find({
     gender: CowGenders.Cow,
-    farmId: req.params.id
+    farm: req.params.id
   });
 
   res.send(cattle);
@@ -85,7 +85,7 @@ router.get('/:id/cattle/eligible-fathers', auth, validateObjectId, async (req, r
 
   const cattle = await Cow.find({
     gender: CowGenders.Bull,
-    farmId: req.params.id
+    farm: req.params.id
   });
 
   res.send(cattle);

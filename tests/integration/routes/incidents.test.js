@@ -1,5 +1,6 @@
 const request = require('supertest');
 const seedIncidents = require('../../../db/seeds/seedIncidents');
+const { Incident } = require('../../../models/Incident');
 
 let server;
 
@@ -14,6 +15,8 @@ describe('/api/incidents', () => {
       const res = await request(server).get('/api/incidents');
       expect(res.status).toBe(200);
       expect(res.body.length).toBeGreaterThan(0);
+
+      await Incident.deleteMany({});
     });
   });
 });

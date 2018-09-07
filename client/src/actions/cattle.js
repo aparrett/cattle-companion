@@ -25,25 +25,25 @@ export function fetchCow(id) {
   }
 }
 
-export function saveCow({ name, gender, dateOfBirth, farmId, mother, father }, history) {
+export function saveCow({ name, gender, dateOfBirth, farm, mother, father }, history) {
   return dispatch => axios
-    .post(`/api/farms/${farmId}/cattle`, {
+    .post(`/api/farms/${farm}/cattle`, {
       name, gender, dateOfBirth, mother, father
     }, {
       headers: { 'x-auth-token': cookie.get('token') }
     })
-    .then(res => history.push(`/farms/${farmId}/cattle/${res.data._id}`))
+    .then(res => history.push(`/farms/${farm}/cattle/${res.data._id}`))
     .catch(({ response }) => errorHandler(dispatch, ERROR, response.status, response.data));
 }
 
-export function editCow({ _id, name, gender, dateOfBirth, farmId, mother, father }, history) {
+export function editCow({ _id, name, gender, dateOfBirth, farm, mother, father }, history) {
   return dispatch => axios
     .put(`/api/cattle/${_id}`, {
-      name, gender, dateOfBirth, farmId, mother, father
+      name, gender, dateOfBirth, farm, mother, father
     }, {
       headers: { 'x-auth-token': cookie.get('token') }
     })
-    .then(res => history.push(`/farms/${farmId}/cattle/${res.data._id}`))
+    .then(res => history.push(`/farms/${farm}/cattle/${res.data._id}`))
     .catch(({ response }) => errorHandler(dispatch, ERROR, response.status, response.data));
 }
 

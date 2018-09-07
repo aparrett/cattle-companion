@@ -16,7 +16,7 @@ class FarmDetailsPage extends Component {
   renderFarm() {
     const { farm } = this.props;
     return(
-      <div className="mt-5">
+      <div className="my-5">
         <h1>{farm.name}</h1>
         {farm.cattle && <ul className="list-group mt-4">{this.renderCattle()}</ul>}
         <Link to={`/farms/${farm._id}/cattle/new`}>

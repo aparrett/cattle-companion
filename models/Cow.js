@@ -44,7 +44,7 @@ const cowSchema = new mongoose.Schema({
   },
   mother: { type: mongoose.Schema.Types.ObjectId, ref: 'Cow' },
   father: { type: mongoose.Schema.Types.ObjectId, ref: 'Cow' },
-  farmId: {
+  farm: {
     type: mongoose.Schema.Types.ObjectId, 
     ref: 'Farm',
     required: true
@@ -71,19 +71,24 @@ function validate(cow) {
     dateOfBirth: Joi.date().required(),
     mother: Joi.objectId(),
     father: Joi.objectId(),
-    farmId: Joi.objectId().required(),
+    farm: Joi.objectId().required(),
     incidents: Joi.array().items(incident)
   });
 }
 
 function validateUpdate(cow) {
+  const incident = Joi.object().keys({
+    name: Joi.string().max(255).required(),
+    date: Joi.date()
+  });
+  
   return Joi.validate(cow, {
     name: Joi.string().max(100),
     gender: Joi.string().valid(Object.values(CowGenders)),
     dateOfBirth: Joi.date(),
     mother: Joi.objectId().allow(null),
     father: Joi.objectId().allow(null),
-    farmId: Joi.objectId(),
+    farm: Joi.objectId(),
     incidents: Joi.array().items(incident)
   });
 }
@@ -95,7 +100,7 @@ async function validateParents(cow) {
       dateOfBirth: { $lt: cow.dateOfBirth },
       gender: CowGenders.Cow,
       _id: { $ne: cow._id },
-      farmId: cow.farmId
+      farm: cow.farm
     });
 
     if (!eligibleMothers.find(mother => String(mother._id) === cow.mother)) {
@@ -112,7 +117,7 @@ async function validateParents(cow) {
       dateOfBirth: { $lt: cow.dateOfBirth },
       gender: CowGenders.Bull,
       _id: { $ne: cow._id },
-      farmId: cow.farmId
+      farm: cow.farm
     });
 
     if (!eligibleFathers.find(father => String(father._id) === cow.father)) {

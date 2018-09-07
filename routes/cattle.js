@@ -8,6 +8,7 @@ const _ = require('lodash');
 
 router.get('/:id', auth, validateObjectId, async (req, res) => {
   let cow = await Cow.findById(req.params.id)
+    .populate('farm')
     .populate('mother')
     .populate('father');
 
@@ -17,7 +18,7 @@ router.get('/:id', auth, validateObjectId, async (req, res) => {
     .populate('mother')
     .populate('father');
 
-  cow = _.pick(cow, ['_id', 'name', 'gender', 'dateOfBirth', 'farmId', 'incidents', 'mother', 'father']);
+  cow = _.pick(cow, ['_id', 'name', 'gender', 'dateOfBirth', 'farm', 'incidents', 'mother', 'father']);
   cow.children = children;
 
   res.send(cow);
@@ -29,7 +30,7 @@ router.patch('/:id', auth, validateObjectId, async (req, res) => {
   let cow = await Cow.findById(id);
   if (!cow) return res.status(404).send('Cow not found.');
 
-  const farm = await Farm.findById(cow.farmId).populate('User');
+  const farm = await Farm.findById(cow.farm).populate('User');
   if (farm.users.indexOf(req.user._id) === -1){
     return res.status(401).send('Unauthorized.');
   } 
@@ -43,7 +44,7 @@ router.put('/:id', auth, validateObjectId, async (req, res) => {
   let cow = await Cow.findById(id);
   if (!cow) return res.status(404).send('Cow not found.');
 
-  const farm = await Farm.findById(cow.farmId).populate('User');
+  const farm = await Farm.findById(cow.farm).populate('User');
   if (farm.users.indexOf(req.user._id) === -1){
     return res.status(401).send('Unauthorized.');
   } 
@@ -52,8 +53,8 @@ router.put('/:id', auth, validateObjectId, async (req, res) => {
     ['name', 'gender', 'dateOfBirth', 'incidents', 'mother', 'father']
   );
 
-  // farmId is required for parent validation.
-  updateCow.farmId = String(farm._id);
+  // farm is required for parent validation.
+  updateCow.farm = String(farm._id);
 
   let validateResult;
 
@@ -71,7 +72,7 @@ router.delete('/:id', auth, validateObjectId, async (req, res) => {
   const cow = await Cow.findById(req.params.id);
   if (!cow) return res.status(404).send('Cow not found.');
 
-  const farm = await Farm.findById(cow.farmId).populate('User');
+  const farm = await Farm.findById(cow.farm).populate('User');
   if (farm.users.indexOf(req.user._id) === -1) {
     return res.status(401).send('Unauthorized.');
   }
@@ -95,7 +96,7 @@ router.get('/:id/eligible-mothers', auth, validateObjectId, async (req, res) => 
     dateOfBirth: { $lt: cow.dateOfBirth },
     gender: CowGenders.Cow,
     _id: { $ne: cow._id },
-    farmId: cow.farmId
+    farm: cow.farm
   });
 
   res.send(cattle);
@@ -109,7 +110,7 @@ router.get('/:id/eligible-fathers', auth, validateObjectId, async (req, res) => 
     dateOfBirth: { $lt: cow.dateOfBirth },
     gender: CowGenders.Bull,
     _id: { $ne: cow._id },
-    farmId: cow.farmId
+    farm: cow.farm
   });
 
   res.send(cattle);
