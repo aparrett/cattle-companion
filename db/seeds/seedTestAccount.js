@@ -6,7 +6,7 @@ const bcrypt = require('bcrypt');
 async function seedTestAccount() {
   await deleteTestAccount();
 
-  let guest = new User({ name: 'Guest', email: 'test@test.com', password: 'password' });
+  let guest = new User({ name: 'Guest', email: 'guest@test.com', password: 'password' });
   const salt = await bcrypt.genSalt(10);
   guest.password = await bcrypt.hash(guest.password, salt);
   guest = await guest.save();
@@ -230,7 +230,7 @@ async function seedWesteros(farmId) {
 }
 
 async function deleteTestAccount() {
-  const user = await User.findOne({ email: 'test@test.com' });
+  const user = await User.findOne({ email: 'guest@test.com' });
   
   if (!user) return;
   
