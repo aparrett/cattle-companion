@@ -29,7 +29,7 @@ class CowDetailsPage extends Component {
 
   handleDeleteClick() {
     const { showConfirmation, deleteCow, history, cow, match: { params: { farmId } } } = this.props;
-    showConfirmation(cow._id, `Are you sure you want to delete cow ${cow.name}?`, id => {
+    showConfirmation(cow._id, `Are you sure you want to delete ${cow.name}?`, id => {
       deleteCow(id);
       history.push(`/farms/${farmId}`);
     });

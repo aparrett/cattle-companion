@@ -10,12 +10,19 @@ class Login extends Component {
     this.props.clearAuthError();
     
     if (this.props.authenticated) { 
-      this.props.logoutUser();
+      this.props.logoutUser(this.props.history);
     }
   }
 
   handleFormSubmit(formProps) {
-    this.props.loginUser(formProps, () => window.location.href = '/');
+    this.props.loginUser(formProps, () => this.props.history.push('/'));
+  }
+
+  handleGuestClick() {
+    this.props.loginUser({ 
+      email: 'guest@test.com', 
+      password: 'password' 
+    }, () => this.props.history.push('/'));
   }
 
   render() {
@@ -23,6 +30,7 @@ class Login extends Component {
 
     return (
       <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+        <div className="mb-2">Taking the app for a spin? Click <a onClick={this.handleGuestClick.bind(this)}>here</a> to login as a guest.</div>
         {error && <div className="invalid-feedback mb-3">{error}</div>}
         <div className="row">
           <div className="col-md-12">

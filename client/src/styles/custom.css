@@ -20,6 +20,20 @@
   border-radius: 0;
 }
 
+a {
+  color: #e19b4e;
+}
+
+a:not([href]):not([tabindex]) {
+  color: #e19b4e;
+} 
+
+a:hover {
+  color: #442317;
+  text-decoration: none;
+  cursor: pointer;
+}
+
 /* Custom CSS */
 
 /* 
@@ -42,16 +56,6 @@ Brand-light: #e19b4e
   font-size: 1.75rem;
   font-weight: bold;
   color: #442317;
-}
-
-a {
-  color: #e19b4e;
-}
-
-a:hover {
-  color: #442317;
-  text-decoration: none;
-  cursor: pointer;
 }
 
 input.error, select.error {

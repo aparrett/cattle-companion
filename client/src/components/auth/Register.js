@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
 import { Link } from 'react-router-dom';
-import { registerUser, clearAuthError } from '../../actions/auth';
+import { registerUser, loginUser, clearAuthError } from '../../actions/auth';
 
 import InputField from '../fields/InputField';
 
@@ -12,7 +12,14 @@ class Register extends Component {
   }
 
   handleFormSubmit(formProps) {
-    this.props.registerUser(formProps, () => window.location.href = '/');
+    this.props.registerUser(formProps, () => this.props.history.push('/'));
+  }
+
+  handleGuestClick() {
+    this.props.loginUser({ 
+      email: 'guest@test.com', 
+      password: 'password' 
+    }, () => this.props.history.push('/'));
   }
 
   render() {
@@ -20,6 +27,7 @@ class Register extends Component {
 
     return (
       <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
+        <div className="mb-2">Taking the app for a spin? Click <a onClick={this.handleGuestClick.bind(this)}>here</a> to login as a guest.</div>
         {error && <div className="invalid-feedback mb-3">{error}</div>}
         <div className="row">
           <div className="col-md-12">
@@ -94,7 +102,7 @@ function mapStateToProps({ auth }) {
   return { error: auth.error };
 }
 
-Register = connect(mapStateToProps, { registerUser, clearAuthError })(Register);  
+Register = connect(mapStateToProps, { registerUser, loginUser, clearAuthError })(Register);  
 
 export default reduxForm({
   form: 'register',

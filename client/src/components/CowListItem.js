@@ -15,7 +15,7 @@ const CowListItem = ({ cow, deleteCow, showConfirmation }) => (
         <Link to={`/farms/${cow.farm}/cattle/${cow._id}/edit`}>
           <FontAwesomeIcon className="text-secondary fa-lg d-inline-block mr-3" icon="pencil-alt" />
         </Link>
-        <a onClick={() => showConfirmation(cow._id, `Are you sure you want to delete cow ${cow.name}?`, deleteCow)}>
+        <a onClick={() => showConfirmation(cow._id, `Are you sure you want to delete ${cow.name}?`, deleteCow)}>
           <FontAwesomeIcon className="text-danger fa-lg d-inline-block" icon="trash-alt" />
         </a>
       </div>

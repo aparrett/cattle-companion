@@ -11,7 +11,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
         if (rest.authenticated){
           return <Component {...props} />;
         } else {
-          rest.fetchUser(() => window.location.href = '/login');
+          rest.fetchUser(() => props.history.push('/login'));
           return <div />;
         }
       }

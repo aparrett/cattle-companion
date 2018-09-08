@@ -44,7 +44,7 @@ export function fetchUser(callback) {
       if (response.status === 401) {
         dispatch({ type: UNAUTH_USER });
         cookie.remove('token', { path: '/' });
-        window.location.href = '/login';
+        callback();
       }
 
       errorHandler(dispatch, AUTH_ERROR, response.status, response.data);
@@ -59,10 +59,10 @@ export function clearAuthError() {
   return dispatch => dispatch({ type: CLEAR_AUTH_ERROR });
 }
 
-export function logoutUser() {  
+export function logoutUser(history) {  
   return dispatch => {
     dispatch({ type: UNAUTH_USER });
     cookie.remove('token', { path: '/' });
-    window.location.href = '/login';
+    history.push('/login');
   }
 }
