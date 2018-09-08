@@ -12,7 +12,7 @@ async function seedTestAccount() {
   guest = await guest.save();
 
   let greece = new Farm({ name: 'Greece', users: [guest] });
-  let westeros = new Farm({ name: 'westeros', users: [guest] });
+  let westeros = new Farm({ name: 'Westeros', users: [guest] });
   
   [greece, westeros]  = await Promise.all([ greece.save(), westeros.save() ]);
 
@@ -230,19 +230,19 @@ async function seedWesteros(farmId) {
 }
 
 async function deleteTestAccount() {
-  const user = await User.findOne({ email: 'guest@test.com' });
-  console.log('user in delete', user);
-  if (!user) return;
+  const users = await User.find({ email: 'guest@test.com' });
+  if (!users) return;
+
+  const userIds = users.map(user => user._id);
   
-  const farms = await Farm.find({ users: user._id });
-  console.log('farms', farms);
+  const farms = await Farm.find({ users: { $in: userIds } });
   const farmIds = farms.map(farm => farm._id);
   
   const cows = await Cow.find({ farm: { $in: farmIds } });
   const cowIds = cows.map(cow => cow._id);
 
   await Promise.all([
-    User.findByIdAndDelete(user._id),
+    User.deleteMany({ _id: { $in: userIds } }),
     Farm.deleteMany({ _id: { $in: farmIds } }),
     Cow.deleteMany({ _id: { $in: cowIds } })
   ]);
