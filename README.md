@@ -77,35 +77,35 @@ npm run test
 
 Bugfixes
 
-* Visiting any page other than the home page on the first visit results in a server error.
+[ ] Visiting any page other than the home page on the first visit results in a server error.
 
 Testing
 
-* Write unit and integration tests for front end of the application.
+[ ] Write unit and integration tests for front end of the application.
 
-* Write any necessary unit tests for back end.
+[ ] Write any necessary unit tests for back end.
 
 Features
 
-* A user can cancel a form.
+[ ] A user can cancel a form.
 
-* A user can delete an incident.
+[ ] A user can delete an incident.
 
-* A user can edit a farm's name.
+[ ] A user can edit a farm's name.
 
-* A user can add children directly.
+[ ] A user can add children directly.
 
-* The cow details page should show a cow's siblings.
+[ ] The cow details page should show a cow's siblings.
 
-* Validate that incidents are after a cow's date of birth.
+[ ] Validate that incidents are after a cow's date of birth.
 
-* Deleting a farm and its cattle should use two phase commits.
+[ ] Deleting a farm and its cattle should use two phase commits.
 
-* A user can share a farm with another user.
+[ ] A user can share a farm with another user.
 
-* A user can filter cows on a farm page.
+[ ] A user can filter cows on a farm page.
 
-* (TBD) A user can add family to a cow from other farms.
+[ ] (TBD) A user can add family to a cow from other farms.
 
 ## License
 
