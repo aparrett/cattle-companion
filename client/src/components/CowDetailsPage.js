@@ -65,7 +65,7 @@ class CowDetailsPage extends Component {
                   <div>
                     <h1 className="font-weight-bold d-inline-block">{name}</h1>
                     <div className="ml-2 d-inline-block">
-                      <Link className="heading-icon-link" to={`/farms/${farm}/cattle/${_id}/edit`}>
+                      <Link className="heading-icon-link" to={`/farms/${farm._id}/cattle/${_id}/edit`}>
                         <FontAwesomeIcon className="text-secondary fa-lg d-inline-block" icon="pencil-alt" />
                       </Link>
                       <a onClick={this.handleDeleteClick.bind(this)} className="heading-icon-link">
