@@ -7,13 +7,13 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={
-      props => {      
+      props => {   
+        rest.fetchUser(props.history);
+
         if (rest.authenticated){
           return <Component {...props} />;
-        } else {
-          rest.fetchUser(() => props.history.push('/login'));
-          return <div />;
         }
+        return <div />;
       }
     }
   />

@@ -31,7 +31,7 @@ export function loginUser({ email, password }, callback) {
   }
 }
 
-export function fetchUser(callback) {
+export function fetchUser(history) {
   return dispatch => {
     axios.get('/api/me', {
       headers: { 'x-auth-token': cookie.get('token') }
@@ -40,17 +40,10 @@ export function fetchUser(callback) {
       type: AUTH_USER, 
       payload: response.data.user,
     }))
-    .catch(({ response }) => {
-      if (response.status === 401) {
-        dispatch({ type: UNAUTH_USER });
-        cookie.remove('token', { path: '/' });
-        callback();
-      }
-
-      errorHandler(dispatch, AUTH_ERROR, response.status, response.data);
-      if (callback) {
-        callback();
-      }
+    .catch(() => {
+      dispatch({ type: UNAUTH_USER });
+      cookie.remove('token', { path: '/' });
+      history.push('/login');    
     });
   }
 }

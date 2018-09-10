@@ -8,7 +8,7 @@ export default function (state = INITIAL_STATE, action) {
       return { ...state, user: action.payload, error: '', authenticated: true };
     case UNAUTH_USER:
         return { ...state, user: null, authenticated: false };
-    case AUTH_ERROR:
+    case AUTH_ERROR:      
       return { ...state, error: action.payload, authenticated: false };
     case CLEAR_AUTH_ERROR:
       return { ...state, error: '' };
