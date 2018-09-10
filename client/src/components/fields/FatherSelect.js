@@ -32,6 +32,7 @@ class FatherSelect extends Component {
         <label>{label}</label>
         <select className="form-control" {...input}>
           <option value="">None</option>
+          {this.renderFatherOptions(eligibleFathers)}
         </select>
         {eligibleFathers.length === 0 && <p className="mt-1">There are no eligible fathers for this cow.</p>}
       </div>
