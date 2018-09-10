@@ -1,4 +1,5 @@
 const express = require('express');
+const compression = require('compression');
 const error = require('../middleware/error');
 const users = require('../routes/users');
 const auth = require('../routes/auth');
@@ -8,8 +9,8 @@ const cattle = require('../routes/cattle');
 const incidents = require('../routes/incidents');
 
 module.exports = function(app) {
+  app.use(compression());
   app.use(express.json());
-
   app.use('/api/users', users);
   app.use('/api/auth', auth);
   app.use('/api/me', me);
