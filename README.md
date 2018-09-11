@@ -17,15 +17,26 @@ Download the project files
 git clone https://github.com/aparrett/cattle-companion.git
 ```
 
-Install dependencies
+Change into the newly created directory (cattle-companion by default) and install server dependencies
 
 ```
-npm i && npm i --prefix client
+cd cattle-companion
+npm i
 ```
 
-Run the application
+Change into the client directory and install client dependencies.
+
+*Note: Attempting to install the client dependencies from the root directory using the --prefix flag could result in a bug where cmd files are installed into the /client directory.  To prevent this, we use cd instead.*
 
 ```
+cd client
+npm i
+```
+
+Change back into the project root directory and run the application
+
+```
+cd ..
 npm run dev
 ```
 
