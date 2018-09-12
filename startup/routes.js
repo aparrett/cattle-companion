@@ -26,7 +26,6 @@ module.exports = function(app) {
   
     // Point all other routes to index.html.
     app.get('*', (req, res) => {
-      console.log('Path', path.resolve('client', 'build', 'index.html'));
       res.sendFile(path.resolve('client', 'build', 'index.html'));
     });
   }
