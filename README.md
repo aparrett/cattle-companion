@@ -88,8 +88,6 @@ npm run test
 
 Bugfixes
 
-- [ ] Visiting any page other than the home page on the first visit results in a server error.
-
 - [ ] Graceful error handling of async mongoose actions
 
 Testing
