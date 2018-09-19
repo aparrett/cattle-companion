@@ -7,41 +7,43 @@ import {  SHOW_MODAL,
 
 describe('showAddIncident', () => {
   it('should dispatch the correct action', async () => {
+    const expectedActions = [{
+      type: SHOW_MODAL,
+      modalType: ADD_INCIDENT_MODAL,
+      modalProps: { cow: { name: 'cow' } }
+    }];
+
     const store = mockStore();
     await store.dispatch(showAddIncident({ name: 'cow' }));
     
-    const action = store.getActions()[0];
-
-    expect(action.type).toEqual(SHOW_MODAL);
-    expect(action.modalType).toEqual(ADD_INCIDENT_MODAL);
-    expect(action.modalProps).toEqual({ cow: { name: 'cow' } });
+    expect(store.getActions()).toEqual(expectedActions);
   });
 });
 
 describe('showConfirmation', () => {
   it('should dispatch the correct action', async () => {
+    const expectedActions = [{
+      type: SHOW_MODAL,
+      modalType: CONFIRMATION_MODAL,
+      modalProps: {
+        id: 1,
+        title: 'title',
+        action: 'action'
+      }
+    }];
+    
     const store = mockStore();
     await store.dispatch(showConfirmation(1, 'title', 'action'));
 
-    const action = store.getActions()[0];
-
-    expect(action.type).toEqual(SHOW_MODAL);
-    expect(action.modalType).toEqual(CONFIRMATION_MODAL);
-    expect(action.modalProps).toEqual({
-      id: 1,
-      title: 'title',
-      action: 'action'
-    });
+    expect(store.getActions()).toEqual(expectedActions);
   });
 });
 
 describe('hideModal', () => {
   it('should dispatch the correct action', async () => {
+    const expectedActions = [{ type: HIDE_MODAL }];
     const store = mockStore();
     await store.dispatch(hideModal());
-
-    const action = store.getActions()[0];
-
-    expect(action.type).toEqual(HIDE_MODAL);
+    expect(store.getActions()).toEqual(expectedActions);
   });
 });
