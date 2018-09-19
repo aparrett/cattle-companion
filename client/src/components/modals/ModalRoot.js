@@ -4,8 +4,8 @@ import AddIncidentModal from './AddIncidentModal';
 import ConfirmationModal from './ConfirmationModal';
 
 const MODAL_COMPONENTS = {
-  'ADD_INCIDENT': AddIncidentModal,
-  'CONFIRMATION': ConfirmationModal
+  'add_incident_modal': AddIncidentModal,
+  'confirmation_modal': ConfirmationModal
 };
 
 const ModalRoot = ({ modalType, modalProps }) => {
