@@ -1,5 +1,5 @@
 import { mockStore } from '../../utils/mockStore';
-import { showAddIncident, showConfirmation, hideModal } from '../modals';
+import { showAddIncident, showConfirmation, hideModal } from '../../actions/modals';
 import { SHOW_MODAL, 
     HIDE_MODAL, 
     ADD_INCIDENT_MODAL, 
