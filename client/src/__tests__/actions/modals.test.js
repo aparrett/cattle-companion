@@ -1,9 +1,9 @@
 import { mockStore } from '../../utils/mockStore';
 import { showAddIncident, showConfirmation, hideModal } from '../../actions/modals';
-import { SHOW_MODAL, 
-    HIDE_MODAL, 
-    ADD_INCIDENT_MODAL, 
-    CONFIRMATION_MODAL } from '../../types/modal';
+import {  SHOW_MODAL, 
+          HIDE_MODAL, 
+          ADD_INCIDENT_MODAL, 
+          CONFIRMATION_MODAL } from '../../types/modal';
 
 describe('showAddIncident', () => {
   it('should dispatch the correct action', async () => {
