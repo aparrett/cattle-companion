@@ -1,5 +1,5 @@
 import axios from 'axios';
-import Cookies from 'universal-cookie';
+import cookie from '../utils/cookie';
 import { errorHandler } from './error';
 import { ERROR } from '../types/error';
 import { FETCH_FARMS_SUCCESS, 
@@ -8,8 +8,6 @@ import { FETCH_FARMS_SUCCESS,
          FETCH_FARM_PENDING,
          FETCH_FARMS_PENDING, 
          DELETE_FARM_SUCCESS } from '../types/farms';
-
-const cookie = new Cookies();
 
 export function saveFarm({ name }) {
   return dispatch => axios.post('/api/farms', { name }, {

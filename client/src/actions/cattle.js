@@ -1,23 +1,22 @@
+import axios from 'axios';
+import moment from 'moment';
+import cookie from '../utils/cookie';
+
+import { errorHandler } from './error';
+import { ERROR } from '../types/error';
+import { ADD_INCIDENT_SUCCESS } from '../types/incidents';
 import {  FETCH_COW_PENDING, 
           FETCH_COW_SUCCESS,
           FETCH_COW_ERROR,
           DELETE_COW_SUCCESS,
           FETCH_ELIGIBLE_FATHERS_SUCCESS,
           FETCH_ELIGIBLE_MOTHERS_SUCCESS } from '../types/cattle';
-import { ADD_INCIDENT_SUCCESS } from '../types/incidents';
-import { ERROR } from '../types/error';
-import axios from 'axios';
-import Cookies from 'universal-cookie';
-import { errorHandler } from './error';
-import moment from 'moment';
-
-const cookie = new Cookies();
 
 export function fetchCow(id) {
   return dispatch => {
     dispatch({ type: FETCH_COW_PENDING });
 
-    axios.get(`/api/cattle/${id}`, {
+    return axios.get(`/api/cattle/${id}`, {
       headers: { 'x-auth-token': cookie.get('token') }
     })
     .then(res => dispatch({ type: FETCH_COW_SUCCESS, payload: res.data }))
