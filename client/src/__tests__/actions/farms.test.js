@@ -18,11 +18,11 @@ describe('actions - farms', () => {
 
   describe('saveFarm', () => {
     it('should dispatch proper action on success', async done => {
-      moxios.stubRequest('/api/farms', { status: 201, response: [{ name: 'farm' }] });
+      moxios.stubRequest('/api/farms', { status: 201, response: { name: 'farm' } });
 
       const expectedActions = [{
         type: SAVE_FARM_SUCCESS,
-        payload: [{ name: 'farm' }]
+        payload: { name: 'farm' }
       }];
 
       const store = mockStore();
@@ -45,7 +45,7 @@ describe('actions - farms', () => {
 
   describe('fetchFarm', () => {
     it('should dispatch pending action', async done => {
-      moxios.stubRequest('/api/farms/1', { status: 200, response: [{ name: 'farm' }] });
+      moxios.stubRequest('/api/farms/1', { status: 200, response: { name: 'farm' } });
 
       const expectedAction = { type: FETCH_FARM_PENDING };
 
@@ -57,9 +57,9 @@ describe('actions - farms', () => {
     });
 
     it('should dispatch success action on success', async done => {
-      moxios.stubRequest('/api/farms/1', { status: 200, response: [{ name: 'farm' }] });
+      moxios.stubRequest('/api/farms/1', { status: 200, response: { name: 'farm' } });
 
-      const expectedAction = { type: FETCH_FARM_SUCCESS, payload: [{ name: 'farm' }] };
+      const expectedAction = { type: FETCH_FARM_SUCCESS, payload: { name: 'farm' } };
 
       const store = mockStore();
       await store.dispatch(fetchFarm(1));
