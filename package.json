@@ -11,6 +11,11 @@
     "dev": "concurrently \"npm run start\" \"npm run client\"",
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
+  "jest": {
+    "watchPathIgnorePatterns": ["/node_modules/", "client/"],
+    "testPathIgnorePatterns": ["/node_modules/", "client/"],
+    "coveragePathIgnorePatterns": ["/node_modules/", "client/"]
+  },
   "engines": {
     "node": "8.11.3",
     "npm": "5.6.0"

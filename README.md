@@ -44,13 +44,11 @@ At this point, you should be able to see the login screen, use the development v
 
 ## Running the Tests
 
-This app uses the Jest framework for testing.  The back end was created with a Test Driven approach but the front end does not yet have tests.  These tests will be added in the near future.  
+This app uses the Jest framework for testing.  The back end was created with a Test Driven approach but the front end currently only has tests for actions.  The rest of the tests will be added in the near future.  
 
-Currently all of the tests for the back end are integration tests that test all of the routes.  Use the following command to run these tests.
+The tests for the back end are integration tests that test all of the routes.  Use ```npm run test``` from the project root directory to run these tests.
 
-```
-npm run test
-```
+Use the same command from the client directory to run the client tests.
 
 ## Built With
 
