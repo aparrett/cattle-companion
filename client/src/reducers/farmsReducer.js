@@ -11,7 +11,8 @@ export default function farmsReducer(state = { farms: [], isLoading: false }, ac
       return { farms: action.payload, isLoading: false };
     case DELETE_FARM_SUCCESS:
       const farms = [...state.farms];
-      farms.splice(farms.findIndex(farm => farm._id === action.payload), 1);
+      const indexToDelete = farms.findIndex(farm => farm._id === action.payload);
+      if (indexToDelete !== -1) farms.splice(indexToDelete, 1);
       return { ...state, farms };
     case SAVE_FARM_SUCCESS:
       return { ...state, farms: [ ...state.farms, action.payload] };
