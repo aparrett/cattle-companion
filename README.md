@@ -90,9 +90,7 @@ Bugfixes
 
 Testing
 
-- [ ] Write unit and integration tests for front end of the application.
-
-- [ ] Write any necessary unit tests for back end.
+- [ ] Write unit tests for front end of the application. **(in progress)**
 
 Features
 
