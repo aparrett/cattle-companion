@@ -48,7 +48,7 @@ This app uses the Jest framework for testing.  The back end was created with a T
 
 The tests for the back end are integration tests that test all of the routes.  Use ```npm run test``` from the project root directory to run these tests.
 
-Use the same command from the client directory to run the client tests.
+Use the same command from the client directory to run the client tests. **Note:** The client tests will be running in watch mode, so you may have to press ```a``` after executing the test command to run all of the tests.
 
 ## Built With
 
