@@ -15,7 +15,7 @@ export function errorHandler(dispatch, type, status, error) {
   } else if (status === 404) {
     dispatch({
       type: type,
-      payload: 'Page not found.'
+      payload: 'Not found.'
     });
   } else {
     dispatch({

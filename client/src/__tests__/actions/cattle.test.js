@@ -1,5 +1,4 @@
 import moxios from 'moxios';
-import moment from 'moment';
 import { mockStore } from '../../utils/mockStore';
 
 import * as errorActions from '../../actions/error';
@@ -13,11 +12,9 @@ import {  fetchCow,
           fetchEligibleFathersByFarm, 
           fetchEligibleMothersByFarm } from '../../actions/cattle';
 
-import { ERROR } from '../../types/error';
 import { ADD_INCIDENT_SUCCESS } from '../../types/incidents';
 import {  FETCH_COW_PENDING, 
           FETCH_COW_SUCCESS,
-          FETCH_COW_ERROR,
           DELETE_COW_SUCCESS,
           FETCH_ELIGIBLE_FATHERS_SUCCESS,
           FETCH_ELIGIBLE_MOTHERS_SUCCESS } from '../../types/cattle';
