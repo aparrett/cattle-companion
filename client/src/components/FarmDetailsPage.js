@@ -13,9 +13,12 @@ class FarmDetailsPage extends Component {
     return this.props.farm.cattle.map(cow => <CowListItem key={cow._id} cow={cow} />);
   }
 
-  renderFarm() {
+  render() {
+    if (!this.props.farm || this.props.isLoading) return null; 
+    
     const { farm } = this.props;
-    return(
+
+    return (
       <div>
         <h1>{farm.name}</h1>
         {farm.cattle && <ul className="list-group mt-4">{this.renderCattle()}</ul>}
@@ -24,10 +27,6 @@ class FarmDetailsPage extends Component {
         </Link>
       </div>
     );
-  }
-
-  render() {
-    return !this.props.farm || this.props.isLoading ? null : this.renderFarm();
   }
 }
 
