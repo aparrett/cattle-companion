@@ -90,7 +90,7 @@ Bugfixes
 
 Testing
 
-- [ ] Write unit tests for front end of the application. **(in progress)**
+- [ ] Write unit tests for React Components.
 
 Features
 

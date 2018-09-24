@@ -4,7 +4,7 @@ import { fetchFarms } from '../actions/farms';
 import FarmCreateForm from './FarmCreateForm';
 import FarmListItem from './FarmListItem';
 
-class Home extends Component {
+class HomePage extends Component {
   componentDidMount() {
     this.props.fetchFarms();
   }
@@ -30,4 +30,4 @@ function mapStateToProps({ farmsReducer: { farms, isLoading } }) {
   return { farms, isLoading };
 }
 
-export default connect(mapStateToProps, { fetchFarms })(Home);
+export default connect(mapStateToProps, { fetchFarms })(HomePage);

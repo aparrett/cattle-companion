@@ -1,21 +1,18 @@
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { loginUser, logoutUser, clearAuthError } from '../../actions/auth';
+import { Link } from 'react-router-dom';
+import { registerUser, loginUser, clearAuthError } from '../../actions/auth';
+
 import InputField from '../fields/InputField';
 
-class Login extends Component {
+class RegisterPage extends Component {
   componentDidMount() {
     this.props.clearAuthError();
-    
-    if (this.props.authenticated) { 
-      this.props.logoutUser(this.props.history);
-    }
   }
 
   handleFormSubmit(formProps) {
-    this.props.loginUser(formProps, () => this.props.history.push('/'));
+    this.props.registerUser(formProps, () => this.props.history.push('/'));
   }
 
   handleGuestClick() {
@@ -34,6 +31,12 @@ class Login extends Component {
         {error && <div className="invalid-feedback mb-3">{error}</div>}
         <div className="row">
           <div className="col-md-12">
+            <label>Name</label>
+            <Field name="name" className="form-control" component={InputField} type="text" />
+          </div>
+        </div>
+        <div className="row">
+          <div className="col-md-12">
             <label>Email</label>
             <Field name="email" className="form-control" component={InputField} type="email" />
           </div>
@@ -44,9 +47,9 @@ class Login extends Component {
             <Field name="password" className="form-control" component={InputField} type="password" />
           </div>
         </div>
-        <button type="submit" className="btn btn-primary">Login</button>
+        <button type="submit" className="btn btn-primary">Register</button>
         <div className="mt-3">
-          Not signed up? <Link to="/register">Register</Link>
+          Already registered? <Link to="/login">Login</Link>
         </div>
       </form>
     );
@@ -55,6 +58,18 @@ class Login extends Component {
 
 function validate(values) {  
   const errors = {};
+
+  if (!values.name) {
+    errors.name = 'Please enter a name.';
+  }
+
+  if (values.name && values.name.length < 3) {
+    errors.name = 'Name must be longer than 2 characters.';
+  }
+
+  if (values.name && values.name.length > 100) {
+    errors.name = 'Name cannot be longer than 100 characters.';
+  }
 
   if (!values.email) {
     errors.email = 'Please enter an email.';
@@ -84,12 +99,12 @@ function validate(values) {
 }
 
 function mapStateToProps({ auth }) {
-  return { error: auth.error, authenticated: auth.authenticated };
+  return { error: auth.error };
 }
 
-Login = connect(mapStateToProps, { loginUser, logoutUser, clearAuthError })(Login);  
+RegisterPage = connect(mapStateToProps, { registerUser, loginUser, clearAuthError })(RegisterPage);  
 
 export default reduxForm({
-  form: 'login',
+  form: 'register',
   validate
-})(Login);
+})(RegisterPage);

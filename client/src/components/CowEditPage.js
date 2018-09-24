@@ -10,7 +10,7 @@ import VerticalRadioField from './fields/VerticalRadioField';
 import MotherSelect from './fields/MotherSelect';
 import FatherSelect from './fields/FatherSelect';
 
-class CowEditForm extends Component {
+class CowEditPage extends Component {
   componentDidMount() {
     this.props.fetchCow(this.props.match.params.id);
   }
@@ -74,11 +74,11 @@ function validate(values) {
   return errors;
 }
 
-CowEditForm = reduxForm({
+CowEditPage = reduxForm({
   form: 'cowEditForm',
   validate,
   enableReinitialize: true
-})(CowEditForm);
+})(CowEditPage);
 
 function mapStateToProps({ cowReducer: { cow } }) {
   const initialValues = { 
@@ -97,4 +97,4 @@ function mapStateToProps({ cowReducer: { cow } }) {
   return { initialValues }
 }
 
-export default withRouter(connect(mapStateToProps, { fetchCow, editCow })(CowEditForm));
+export default withRouter(connect(mapStateToProps, { fetchCow, editCow })(CowEditPage));

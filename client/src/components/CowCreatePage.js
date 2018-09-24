@@ -9,7 +9,7 @@ import FatherSelect from './fields/FatherSelect';
 import { CowGenders } from '../enums';
 import { saveCow } from '../actions/cattle';
 
-class CowCreateForm extends Component {
+class CowCreatePage extends Component {
   handleFormSubmit(formProps) {
     const { match, saveCow, history} = this.props;
     const cow = { ...formProps, farm: match.params.farmId };
@@ -61,9 +61,9 @@ function validate(values) {
   return errors;
 }
 
-CowCreateForm = reduxForm({
+CowCreatePage = reduxForm({
   form: 'cowCreateForm',
   validate
-})(CowCreateForm);
+})(CowCreatePage);
 
-export default withRouter(connect(null, { saveCow })(CowCreateForm));
+export default withRouter(connect(null, { saveCow })(CowCreatePage));
