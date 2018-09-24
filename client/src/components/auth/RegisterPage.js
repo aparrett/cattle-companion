@@ -16,10 +16,13 @@ class RegisterPage extends Component {
   }
 
   handleGuestClick() {
-    this.props.loginUser({ 
-      email: 'guest@test.com', 
-      password: 'password' 
-    }, () => this.props.history.push('/'));
+    this.props.loginUser(
+      {
+        email: 'guest@test.com',
+        password: 'password'
+      },
+      () => this.props.history.push('/')
+    );
   }
 
   render() {
@@ -27,7 +30,10 @@ class RegisterPage extends Component {
 
     return (
       <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-        <div className="mb-2">Taking the app for a spin? Click <a onClick={this.handleGuestClick.bind(this)}>here</a> to login as a guest.</div>
+        <div className="mb-2">
+          Taking the app for a spin? Click <a onClick={this.handleGuestClick.bind(this)}>here</a> to
+          login as a guest.
+        </div>
         {error && <div className="invalid-feedback mb-3">{error}</div>}
         <div className="row">
           <div className="col-md-12">
@@ -44,10 +50,17 @@ class RegisterPage extends Component {
         <div className="row">
           <div className="col-md-12">
             <label>Password</label>
-            <Field name="password" className="form-control" component={InputField} type="password" />
+            <Field
+              name="password"
+              className="form-control"
+              component={InputField}
+              type="password"
+            />
           </div>
         </div>
-        <button type="submit" className="btn btn-primary">Register</button>
+        <button type="submit" className="btn btn-primary">
+          Register
+        </button>
         <div className="mt-3">
           Already registered? <Link to="/login">Login</Link>
         </div>
@@ -56,7 +69,7 @@ class RegisterPage extends Component {
   }
 }
 
-function validate(values) {  
+function validate(values) {
   const errors = {};
 
   if (!values.name) {
@@ -102,7 +115,10 @@ function mapStateToProps({ auth }) {
   return { error: auth.error };
 }
 
-RegisterPage = connect(mapStateToProps, { registerUser, loginUser, clearAuthError })(RegisterPage);  
+RegisterPage = connect(
+  mapStateToProps,
+  { registerUser, loginUser, clearAuthError }
+)(RegisterPage);
 
 export default reduxForm({
   form: 'register',

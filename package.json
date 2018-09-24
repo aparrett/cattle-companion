@@ -12,9 +12,18 @@
     "heroku-postbuild": "NPM_CONFIG_PRODUCTION=false npm install --prefix client && npm run build --prefix client"
   },
   "jest": {
-    "watchPathIgnorePatterns": ["/node_modules/", "client/"],
-    "testPathIgnorePatterns": ["/node_modules/", "client/"],
-    "coveragePathIgnorePatterns": ["/node_modules/", "client/"]
+    "watchPathIgnorePatterns": [
+      "/node_modules/",
+      "client/"
+    ],
+    "testPathIgnorePatterns": [
+      "/node_modules/",
+      "client/"
+    ],
+    "coveragePathIgnorePatterns": [
+      "/node_modules/",
+      "client/"
+    ]
   },
   "engines": {
     "node": "8.11.3",
@@ -34,7 +43,6 @@
     "bcrypt": "^3.0.0",
     "compression": "^1.7.3",
     "concurrently": "^3.6.1",
-    "eslint-plugin-react": "^7.11.1",
     "express": "^4.16.3",
     "express-async-errors": "^3.0.0",
     "jest": "^23.5.0",
@@ -48,5 +56,15 @@
     "redux-promise": "^0.6.0",
     "supertest": "^3.1.0",
     "winston": "^2.4.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.6.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-import": "^2.14.0",
+    "eslint-plugin-jsx-a11y": "^6.1.1",
+    "eslint-plugin-prettier": "^2.6.2",
+    "eslint-plugin-react": "^7.11.0",
+    "prettier": "^1.14.3"
   }
 }

@@ -8,8 +8,8 @@ import InputField from '../fields/InputField';
 class LoginPage extends Component {
   componentDidMount() {
     this.props.clearAuthError();
-    
-    if (this.props.authenticated) { 
+
+    if (this.props.authenticated) {
       this.props.logoutUser(this.props.history);
     }
   }
@@ -19,10 +19,13 @@ class LoginPage extends Component {
   }
 
   handleGuestClick() {
-    this.props.loginUser({ 
-      email: 'guest@test.com', 
-      password: 'password' 
-    }, () => this.props.history.push('/'));
+    this.props.loginUser(
+      {
+        email: 'guest@test.com',
+        password: 'password'
+      },
+      () => this.props.history.push('/')
+    );
   }
 
   render() {
@@ -30,7 +33,10 @@ class LoginPage extends Component {
 
     return (
       <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-        <div className="mb-2">Taking the app for a spin? Click <a onClick={this.handleGuestClick.bind(this)}>here</a> to login as a guest.</div>
+        <div className="mb-2">
+          Taking the app for a spin? Click <a onClick={this.handleGuestClick.bind(this)}>here</a> to
+          login as a guest.
+        </div>
         {error && <div className="invalid-feedback mb-3">{error}</div>}
         <div className="row">
           <div className="col-md-12">
@@ -41,10 +47,17 @@ class LoginPage extends Component {
         <div className="row">
           <div className="col-md-12">
             <label>Password</label>
-            <Field name="password" className="form-control" component={InputField} type="password" />
+            <Field
+              name="password"
+              className="form-control"
+              component={InputField}
+              type="password"
+            />
           </div>
         </div>
-        <button type="submit" className="btn btn-primary">Login</button>
+        <button type="submit" className="btn btn-primary">
+          Login
+        </button>
         <div className="mt-3">
           Not signed up? <Link to="/register">Register</Link>
         </div>
@@ -53,7 +66,7 @@ class LoginPage extends Component {
   }
 }
 
-function validate(values) {  
+function validate(values) {
   const errors = {};
 
   if (!values.email) {
@@ -87,7 +100,10 @@ function mapStateToProps({ auth }) {
   return { error: auth.error, authenticated: auth.authenticated };
 }
 
-LoginPage = connect(mapStateToProps, { loginUser, logoutUser, clearAuthError })(LoginPage);  
+LoginPage = connect(
+  mapStateToProps,
+  { loginUser, logoutUser, clearAuthError }
+)(LoginPage);
 
 export default reduxForm({
   form: 'login',

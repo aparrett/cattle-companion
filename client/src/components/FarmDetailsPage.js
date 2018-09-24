@@ -14,8 +14,8 @@ class FarmDetailsPage extends Component {
   }
 
   render() {
-    if (!this.props.farm || this.props.isLoading) return null; 
-    
+    if (!this.props.farm || this.props.isLoading) return null;
+
     const { farm } = this.props;
 
     return (
@@ -34,4 +34,7 @@ function mapStateToProps({ farmReducer: { farm, isLoading } }) {
   return { farm, isLoading };
 }
 
-export default connect(mapStateToProps, { fetchFarm })(FarmDetailsPage);
+export default connect(
+  mapStateToProps,
+  { fetchFarm }
+)(FarmDetailsPage);

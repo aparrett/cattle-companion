@@ -18,7 +18,15 @@ class CowDetailsPage extends Component {
   }
 
   componentDidUpdate() {
-    const { cow, fetchCow, isLoading, error, match: { params: { id } } } = this.props;
+    const {
+      cow,
+      fetchCow,
+      isLoading,
+      error,
+      match: {
+        params: { id }
+      }
+    } = this.props;
 
     // Ensure that the new cow is fetched if the id changes in the route.
     if (!isLoading && !error && cow._id !== id) {
@@ -31,7 +39,15 @@ class CowDetailsPage extends Component {
   }
 
   handleDeleteClick() {
-    const { showConfirmation, deleteCow, history, cow, match: { params: { farmId } } } = this.props;
+    const {
+      showConfirmation,
+      deleteCow,
+      history,
+      cow,
+      match: {
+        params: { farmId }
+      }
+    } = this.props;
 
     showConfirmation(cow._id, `Are you sure you want to delete ${cow.name}?`, id => {
       deleteCow(id);
@@ -40,7 +56,11 @@ class CowDetailsPage extends Component {
   }
 
   render() {
-    const { isLoading, error, cow: { _id, name, farm, gender, dateOfBirth, mother, father, incidents, children } } = this.props;
+    const {
+      isLoading,
+      error,
+      cow: { _id, name, farm, gender, dateOfBirth, mother, father, incidents, children }
+    } = this.props;
 
     if (isLoading || !this.props.cow.name) return null;
 
@@ -48,7 +68,7 @@ class CowDetailsPage extends Component {
 
     return (
       <div>
-        <CowDetails 
+        <CowDetails
           handleDeleteClick={this.handleDeleteClick.bind(this)}
           id={_id}
           farm={farm}
@@ -56,8 +76,8 @@ class CowDetailsPage extends Component {
           dateOfBirth={dateOfBirth}
           name={name}
         />
-        <CowIncidentsSection 
-          incidents={incidents} 
+        <CowIncidentsSection
+          incidents={incidents}
           handleAddIncidentClick={this.handleAddIncidentClick.bind(this)}
         />
         <CowParentsSection name={name} mother={mother} father={father} />
@@ -70,6 +90,7 @@ class CowDetailsPage extends Component {
 function mapStateToProps({ cowReducer: { cow, isLoading, error } }) {
   return { cow, isLoading, error };
 }
-export default connect(mapStateToProps, 
+export default connect(
+  mapStateToProps,
   { fetchCow, fetchIncidents, showAddIncident, showConfirmation, deleteCow }
 )(CowDetailsPage);

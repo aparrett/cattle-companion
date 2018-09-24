@@ -10,17 +10,20 @@ const ErrorAlert = ({ error, dismissError }) => {
   return (
     <div>
       <div className="alert alert-secondary">
-        { error }
-        <button type="button" className="close" onClick={() => dismissError()}> 
+        {error}
+        <button type="button" className="close" onClick={() => dismissError()}>
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
     </div>
   );
-}
+};
 
 function mapStateToProps({ error }) {
   return { error };
 }
 
-export default connect(mapStateToProps, { dismissError })(ErrorAlert);
+export default connect(
+  mapStateToProps,
+  { dismissError }
+)(ErrorAlert);

@@ -14,7 +14,6 @@ import { faTrashAlt, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
 library.add(faTrashAlt);
 library.add(faPencilAlt);
 
-
 const App = () => (
   <BrowserRouter>
     <div>

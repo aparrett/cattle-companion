@@ -15,7 +15,9 @@ const CowDetails = ({ handleDeleteClick, _id, farm, gender, dateOfBirth, name })
         </a>
       </div>
     </div>
-    <h4><Link to={`/farms/${farm._id}`}>{farm.name}</Link></h4>
+    <h4>
+      <Link to={`/farms/${farm._id}`}>{farm.name}</Link>
+    </h4>
     <h4 className="text-muted">Gender: {gender}</h4>
     <h4 className="text-muted">DOB: {dateOfBirth}</h4>
   </div>

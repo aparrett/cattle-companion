@@ -16,19 +16,25 @@ class CowEditPage extends Component {
   }
 
   handleFormSubmit(formProps) {
-    const { match: { params: { id, farmId } }, editCow, history} = this.props;
-    
-    const cow = { 
-      ...formProps, 
-      _id: id, 
+    const {
+      match: {
+        params: { id, farmId }
+      },
+      editCow,
+      history
+    } = this.props;
+
+    const cow = {
+      ...formProps,
+      _id: id,
       farm: farmId,
-      mother: formProps.mother === "" ? null : formProps.mother,
-      father: formProps.father === "" ? null : formProps.father
+      mother: formProps.mother === '' ? null : formProps.mother,
+      father: formProps.father === '' ? null : formProps.father
     };
 
     editCow(cow, history);
   }
-  
+
   render() {
     const { handleSubmit, match } = this.props;
 
@@ -36,16 +42,56 @@ class CowEditPage extends Component {
       <div>
         <h1>Edit Cow</h1>
         <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
-          <Field name="name" type="text" label="Name" className="form-control" component={InputField} />
+          <Field
+            name="name"
+            type="text"
+            label="Name"
+            className="form-control"
+            component={InputField}
+          />
           <div className="mb-3">
             <label>Gender</label>
-            <Field name="gender" component={VerticalRadioField} label="Cow" radioValue={CowGenders.Cow} ignoreError="true" />
-            <Field name="gender" component={VerticalRadioField} label="Bull" radioValue={CowGenders.Bull} />
+            <Field
+              name="gender"
+              component={VerticalRadioField}
+              label="Cow"
+              radioValue={CowGenders.Cow}
+              ignoreError="true"
+            />
+            <Field
+              name="gender"
+              component={VerticalRadioField}
+              label="Bull"
+              radioValue={CowGenders.Bull}
+            />
           </div>
-          <Field name="dateOfBirth" label="Date of Birth" type="date" className="form-control" component={InputField} pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}" />
-          <Field name="mother" label="Mother" type="text" cowId={match.params.id} className="form-control" component={MotherSelect} />
-          <Field name="father" label="Father" type="text" cowId={match.params.id} className="form-control" component={FatherSelect} />
-          <button type="submit" className="btn btn-primary">Save</button>
+          <Field
+            name="dateOfBirth"
+            label="Date of Birth"
+            type="date"
+            className="form-control"
+            component={InputField}
+            pattern="[0-9]{4}-[0-9]{2}-[0-9]{2}"
+          />
+          <Field
+            name="mother"
+            label="Mother"
+            type="text"
+            cowId={match.params.id}
+            className="form-control"
+            component={MotherSelect}
+          />
+          <Field
+            name="father"
+            label="Father"
+            type="text"
+            cowId={match.params.id}
+            className="form-control"
+            component={FatherSelect}
+          />
+          <button type="submit" className="btn btn-primary">
+            Save
+          </button>
         </form>
       </div>
     );
@@ -81,8 +127,8 @@ CowEditPage = reduxForm({
 })(CowEditPage);
 
 function mapStateToProps({ cowReducer: { cow } }) {
-  const initialValues = { 
-    ...cow, 
+  const initialValues = {
+    ...cow,
     dateOfBirth: moment(cow.dateOfBirth).format('YYYY-MM-DD')
   };
 
@@ -94,7 +140,12 @@ function mapStateToProps({ cowReducer: { cow } }) {
     initialValues.father = cow.father._id;
   }
 
-  return { initialValues }
+  return { initialValues };
 }
 
-export default withRouter(connect(mapStateToProps, { fetchCow, editCow })(CowEditPage));
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { fetchCow, editCow }
+  )(CowEditPage)
+);
