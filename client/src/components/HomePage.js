@@ -10,18 +10,18 @@ class HomePage extends Component {
   }
 
   render() {
+    if (this.props.isLoading) return null;
+
     return (
-      this.props.isLoading 
-        ? null
-        : <div className="mt-5">
-            <h1 className="font-weight-bold">Farms</h1>
-            <ul className="list-group mt-4">
-              { this.props.farms.map(farm => <FarmListItem farm={farm} key={farm._id} />) }
-            </ul>
-            <div className="mt-4">
-              <FarmCreateForm />
-            </div>
-          </div>
+      <div className="mt-5">
+        <h1 className="font-weight-bold">Farms</h1>
+        <ul className="list-group mt-4">
+          { this.props.farms.map(farm => <FarmListItem farm={farm} key={farm._id} />) }
+        </ul>
+        <div className="mt-4">
+          <FarmCreateForm />
+        </div>
+      </div>
     );
   }
 }
