@@ -2,12 +2,12 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const CowDetails = ({ handleDeleteClick, _id, farm, gender, dateOfBirth, name }) => (
+const CowDetails = ({ handleDeleteClick, id, farm, gender, dateOfBirth, name }) => (
   <div className="mt-5">
     <div>
       <h1 className="font-weight-bold d-inline-block">{name}</h1>
       <div className="ml-2 d-inline-block">
-        <Link className="heading-icon-link" to={`/farms/${farm._id}/cattle/${_id}/edit`}>
+        <Link className="heading-icon-link" to={`/farms/${farm._id}/cattle/${id}/edit`}>
           <FontAwesomeIcon className="text-secondary fa-lg d-inline-block" icon="pencil-alt" />
         </Link>
         <a onClick={handleDeleteClick} className="heading-icon-link">
