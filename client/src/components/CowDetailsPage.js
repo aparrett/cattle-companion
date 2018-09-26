@@ -35,8 +35,8 @@ export class CowDetailsPage extends Component {
       <div>
         <CowDetails cow={cow} history={history} />
         <CowIncidentsSection cow={cow} />
-        <CowParentsSection name={cow.name} mother={cow.mother} father={cow.father} />
-        <CowChildrenSection name={cow.name} children={cow.children} />
+        <CowParentsSection cow={cow} />
+        <CowChildrenSection cow={cow} />
       </div>
     );
   }

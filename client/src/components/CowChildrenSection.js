@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const CowChildrenSection = ({ children, name }) => (
+const CowChildrenSection = ({ cow: { children, name } }) => (
   <div className="mt-4">
     <h3 className="text-center">Children</h3>
     {!children || children.length === 0 ? (

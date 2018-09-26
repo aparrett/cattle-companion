@@ -1,13 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 
-const CowParentsSection = ({ mother, father, name }) => (
+const CowParentsSection = ({ cow: { mother, father, name } }) => (
   <div className="mt-4">
     <h3 className="text-center">Parents</h3>
     {!mother && !father ? (
-      <p>{name} does not have any parents.</p>
+      <p data-test="no-parents">{name} does not have any parents.</p>
     ) : (
-      <ul className="list-group mt-4">
+      <ul data-test="parents-list" className="list-group mt-4">
         {mother && (
           <li className="list-group-item" key={mother._id}>
             <Link to={`/farms/${mother.farm}/cattle/${mother._id}`}>{mother.name}</Link>
