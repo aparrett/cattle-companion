@@ -8,7 +8,7 @@ The app is currently in the prototype stage and development may or may not conti
 
 Click [here](https://cattle-companion.herokuapp.com 'Cattle Companion') to view the live application.
 
-## Getting Started
+## Installation
 
 Download the project files
 
