@@ -9,11 +9,13 @@ export class CowIncidentsSection extends Component {
   }
 
   render() {
+    const incidents = this.props.cow.incidents || [];
+
     return (
       <div className="mt-4">
         <h3 className="text-center">Incidents</h3>
         <ul className="list-group mt-4">
-          <CowIncidentList incidents={this.props.cow.incidents} />
+          <CowIncidentList incidents={incidents} />
         </ul>
         <button
           className="btn btn-outline-primary mt-3"

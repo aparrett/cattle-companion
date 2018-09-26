@@ -59,6 +59,8 @@ Use the same command from the client directory to run the front end tests. **Not
 
 - [Jest](https://github.com/facebook/jest) - Javascript testing
 
+- [Enzyme](https://github.com/airbnb/enzyme) - React testing
+
 - [Joi](https://github.com/hapijs/joi) - Mongoose model validation
 
 - [React](https://github.com/facebook/react) - Front end library
@@ -83,13 +85,9 @@ Use the same command from the client directory to run the front end tests. **Not
 
 ## TODO
 
-Bugfixes
+Issues
 
 - [ ] Graceful error handling of async mongoose actions
-
-Testing
-
-- [ ] Write unit tests for React Components.
 
 Features
 
