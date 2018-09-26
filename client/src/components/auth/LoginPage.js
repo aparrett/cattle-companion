@@ -19,12 +19,8 @@ class LoginPage extends Component {
   }
 
   handleGuestClick() {
-    this.props.loginUser(
-      {
-        email: 'guest@test.com',
-        password: 'password'
-      },
-      () => this.props.history.push('/')
+    this.props.loginUser({ email: 'guest@test.com', password: 'password' }, () =>
+      this.props.history.push('/')
     );
   }
 

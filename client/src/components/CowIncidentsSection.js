@@ -1,16 +1,32 @@
-import React from 'react';
+import React, { Component } from 'react';
+import { connect } from 'react-redux';
 import CowIncidentList from './CowIncidentList';
+import { showAddIncident } from '../actions/modals';
 
-const CowIncidentsSection = ({ incidents, handleAddIncidentClick }) => (
-  <div className="mt-4">
-    <h3 className="text-center">Incidents</h3>
-    <ul className="list-group mt-4">
-      <CowIncidentList incidents={incidents} />
-    </ul>
-    <button className="btn btn-outline-primary mt-3" onClick={handleAddIncidentClick}>
-      Add Incident
-    </button>
-  </div>
-);
+export class CowIncidentsSection extends Component {
+  handleAddIncidentClick() {
+    this.props.showAddIncident(this.props.cow);
+  }
 
-export default CowIncidentsSection;
+  render() {
+    return (
+      <div className="mt-4">
+        <h3 className="text-center">Incidents</h3>
+        <ul className="list-group mt-4">
+          <CowIncidentList incidents={this.props.cow.incidents} />
+        </ul>
+        <button
+          className="btn btn-outline-primary mt-3"
+          onClick={this.handleAddIncidentClick.bind(this)}
+        >
+          Add Incident
+        </button>
+      </div>
+    );
+  }
+}
+
+export default connect(
+  null,
+  { showAddIncident }
+)(CowIncidentsSection);
