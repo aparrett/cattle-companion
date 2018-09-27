@@ -8,7 +8,7 @@ import FarmDetailsPage from './FarmDetailsPage';
 import CowDetailsPage from './CowDetailsPage';
 import CowCreatePage from './CowCreatePage';
 import CowEditPage from './CowEditPage';
-import Page404 from './Page404';
+import NotFoundPage from './NotFoundPage';
 
 const Router = () => (
   <Switch>
@@ -19,7 +19,7 @@ const Router = () => (
     <PrivateRoute exact path="/farms/:farmId/cattle/new" component={CowCreatePage} />
     <PrivateRoute exact path="/farms/:farmId/cattle/:id" component={CowDetailsPage} />
     <PrivateRoute exact path="/farms/:farmId/cattle/:id/edit" component={CowEditPage} />
-    <Route component={Page404} />
+    <Route component={NotFoundPage} />
   </Switch>
 );
 
