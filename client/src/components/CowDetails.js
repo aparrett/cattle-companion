@@ -29,7 +29,11 @@ export class CowDetails extends Component {
             >
               <FontAwesomeIcon className="text-secondary fa-lg d-inline-block" icon="pencil-alt" />
             </Link>
-            <a onClick={this.handleDeleteClick.bind(this)} className="delete-cow heading-icon-link">
+            <a
+              onClick={this.handleDeleteClick.bind(this)}
+              className="heading-icon-link"
+              data-test="delete-cow"
+            >
               <FontAwesomeIcon className="text-danger fa-lg d-inline-block" icon="trash-alt" />
             </a>
           </div>

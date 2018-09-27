@@ -1,8 +1,8 @@
 import moxios from 'moxios';
 import cookie from '../../utils/cookie';
-import { mockStore } from '../../utils/mockStore';
+import { mockStore } from '../../utils/mocks';
 
-import { AUTH_USER, AUTH_ERROR, UNAUTH_USER, CLEAR_AUTH_ERROR } from '../../types/auth';
+import { AUTH_USER, UNAUTH_USER, CLEAR_AUTH_ERROR } from '../../types/auth';
 import { registerUser, loginUser, fetchUser, clearAuthError, logoutUser } from '../../actions/auth';
 import * as errorActions from '../../actions/error';
 
@@ -36,9 +36,9 @@ describe('actions - auth', () => {
     });
 
     it('should call the set method on cookie with proper params', async done => {
-      moxios.stubRequest('/api/users', { 
-        status: 201, 
-        response: { token: 'userToken', user: { name: 'user' } } 
+      moxios.stubRequest('/api/users', {
+        status: 201,
+        response: { token: 'userToken', user: { name: 'user' } }
       });
 
       const store = mockStore();
@@ -88,9 +88,9 @@ describe('actions - auth', () => {
     });
 
     it('should call the set method on cookie with proper params', async done => {
-      moxios.stubRequest('/api/auth', { 
-        status: 200, 
-        response: { token: 'userToken', user: { name: 'user' } } 
+      moxios.stubRequest('/api/auth', {
+        status: 200,
+        response: { token: 'userToken', user: { name: 'user' } }
       });
 
       const store = mockStore();
@@ -164,7 +164,7 @@ describe('actions - auth', () => {
       expect(cookie.remove).toHaveBeenCalled();
       expect(cookie.remove.mock.calls[0][0]).toBe('token');
       expect(cookie.remove.mock.calls[0][1]).toEqual({ path: '/' });
-      
+
       done();
     });
 
@@ -175,10 +175,10 @@ describe('actions - auth', () => {
 
       const store = mockStore();
       await store.dispatch(fetchUser(history));
-      
+
       expect(history.push).toHaveBeenCalled();
       expect(history.push.mock.calls[0][0]).toEqual('/login');
-      
+
       done();
     });
   });
@@ -217,7 +217,7 @@ describe('actions - auth', () => {
       expect(cookie.remove).toHaveBeenCalled();
       expect(cookie.remove.mock.calls[0][0]).toBe('token');
       expect(cookie.remove.mock.calls[0][1]).toEqual({ path: '/' });
-      
+
       done();
     });
 
@@ -226,10 +226,10 @@ describe('actions - auth', () => {
 
       const store = mockStore();
       await store.dispatch(logoutUser(history));
-      
+
       expect(history.push).toHaveBeenCalled();
       expect(history.push.mock.calls[0][0]).toEqual('/login');
-      
+
       done();
     });
   });

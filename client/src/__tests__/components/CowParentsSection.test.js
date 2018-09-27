@@ -1,10 +1,15 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import CowParentsSection from '../../components/CowParentsSection';
-
-const sel = id => `[data-test="${id}"]`;
+import { sel } from '../../utils/testing';
 
 describe('CowParentsSection', () => {
+  it('should render', () => {
+    const cow = { _id: '1', name: 'cow' };
+    const wrapper = shallow(<CowParentsSection cow={cow} />);
+    expect(wrapper.html()).not.toBeNull();
+  });
+
   describe('cow has no parents', () => {
     const cow = { _id: '1', name: 'cow' };
 

@@ -1,14 +1,16 @@
 import moxios from 'moxios';
-import { mockStore } from '../../utils/mockStore';
+import { mockStore } from '../../utils/mocks';
 import { saveFarm, fetchFarm, fetchFarms, deleteFarm } from '../../actions/farms';
 import * as errorActions from '../../actions/error';
 
-import {  SAVE_FARM_SUCCESS, 
-          FETCH_FARM_PENDING,
-          FETCH_FARM_SUCCESS,
-          FETCH_FARMS_PENDING,
-          FETCH_FARMS_SUCCESS,
-          DELETE_FARM_SUCCESS } from '../../types/farms';
+import {
+  SAVE_FARM_SUCCESS,
+  FETCH_FARM_PENDING,
+  FETCH_FARM_SUCCESS,
+  FETCH_FARMS_PENDING,
+  FETCH_FARMS_SUCCESS,
+  DELETE_FARM_SUCCESS
+} from '../../types/farms';
 
 describe('actions - farms', () => {
   beforeEach(() => moxios.install());
@@ -20,10 +22,7 @@ describe('actions - farms', () => {
     it('should dispatch proper action on success', async done => {
       moxios.stubRequest('/api/farms', { status: 201, response: { name: 'farm' } });
 
-      const expectedActions = [{
-        type: SAVE_FARM_SUCCESS,
-        payload: { name: 'farm' }
-      }];
+      const expectedActions = [{ type: SAVE_FARM_SUCCESS, payload: { name: 'farm' } }];
 
       const store = mockStore();
       await store.dispatch(saveFarm({ name: 'farm' }));

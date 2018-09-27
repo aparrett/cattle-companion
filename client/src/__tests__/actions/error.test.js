@@ -1,4 +1,4 @@
-import { mockStore } from '../../utils/mockStore';
+import { mockStore } from '../../utils/mocks';
 
 import { dismissError, errorHandler } from '../../actions/error';
 import { DISMISS_ERROR } from '../../types/error';
@@ -26,11 +26,11 @@ describe('actions - error', () => {
     });
 
     it('should dispatch action with given type and specific payload if status is 401', async () => {
-      const expectedAction = { 
-        type: 'unauth', 
-        payload: 'You are not authorized to perform this action.' 
+      const expectedAction = {
+        type: 'unauth',
+        payload: 'You are not authorized to perform this action.'
       };
-      
+
       const store = mockStore();
       await store.dispatch(dispatch => errorHandler(dispatch, 'unauth', 401, 'Unauthorized'));
 
@@ -38,11 +38,11 @@ describe('actions - error', () => {
     });
 
     it('should dispatch action with given type and specific payload if status is 404', async () => {
-      const expectedAction = { 
-        type: 'not_found', 
-        payload: 'Not found.' 
+      const expectedAction = {
+        type: 'not_found',
+        payload: 'Not found.'
       };
-      
+
       const store = mockStore();
       await store.dispatch(dispatch => errorHandler(dispatch, 'not_found', 404, 'Cow not found.'));
 
@@ -50,11 +50,11 @@ describe('actions - error', () => {
     });
 
     it('should dispatch action with given type and specific payload if status is not 400, 401, or 404', async () => {
-      const expectedAction = { 
-        type: 'server_error', 
-        payload: 'Could not perform action at this time. Please try again later.' 
+      const expectedAction = {
+        type: 'server_error',
+        payload: 'Could not perform action at this time. Please try again later.'
       };
-      
+
       const store = mockStore();
       await store.dispatch(dispatch => errorHandler(dispatch, 'server_error', 500, 'Oops.'));
 

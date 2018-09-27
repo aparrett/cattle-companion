@@ -1,23 +1,27 @@
 import moxios from 'moxios';
-import { mockStore } from '../../utils/mockStore';
+import { mockStore } from '../../utils/mocks';
 
 import * as errorActions from '../../actions/error';
-import {  fetchCow, 
-          saveCow, 
-          editCow, 
-          addIncident, 
-          deleteCow, 
-          fetchEligibleFathers, 
-          fetchEligibleMothers, 
-          fetchEligibleFathersByFarm, 
-          fetchEligibleMothersByFarm } from '../../actions/cattle';
+import {
+  fetchCow,
+  saveCow,
+  editCow,
+  addIncident,
+  deleteCow,
+  fetchEligibleFathers,
+  fetchEligibleMothers,
+  fetchEligibleFathersByFarm,
+  fetchEligibleMothersByFarm
+} from '../../actions/cattle';
 
 import { ADD_INCIDENT_SUCCESS } from '../../types/incidents';
-import {  FETCH_COW_PENDING, 
-          FETCH_COW_SUCCESS,
-          DELETE_COW_SUCCESS,
-          FETCH_ELIGIBLE_FATHERS_SUCCESS,
-          FETCH_ELIGIBLE_MOTHERS_SUCCESS } from '../../types/cattle';
+import {
+  FETCH_COW_PENDING,
+  FETCH_COW_SUCCESS,
+  DELETE_COW_SUCCESS,
+  FETCH_ELIGIBLE_FATHERS_SUCCESS,
+  FETCH_ELIGIBLE_MOTHERS_SUCCESS
+} from '../../types/cattle';
 
 describe('actions - cattle', () => {
   beforeEach(() => moxios.install());
@@ -68,13 +72,13 @@ describe('actions - cattle', () => {
 
       const store = mockStore();
       const history = { push: jest.fn() };
-      const cow = { 
-        name: 'cow', 
-        gender: 'bull', 
-        dateOfBirth: new Date(), 
+      const cow = {
+        name: 'cow',
+        gender: 'bull',
+        dateOfBirth: new Date(),
         farm: '1',
         mother: '1',
-        father: '2',
+        father: '2'
       };
 
       await store.dispatch(saveCow(cow, history));
@@ -90,13 +94,13 @@ describe('actions - cattle', () => {
 
       const store = mockStore();
       const history = { push: jest.fn() };
-      const cow = { 
-        name: 'cow', 
-        gender: 'bull', 
-        dateOfBirth: new Date(), 
+      const cow = {
+        name: 'cow',
+        gender: 'bull',
+        dateOfBirth: new Date(),
         farm: '1',
         mother: '1',
-        father: '2',
+        father: '2'
       };
 
       await store.dispatch(saveCow(cow, history));
@@ -108,14 +112,14 @@ describe('actions - cattle', () => {
 
   describe('editCow', () => {
     it('should push new route to history', async done => {
-      const cow = { 
+      const cow = {
         _id: '3',
-        name: 'cow', 
-        gender: 'bull', 
-        dateOfBirth: new Date(), 
+        name: 'cow',
+        gender: 'bull',
+        dateOfBirth: new Date(),
         farm: '1',
         mother: '1',
-        father: '2',
+        father: '2'
       };
 
       moxios.stubRequest('/api/cattle/3', { status: 201, response: { _id: cow._id } });
@@ -136,14 +140,14 @@ describe('actions - cattle', () => {
 
       const store = mockStore();
       const history = { push: jest.fn() };
-      const cow = { 
+      const cow = {
         _id: '3',
-        name: 'cow', 
-        gender: 'bull', 
-        dateOfBirth: new Date(), 
+        name: 'cow',
+        gender: 'bull',
+        dateOfBirth: new Date(),
         farm: '1',
         mother: '1',
-        father: '2',
+        father: '2'
       };
 
       await store.dispatch(editCow(cow, history));
@@ -185,7 +189,7 @@ describe('actions - cattle', () => {
   describe('deleteCow', () => {
     it('should dispatch success action on success', async done => {
       moxios.stubRequest('/api/cattle/1', { status: 200 });
-      
+
       const expectedAction = { type: DELETE_COW_SUCCESS, payload: 1 };
       const store = mockStore();
       await store.dispatch(deleteCow(1));
@@ -208,8 +212,11 @@ describe('actions - cattle', () => {
   describe('fetchEligibleFathers', () => {
     it('should dispatch success action on success', async done => {
       const eligibleFather = { name: 'bull' };
-      moxios.stubRequest('/api/cattle/1/eligible-fathers', { status: 200, response: eligibleFather });
-      
+      moxios.stubRequest('/api/cattle/1/eligible-fathers', {
+        status: 200,
+        response: eligibleFather
+      });
+
       const expectedAction = { type: FETCH_ELIGIBLE_FATHERS_SUCCESS, payload: eligibleFather };
       const store = mockStore();
       await store.dispatch(fetchEligibleFathers(1));
@@ -232,8 +239,11 @@ describe('actions - cattle', () => {
   describe('fetchEligibleMothers', () => {
     it('should dispatch success action on success', async done => {
       const eligibleMother = { name: 'cow' };
-      moxios.stubRequest('/api/cattle/1/eligible-mothers', { status: 200, response: eligibleMother });
-      
+      moxios.stubRequest('/api/cattle/1/eligible-mothers', {
+        status: 200,
+        response: eligibleMother
+      });
+
       const expectedAction = { type: FETCH_ELIGIBLE_MOTHERS_SUCCESS, payload: eligibleMother };
       const store = mockStore();
       await store.dispatch(fetchEligibleMothers(1));
@@ -256,8 +266,11 @@ describe('actions - cattle', () => {
   describe('fetchEligibleFathersByFarm', () => {
     it('should dispatch success action on success', async done => {
       const eligibleFather = { name: 'cow' };
-      moxios.stubRequest('/api/farms/1/cattle/eligible-fathers', { status: 200, response: eligibleFather });
-      
+      moxios.stubRequest('/api/farms/1/cattle/eligible-fathers', {
+        status: 200,
+        response: eligibleFather
+      });
+
       const expectedAction = { type: FETCH_ELIGIBLE_FATHERS_SUCCESS, payload: eligibleFather };
       const store = mockStore();
       await store.dispatch(fetchEligibleFathersByFarm(1));
@@ -280,8 +293,11 @@ describe('actions - cattle', () => {
   describe('fetchEligibleMothersByFarm', () => {
     it('should dispatch success action on success', async done => {
       const eligibleMother = { name: 'cow' };
-      moxios.stubRequest('/api/farms/1/cattle/eligible-mothers', { status: 200, response: eligibleMother });
-      
+      moxios.stubRequest('/api/farms/1/cattle/eligible-mothers', {
+        status: 200,
+        response: eligibleMother
+      });
+
       const expectedAction = { type: FETCH_ELIGIBLE_MOTHERS_SUCCESS, payload: eligibleMother };
       const store = mockStore();
       await store.dispatch(fetchEligibleMothersByFarm(1));
