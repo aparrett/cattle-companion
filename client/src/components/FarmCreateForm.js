@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { saveFarm } from '../actions/farms';
 import { Field, reduxForm } from 'redux-form';
 import InputField from './fields/InputField';
+import validate from '../validation/validateFarm';
 
 class FarmCreateForm extends Component {
   handleFormSubmit(formProps) {
@@ -25,20 +26,6 @@ class FarmCreateForm extends Component {
       </div>
     );
   }
-}
-
-function validate(values) {
-  const errors = {};
-
-  if (!values.name) {
-    errors.name = 'Please enter a name.';
-  }
-
-  if (values.name && values.name.length > 100) {
-    errors.name = 'Name cannot be longer than 100 characters.';
-  }
-
-  return errors;
 }
 
 FarmCreateForm = connect(
