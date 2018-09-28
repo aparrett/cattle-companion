@@ -37,16 +37,10 @@ describe('CowCreatePage', () => {
     expect(props.clearAuthError).toHaveBeenCalled();
   });
 
-  describe('on form submit', () => {
-    it('should call validate function', () => {
-      wrapper.find('form').simulate('submit');
-      expect(validate).toHaveBeenCalled();
-    });
-
-    it('should call loginUser', () => {
-      wrapper.find('form').simulate('submit');
-      expect(props.loginUser).toHaveBeenCalled();
-    });
+  it('should call functions on form submit', () => {
+    wrapper.find('form').simulate('submit');
+    expect(validate).toHaveBeenCalled();
+    expect(props.loginUser).toHaveBeenCalled();
   });
 
   it('should call loginUser on guest btn click', () => {
