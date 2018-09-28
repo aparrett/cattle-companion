@@ -4,7 +4,7 @@ import { fetchFarms } from '../actions/farms';
 import FarmCreateForm from './FarmCreateForm';
 import FarmListItem from './FarmListItem';
 
-class HomePage extends Component {
+export class HomePage extends Component {
   componentDidMount() {
     this.props.fetchFarms();
   }
@@ -12,11 +12,13 @@ class HomePage extends Component {
   render() {
     if (this.props.isLoading) return null;
 
+    const farms = this.props.farms || [];
+
     return (
       <div className="mt-5">
         <h1 className="font-weight-bold">Farms</h1>
         <ul className="list-group mt-4">
-          {this.props.farms.map(farm => (
+          {farms.map(farm => (
             <FarmListItem farm={farm} key={farm._id} />
           ))}
         </ul>

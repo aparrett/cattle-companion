@@ -3,7 +3,7 @@ import { Route } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchUser } from '../actions/auth';
 
-const PrivateRoute = ({ component: Component, ...rest }) => (
+export const PrivateRoute = ({ component: Component, ...rest }) => (
   <Route
     {...rest}
     render={props => {
@@ -12,7 +12,7 @@ const PrivateRoute = ({ component: Component, ...rest }) => (
       if (rest.authenticated) {
         return <Component {...props} />;
       }
-      return <div />;
+      return null;
     }}
   />
 );

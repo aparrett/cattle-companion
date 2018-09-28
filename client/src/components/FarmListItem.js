@@ -5,7 +5,7 @@ import { showConfirmation } from '../actions/modals';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const FarmListItem = ({ farm, deleteFarm, showConfirmation }) => (
+export const FarmListItem = ({ farm, deleteFarm, showConfirmation }) => (
   <li className="list-group-item" key={farm._id}>
     <div className="row justify-content-between">
       <div className="col-6">
@@ -13,6 +13,7 @@ const FarmListItem = ({ farm, deleteFarm, showConfirmation }) => (
       </div>
       <div className="col-6 text-right">
         <a
+          data-test="delete-farm"
           onClick={() =>
             showConfirmation(
               farm._id,
