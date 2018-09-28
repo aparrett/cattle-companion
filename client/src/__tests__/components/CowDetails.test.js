@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import { CowDetails } from '../../components/CowDetails';
-import { sel } from '../../utils/testing';
 
 describe('CowDetails', () => {
   let wrapper;
@@ -20,7 +19,7 @@ describe('CowDetails', () => {
   });
 
   it('should call showConfirmation with correct params on delete-cow click', () => {
-    wrapper.find(sel('delete-cow')).simulate('click');
+    wrapper.find('[data-test="delete-cow"]').simulate('click');
     expect(showConfirmation).toHaveBeenCalledWith(
       cow._id,
       expect.any(String),

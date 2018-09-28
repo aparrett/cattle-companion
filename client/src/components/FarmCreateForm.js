@@ -28,9 +28,13 @@ class FarmCreateForm extends Component {
   }
 }
 
+const mergeProps = (stateProps, dispatchProps, ownProps) =>
+  Object.assign({}, stateProps, dispatchProps, ownProps);
+
 FarmCreateForm = connect(
   null,
-  { saveFarm }
+  { saveFarm },
+  mergeProps
 )(FarmCreateForm);
 
 export default reduxForm({

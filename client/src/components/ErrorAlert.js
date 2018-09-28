@@ -2,7 +2,7 @@ import React from 'react';
 import { dismissError } from '../actions/error';
 import { connect } from 'react-redux';
 
-const ErrorAlert = ({ error, dismissError }) => {
+export const ErrorAlert = ({ error, dismissError }) => {
   if (!error) return null;
 
   setTimeout(() => dismissError(), 5 * 1000);

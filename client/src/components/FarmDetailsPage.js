@@ -4,7 +4,7 @@ import { fetchFarm } from '../actions/farms';
 import CowListItem from './CowListItem';
 import { Link } from 'react-router-dom';
 
-class FarmDetailsPage extends Component {
+export class FarmDetailsPage extends Component {
   componentDidMount() {
     this.props.fetchFarm(this.props.match.params.id);
   }

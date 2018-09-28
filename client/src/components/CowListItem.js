@@ -5,7 +5,7 @@ import { showConfirmation } from '../actions/modals';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-const CowListItem = ({ cow, deleteCow, showConfirmation }) => (
+export const CowListItem = ({ cow, deleteCow, showConfirmation }) => (
   <li className="list-group-item" key={cow._id}>
     <div className="row justify-content-between">
       <div className="col-6">
@@ -16,6 +16,7 @@ const CowListItem = ({ cow, deleteCow, showConfirmation }) => (
           <FontAwesomeIcon className="text-secondary fa-lg d-inline-block mr-3" icon="pencil-alt" />
         </Link>
         <a
+          data-test="delete-cow"
           onClick={() =>
             showConfirmation(cow._id, `Are you sure you want to delete ${cow.name}?`, deleteCow)
           }

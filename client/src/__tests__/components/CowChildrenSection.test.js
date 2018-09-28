@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import CowChildrenSection from '../../components/CowChildrenSection';
-import { sel } from '../../utils/testing';
 
 describe('CowChildrenSection', () => {
   it('should render', () => {
@@ -15,12 +14,12 @@ describe('CowChildrenSection', () => {
 
     it('should render no-children element', () => {
       const wrapper = shallow(<CowChildrenSection cow={cow} />);
-      expect(wrapper.find(sel('no-children')).length).toBe(1);
+      expect(wrapper.find('[data-test="no-children"]').length).toBe(1);
     });
 
     it('should not render children-list element', () => {
       const wrapper = shallow(<CowChildrenSection cow={cow} />);
-      expect(wrapper.find(sel('children-list')).length).toBe(0);
+      expect(wrapper.find('[data-test="children-list"]').length).toBe(0);
     });
   });
 
@@ -29,7 +28,7 @@ describe('CowChildrenSection', () => {
 
     it('should not render no-children element', () => {
       const wrapper = shallow(<CowChildrenSection cow={cow} />);
-      expect(wrapper.find(sel('no-children')).length).toBe(0);
+      expect(wrapper.find('[data-test="no-children"]').length).toBe(0);
     });
 
     it('should contain child element', () => {

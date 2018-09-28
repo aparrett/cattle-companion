@@ -1,6 +1,6 @@
 import React from 'react';
 import { mount } from 'enzyme';
-import { ConnectedCowCreatePage } from '../../components/CowCreatePage';
+import { ConnectedCowEditPage } from '../../components/CowEditPage';
 import Root from '../../Root';
 import validate from '../../validation/validateCow';
 
@@ -8,24 +8,32 @@ jest.mock('../../components/fields/MotherSelect', () => () => <select name="moth
 jest.mock('../../components/fields/FatherSelect', () => () => <select name="father" />);
 jest.mock('../../validation/validateCow');
 
-describe('CowCreatePage', () => {
+describe('CowEditPage', () => {
   let wrapper;
+  const cowId = 'cow';
+  const farmId = 'farm';
   const props = {
     match: {
       params: {
-        farmId: '1'
+        id: cowId,
+        farmId
       }
     },
     history: { name: 'mockHistory' },
-    saveCow: jest.fn()
+    editCow: jest.fn(),
+    fetchCow: jest.fn()
   };
 
   beforeEach(() => {
     wrapper = mount(
       <Root>
-        <ConnectedCowCreatePage {...props} />
+        <ConnectedCowEditPage {...props} />
       </Root>
     );
+  });
+
+  it('should call fetchCow', () => {
+    expect(props.fetchCow).toHaveBeenCalledWith(cowId);
   });
 
   describe('should render', () => {
@@ -56,9 +64,9 @@ describe('CowCreatePage', () => {
       expect(validate).toHaveBeenCalled();
     });
 
-    it('should call saveCow', () => {
+    it('should call editCow', () => {
       wrapper.find('form').simulate('submit');
-      expect(props.saveCow).toHaveBeenCalledWith({ farm: '1' }, { name: 'mockHistory' });
+      expect(props.editCow).toHaveBeenCalled();
     });
   });
 });

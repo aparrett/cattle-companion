@@ -29,8 +29,8 @@ class CowEditPage extends Component {
       ...formProps,
       _id: id,
       farm: farmId,
-      mother: formProps.mother === '' ? null : formProps.mother,
-      father: formProps.father === '' ? null : formProps.father
+      mother: !formProps.mother || formProps.mother === '' ? null : formProps.mother,
+      father: !formProps.father || formProps.father === '' ? null : formProps.father
     };
 
     editCow(cow, history);
@@ -122,9 +122,13 @@ function mapStateToProps({ cowReducer: { cow } }) {
   return { initialValues };
 }
 
-export default withRouter(
-  connect(
-    mapStateToProps,
-    { fetchCow, editCow }
-  )(CowEditPage)
-);
+const mergeProps = (stateProps, dispatchProps, ownProps) =>
+  Object.assign({}, stateProps, dispatchProps, ownProps);
+
+export const ConnectedCowEditPage = connect(
+  mapStateToProps,
+  { fetchCow, editCow },
+  mergeProps
+)(CowEditPage);
+
+export default withRouter(ConnectedCowEditPage);

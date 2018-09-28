@@ -1,7 +1,6 @@
 import React from 'react';
 import { shallow } from 'enzyme';
 import CowParentsSection from '../../components/CowParentsSection';
-import { sel } from '../../utils/testing';
 
 describe('CowParentsSection', () => {
   it('should render', () => {
@@ -15,12 +14,12 @@ describe('CowParentsSection', () => {
 
     it('should contain no-parents element', () => {
       const wrapper = shallow(<CowParentsSection cow={cow} />);
-      expect(wrapper.find(sel('no-parents')).length).toEqual(1);
+      expect(wrapper.find('[data-test="no-parents"]').length).toEqual(1);
     });
 
     it('should not contain parents-list element', () => {
       const wrapper = shallow(<CowParentsSection cow={cow} />);
-      expect(wrapper.find(sel('parents-list')).length).toEqual(0);
+      expect(wrapper.find('[data-test="parents-list"]').length).toEqual(0);
     });
   });
 
@@ -33,7 +32,7 @@ describe('CowParentsSection', () => {
 
     it('should not contain no-parents element', () => {
       const wrapper = shallow(<CowParentsSection cow={cow} />);
-      expect(wrapper.find(sel('no-parents')).length).toEqual(0);
+      expect(wrapper.find('[data-test="no-parents"]').length).toEqual(0);
     });
 
     it('should contain mother element', () => {
@@ -51,7 +50,7 @@ describe('CowParentsSection', () => {
 
     it('should not contain no-parents element', () => {
       const wrapper = shallow(<CowParentsSection cow={cow} />);
-      expect(wrapper.find(sel('no-parents')).length).toEqual(0);
+      expect(wrapper.find('[data-test="no-parents"]').length).toEqual(0);
     });
 
     it('should contain father element', () => {
