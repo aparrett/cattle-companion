@@ -10,7 +10,7 @@ import { CowGenders } from '../enums';
 import { saveCow } from '../actions/cattle';
 import validate from '../validation/validateCow';
 
-class CowCreatePage extends Component {
+export class CowCreatePage extends Component {
   handleFormSubmit(formProps) {
     const { match, saveCow, history } = this.props;
     const cow = { ...formProps, farm: match.params.farmId };
@@ -85,9 +85,14 @@ CowCreatePage = reduxForm({
   validate
 })(CowCreatePage);
 
-export default withRouter(
-  connect(
-    null,
-    { saveCow }
-  )(CowCreatePage)
-);
+const mergeProps = (stateProps, dispatchProps, ownProps) =>
+  Object.assign({}, stateProps, dispatchProps, ownProps);
+
+export const ConnectedCowCreatePage = connect(
+  null,
+  { saveCow },
+  mergeProps
+)(CowCreatePage);
+
+// withRouter passes history to connected component.
+export default withRouter(ConnectedCowCreatePage);

@@ -4,7 +4,7 @@ import { fetchEligibleMothers, fetchEligibleMothersByFarm } from '../../actions/
 
 class MotherSelect extends Component {
   componentDidMount() {
-    const { cowId, farmId, fetchEligibleMothersByFarm, fetchEligibleMothers  } = this.props;
+    const { cowId, farmId, fetchEligibleMothersByFarm, fetchEligibleMothers } = this.props;
 
     if (!cowId) {
       fetchEligibleMothersByFarm(farmId);
@@ -13,7 +13,7 @@ class MotherSelect extends Component {
     }
   }
 
-  renderMotherOptions(eligibleMothers){
+  renderMotherOptions(eligibleMothers) {
     return eligibleMothers
       .sort((a, b) => {
         if (a.name < b.name) return -1;
@@ -21,7 +21,9 @@ class MotherSelect extends Component {
         return 0;
       })
       .map(cow => (
-        <option key={cow._id} value={cow._id}>{cow.name}</option>
+        <option key={cow._id} value={cow._id}>
+          {cow.name}
+        </option>
       ));
   }
 
@@ -34,16 +36,22 @@ class MotherSelect extends Component {
           <option value="">None</option>
           {this.renderMotherOptions(eligibleMothers)}
         </select>
-        {eligibleMothers.length === 0 && <p className="mt-1">There are no eligible mothers for this cow.</p>}
+        {eligibleMothers.length === 0 && (
+          <p className="mt-1">There are no eligible mothers for this cow.</p>
+        )}
       </div>
     );
   }
 }
 
-const mapStateToProps = ({ eligibleParents: { eligibleMothers } }) => ({ 
-  eligibleMothers 
+const mapStateToProps = ({ eligibleParents: { eligibleMothers } }) => ({
+  eligibleMothers
 });
 
-export default connect(mapStateToProps, { 
-  fetchEligibleMothers, fetchEligibleMothersByFarm 
-})(MotherSelect);
+export default connect(
+  mapStateToProps,
+  {
+    fetchEligibleMothers,
+    fetchEligibleMothersByFarm
+  }
+)(MotherSelect);

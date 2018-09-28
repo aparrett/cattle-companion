@@ -12,7 +12,7 @@ jest.mock('../../utils/cookie', () => ({
   remove: jest.fn()
 }));
 
-errorActions.errorHandler = jest.fn();
+jest.mock('../../actions/error');
 
 describe('actions - auth', () => {
   beforeEach(() => moxios.install());
