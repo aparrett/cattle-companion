@@ -2,17 +2,14 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { Field, reduxForm } from 'redux-form';
-import { loginUser, logoutUser, clearAuthError } from '../../actions/auth';
+import { loginUser, clearAuthError } from '../../actions/auth';
 import InputField from '../fields/InputField';
 import validate from '../../validation/validateLogin';
+import { mergeProps } from '../../utils/redux';
 
-class LoginPage extends Component {
+export class LoginPage extends Component {
   componentDidMount() {
     this.props.clearAuthError();
-
-    if (this.props.authenticated) {
-      this.props.logoutUser(this.props.history);
-    }
   }
 
   handleFormSubmit(formProps) {
@@ -20,9 +17,8 @@ class LoginPage extends Component {
   }
 
   handleGuestClick() {
-    this.props.loginUser({ email: 'guest@test.com', password: 'password' }, () =>
-      this.props.history.push('/')
-    );
+    const guestUser = { email: 'guest@test.com', password: 'password' };
+    this.props.loginUser(guestUser, () => this.props.history.push('/'));
   }
 
   render() {
@@ -31,8 +27,11 @@ class LoginPage extends Component {
     return (
       <form onSubmit={handleSubmit(this.handleFormSubmit.bind(this))}>
         <div className="mb-2">
-          Taking the app for a spin? Click <a onClick={this.handleGuestClick.bind(this)}>here</a> to
-          login as a guest.
+          Taking the app for a spin? Click&nbsp;
+          <a data-test="guest" onClick={this.handleGuestClick.bind(this)}>
+            here
+          </a>
+          &nbsp;to login as a guest.
         </div>
         {error && <div className="invalid-feedback mb-3">{error}</div>}
         <div className="row">
@@ -63,16 +62,15 @@ class LoginPage extends Component {
   }
 }
 
-function mapStateToProps({ auth }) {
-  return { error: auth.error, authenticated: auth.authenticated };
-}
+const mapStateToProps = ({ auth }) => ({ error: auth.error, authenticated: auth.authenticated });
 
-LoginPage = connect(
+const ConnectedLoginPage = connect(
   mapStateToProps,
-  { loginUser, logoutUser, clearAuthError }
+  { loginUser, clearAuthError },
+  mergeProps
 )(LoginPage);
 
 export default reduxForm({
   form: 'login',
   validate
-})(LoginPage);
+})(ConnectedLoginPage);

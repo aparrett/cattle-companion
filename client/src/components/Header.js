@@ -1,9 +1,11 @@
 import React from 'react';
 import { connect } from 'react-redux';
+import { withRouter } from 'react-router';
 import { Link } from 'react-router-dom';
 import ErrorAlert from './ErrorAlert';
+import { logoutUser } from '../actions/auth';
 
-export const Header = ({ authenticated }) => (
+export const Header = ({ authenticated, logoutUser, history }) => (
   <div>
     <div className="d-flex p-3 px-md-4 bg-white border-bottom box-shadow">
       <div className="container">
@@ -17,7 +19,9 @@ export const Header = ({ authenticated }) => (
             <Link className="mr-2" to="/">
               Farms
             </Link>
-            <Link to="/login">Logout</Link>
+            <a data-test="logout" onClick={() => logoutUser(history)}>
+              Logout
+            </a>
           </nav>
         )}
       </div>
@@ -30,4 +34,9 @@ function mapStateToProps({ auth: { authenticated } }) {
   return { authenticated };
 }
 
-export default connect(mapStateToProps)(Header);
+export default withRouter(
+  connect(
+    mapStateToProps,
+    { logoutUser }
+  )(Header)
+);

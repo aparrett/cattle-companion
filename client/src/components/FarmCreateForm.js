@@ -4,6 +4,7 @@ import { saveFarm } from '../actions/farms';
 import { Field, reduxForm } from 'redux-form';
 import InputField from './fields/InputField';
 import validate from '../validation/validateFarm';
+import { mergeProps } from '../utils/redux';
 
 class FarmCreateForm extends Component {
   handleFormSubmit(formProps) {
@@ -27,9 +28,6 @@ class FarmCreateForm extends Component {
     );
   }
 }
-
-const mergeProps = (stateProps, dispatchProps, ownProps) =>
-  Object.assign({}, stateProps, dispatchProps, ownProps);
 
 FarmCreateForm = connect(
   null,

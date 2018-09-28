@@ -10,6 +10,7 @@ import VerticalRadioField from './fields/VerticalRadioField';
 import MotherSelect from './fields/MotherSelect';
 import FatherSelect from './fields/FatherSelect';
 import validate from '../validation/validateCow';
+import { mergeProps } from '../utils/redux';
 
 class CowEditPage extends Component {
   componentDidMount() {
@@ -121,9 +122,6 @@ function mapStateToProps({ cowReducer: { cow } }) {
 
   return { initialValues };
 }
-
-const mergeProps = (stateProps, dispatchProps, ownProps) =>
-  Object.assign({}, stateProps, dispatchProps, ownProps);
 
 export const ConnectedCowEditPage = connect(
   mapStateToProps,

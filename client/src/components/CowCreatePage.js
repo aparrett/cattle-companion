@@ -9,6 +9,7 @@ import FatherSelect from './fields/FatherSelect';
 import { CowGenders } from '../enums';
 import { saveCow } from '../actions/cattle';
 import validate from '../validation/validateCow';
+import { mergeProps } from '../utils/redux';
 
 export class CowCreatePage extends Component {
   handleFormSubmit(formProps) {
@@ -84,9 +85,6 @@ CowCreatePage = reduxForm({
   form: 'cowCreateForm',
   validate
 })(CowCreatePage);
-
-const mergeProps = (stateProps, dispatchProps, ownProps) =>
-  Object.assign({}, stateProps, dispatchProps, ownProps);
 
 export const ConnectedCowCreatePage = connect(
   null,

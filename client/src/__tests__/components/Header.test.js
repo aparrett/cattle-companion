@@ -12,13 +12,20 @@ describe('Header', () => {
     expect(wrapper.html()).not.toBeNull();
   });
 
-  it('should render auth nav if authenticated', () => {
-    const wrapper = shallow(<Header authenticated="test" />);
-    expect(wrapper.find('[data-test="auth-nav"]').length).toBe(1);
-  });
-
   it('should not render auth nav if not authenticated', () => {
     const wrapper = shallow(<Header authenticated={false} />);
     expect(wrapper.find('[data-test="auth-nav"]').length).toBe(0);
+  });
+
+  it('should render auth nav if authenticated', () => {
+    const wrapper = shallow(<Header authenticated />);
+    expect(wrapper.find('[data-test="auth-nav"]').length).toBe(1);
+  });
+
+  it('should call logoutUser on logout click', () => {
+    const logoutUser = jest.fn();
+    const wrapper = shallow(<Header authenticated logoutUser={logoutUser} />);
+    wrapper.find('[data-test="logout"]').simulate('click');
+    expect(logoutUser).toHaveBeenCalled();
   });
 });
