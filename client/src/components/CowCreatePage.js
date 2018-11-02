@@ -72,6 +72,9 @@ export class CowCreatePage extends Component {
             className="form-control"
             component={FatherSelect}
           />
+          <button href="#" className="btn btn-gray mr-2" onClick={() => this.props.history.goBack()}>
+            Cancel
+          </button>
           <button type="submit" className="btn btn-primary">
             Save Cow
           </button>

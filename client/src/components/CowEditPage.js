@@ -91,6 +91,12 @@ class CowEditPage extends Component {
             className="form-control"
             component={FatherSelect}
           />
+          <button className="btn btn-gray mr-2" onClick={(e) => {
+            e.preventDefault();
+            this.props.history.goBack();
+          }}>
+            Cancel
+          </button>
           <button type="submit" className="btn btn-primary">
             Save
           </button>
